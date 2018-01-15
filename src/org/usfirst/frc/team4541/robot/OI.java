@@ -8,12 +8,16 @@
 package org.usfirst.frc.team4541.robot;
 
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
+import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -25,7 +29,8 @@ public class OI {
 	};
 
 	Joystick joy = new Joystick(0);
-
+	XboxController cont = new XboxController(0);
+	
 	public OI() {
 		// Create some buttons
 		JoystickButton a_button = new JoystickButton(joy, 1);
@@ -42,14 +47,18 @@ public class OI {
 		JoystickButton l1 = new JoystickButton(joy, 11);
 		JoystickButton r1 = new JoystickButton(joy, 12);
 
-		a_button.whenPressed(new TurnToAngle(90));
-		x_button.whenPressed(new DriveToPosAtAngle(0, 30));
+		a_button.whenPressed(new EjectCube());
+		b_button.whenPressed(new ToggleIntake());
+//		x_button.whenPressed(new DriveToPosAtAngle(0, 30));
+		
 	}
 
 	public Joystick getJoystick() {
 		return joy;
 	}
-
+	public XboxController getController() {
+		return cont;
+	}
 	public PIDSource getPIDSource(SENSOR sensor) {
 		return new PIDSource() {
 
@@ -78,11 +87,11 @@ public class OI {
 				case VISION_TAPE:
 					return 0;
 				case ENCODER_RIGHT_WHEELS:
-					return 0;
+					return Robot.drivetrain.rightWheelEncoder.getDistance();
 				case ENCODER_LEFT_WHEELS:
-					return 0;	
+					return Robot.drivetrain.leftWheelEncoder.getDistance();	
 				case ENCODER_ELEVATOR:
-					return 0;
+					return Robot.elevator.elevatorEncoder.getDistance();
 				}
 				return 0;
 			}

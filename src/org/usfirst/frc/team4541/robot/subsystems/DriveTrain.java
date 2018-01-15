@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.hal.HAL;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4541.robot.Robot;
+import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -45,14 +47,16 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  * and a gyro.
  */
 public class DriveTrain extends Subsystem {
-	private WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(3);
-	private WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(1);
-	private WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(4);
-	private WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(2);
+	private WPI_TalonSRX leftMotor1  = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
+	private WPI_TalonSRX leftMotor2  = new WPI_TalonSRX(RobotMap.leftDriveMotor2);
+	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
+	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
 	
+	public Encoder leftWheelEncoder  = new Encoder(0, 1, false, EncodingType.k4X);
+	public Encoder rightWheelEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 	
-	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(frontLeftMotor,  rearLeftMotor);
-	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
+	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(leftMotor1,  leftMotor2);
+	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
 //	public static PowerDistributionPanel panel = new PowerDistributionPanel(0);
 
@@ -60,8 +64,6 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		super();
-		frontLeftMotor.setInverted(true);
-		rearLeftMotor.setInverted(true);
 	}
 
 	/**

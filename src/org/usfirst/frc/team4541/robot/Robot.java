@@ -8,7 +8,9 @@
 package org.usfirst.frc.team4541.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +18,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4541.robot.subsystems.Elevator;
+import org.usfirst.frc.team4541.robot.subsystems.Intake;
+import org.usfirst.frc.team4541.robot.subsystems.Ramps;
 import org.usfirst.frc.team4541.robot.subsystems.TrackBall;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -29,29 +34,45 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends TimedRobot {
 	public static OI oi;
+	//Robot wide sensors
 	public static AHRS gyro;
-	public static DriveTrain drivetrain;
-	@Deprecated //trackball will be removed soon in favor of encoders on wheels
-	public static TrackBall trackball;
 	public static LidarInterface lidar;
 	public static UltrasonicInterface ultrasonic;
+	
+	//subsystems
+	public static Elevator elevator;
+	public static DriveTrain drivetrain;
+	public static Ramps ramps;
+	public static Intake intake;
+	
+	@Deprecated //trackball will be removed soon in favor of encoders on wheels
+	public static TrackBall trackball;
+	
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		drivetrain = new DriveTrain(); 
 		oi =  new OI();
+		
 		gyro = new AHRS(SPI.Port.kMXP);
+		
 		trackball = new TrackBall();
+		
 		lidar = new LidarInterface(0x62, 0); //TODO: make sure that 0x62 is the correct i2c address
 		lidar.beginInfiniteFastContinuous(); //lidar starts reading at 50hz indefinitely
+		
 		ultrasonic = new UltrasonicInterface();
 		ultrasonic.setUltrasonicsEnabled(false, false, false, false);
+		
+		elevator = new Elevator();
+		drivetrain = new DriveTrain();
+		ramps = new Ramps();
+		intake = new Intake();
+		
 		CameraServer.getInstance().startAutomaticCapture(0);
 		SmartDashboard.putString("driver station message: ", DriverStation.getInstance().getGameSpecificMessage());
 	}
