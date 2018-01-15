@@ -18,7 +18,7 @@ public class TurnToAngle extends PIDCommand {
 		getPIDController().setOutputRange(-.7, .7);
 		getPIDController().setContinuous();
 		getPIDController().setSetpoint(TargetAngle);
-		
+		SmartDashboard.putData(getPIDController());
 	}
 	@Override
 	protected double returnPIDInput() {

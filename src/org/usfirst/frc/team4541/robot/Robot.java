@@ -31,7 +31,10 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static AHRS gyro;
 	public static DriveTrain drivetrain;
+	@Deprecated //trackball will be removed soon in favor of encoders on wheels
 	public static TrackBall trackball;
+	public static LidarInterface lidar;
+	public static UltrasonicInterface ultrasonic;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
 
@@ -45,7 +48,10 @@ public class Robot extends TimedRobot {
 		oi =  new OI();
 		gyro = new AHRS(SPI.Port.kMXP);
 		trackball = new TrackBall();
-		
+		lidar = new LidarInterface(0x62, 0); //TODO: make sure that 0x62 is the correct i2c address
+		lidar.beginInfiniteFastContinuous(); //lidar starts reading at 50hz indefinitely
+		ultrasonic = new UltrasonicInterface();
+		ultrasonic.setUltrasonicsEnabled(false, false, false, false);
 		CameraServer.getInstance().startAutomaticCapture(0);
 		SmartDashboard.putString("driver station message: ", DriverStation.getInstance().getGameSpecificMessage());
 	}

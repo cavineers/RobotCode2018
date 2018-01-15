@@ -50,16 +50,18 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(4);
 	private WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(2);
 	
+	
 	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(frontLeftMotor,  rearLeftMotor);
 	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
 	
-	public static PowerDistributionPanel panel = new PowerDistributionPanel(0);
+//	public static PowerDistributionPanel panel = new PowerDistributionPanel(0);
 
 	private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
 
 	public DriveTrain() {
 		super();
-		
+		frontLeftMotor.setInverted(true);
+		rearLeftMotor.setInverted(true);
 	}
 
 	/**
