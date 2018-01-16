@@ -75,6 +75,7 @@ public class Robot extends TimedRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture(0);
 		SmartDashboard.putString("driver station message: ", DriverStation.getInstance().getGameSpecificMessage());
+		FieldPositionHelper.beginIntegration();
 	}
 
 	/**

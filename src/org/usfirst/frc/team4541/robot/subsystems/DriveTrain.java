@@ -94,5 +94,9 @@ public class DriveTrain extends Subsystem {
 	public void drive(Joystick joy) {
 		this.drive(-joy.getRawAxis(4), joy.getRawAxis(1));
 	}
+	
+	public double getDistanceMoved() {
+		return (leftWheelEncoder.getDistance() + rightWheelEncoder.getDistance()) / 2;
+	}
 
 }
