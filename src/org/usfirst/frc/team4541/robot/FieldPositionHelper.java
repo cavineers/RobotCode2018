@@ -12,6 +12,7 @@ public class FieldPositionHelper {
 				double changeInDistance = Robot.drivetrain.getDistanceMoved() - lastRobotDistanceMoved;
 				FieldXPos += changeInDistance * Math.sin(Robot.gyro.getAngle());
 				FieldYPos += changeInDistance * Math.cos(Robot.gyro.getAngle());
+				lastRobotDistanceMoved = Robot.drivetrain.getDistanceMoved();
 				if (this.isInterrupted()) {
 					 break;
 				}

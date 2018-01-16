@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		FieldPositionHelper.stopIntegration();
 		//make sure to .cancel() auto commands when this starts
 	}
 
