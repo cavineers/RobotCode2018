@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveElevator extends Command {
 
-	
     public MoveElevator() {
     	requires(Robot.elevator);
     }
@@ -29,6 +28,6 @@ public class MoveElevator extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.setElevatorSpeed(0);
+    	Robot.elevator.setElevatorPIDSpeed(0);
     }
 }

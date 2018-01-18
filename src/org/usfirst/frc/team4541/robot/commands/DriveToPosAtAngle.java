@@ -80,6 +80,10 @@ public class DriveToPosAtAngle extends Command {
 		yController.setInputRange(-50, 50);
 		yController.setOutputRange(-0.7, 0.7);
 		yController.setPercentTolerance(1);
+		
+    	aController.enable();
+    	yController.enable();
+    	
 		SmartDashboard.putData(yController);
 	}
     protected void execute() {

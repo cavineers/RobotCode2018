@@ -49,8 +49,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX leftMotor1  = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
 	private WPI_TalonSRX leftMotor2  = new WPI_TalonSRX(RobotMap.leftDriveMotor2);
+	
 	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
-	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
+	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor2);
 	
 	public Encoder leftWheelEncoder  = new Encoder(0, 1, false, EncodingType.k4X);
 	public Encoder rightWheelEncoder = new Encoder(2, 3, false, EncodingType.k4X);
@@ -84,7 +85,7 @@ public class DriveTrain extends Subsystem {
 	 *            Speed in range [-1,1]
 	 */
 	public void drive(double forward, double rotate) {
-		drive.arcadeDrive(forward, rotate);
+		drive.curvatureDrive(forward, rotate, true);
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class DriveTrain extends Subsystem {
 	 *            The ps3 style joystick to use to drive tank style.
 	 */
 	public void drive(Joystick joy) {
-		this.drive(-joy.getRawAxis(4), joy.getRawAxis(1));
+		this.drive(joy.getRawAxis(1), joy.getRawAxis(4));
 	}
 	
 	public double getDistanceMoved() {

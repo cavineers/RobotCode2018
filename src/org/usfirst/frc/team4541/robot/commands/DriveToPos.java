@@ -46,6 +46,7 @@ public class DriveToPos extends Command {
 				fMovement = output;
 			}
 		};
+		yController.enable();
 	}
     protected void execute() {
     	yController.setSetpoint(distObj);

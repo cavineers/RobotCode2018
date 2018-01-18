@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.XboxController;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	enum SENSOR {
+	public enum SENSOR {
 		ULTRASONIC_RIGHT, ULTRASONIC_LEFT, ULTRASONIC_FRONT, LIDAR_BACK, VISION_CUBE, VISION_TAPE, ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
 	};
 
