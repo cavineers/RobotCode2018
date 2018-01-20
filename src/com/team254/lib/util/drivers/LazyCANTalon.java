@@ -11,14 +11,6 @@ public class LazyCANTalon extends WPI_TalonSRX {
     protected double mLastSet = Double.NaN;
     protected ControlMode mLastControlMode = null;
 
-    public LazyCANTalon(int deviceNumber, int controlPeriodMs, int enablePeriodMs) {
-        super(deviceNumber, controlPeriodMs, enablePeriodMs);
-    }
-
-    public LazyCANTalon(int deviceNumber, int controlPeriodMs) {
-        super(deviceNumber, controlPeriodMs);
-    }
-
     public LazyCANTalon(int deviceNumber) {
         super(deviceNumber);
     }

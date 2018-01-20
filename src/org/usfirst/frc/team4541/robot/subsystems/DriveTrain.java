@@ -19,6 +19,7 @@ import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -87,7 +88,16 @@ public class DriveTrain extends Subsystem {
 	public void drive(double forward, double rotate) {
 		drive.curvatureDrive(forward, rotate, true);
 	}
-
+	
+	public void setVelocitySetpoint(double lSpeed, double rSpeed) {
+		leftMotor1.set(ControlMode.Velocity, lSpeed);
+		leftMotor2.set(ControlMode.Velocity, lSpeed);
+		rightMotor1.set(ControlMode.Velocity, rSpeed);
+		rightMotor2.set(ControlMode.Velocity, rSpeed);
+	}
+	public boolean isVelocityControlMode() {
+		return this.leftMotor1.getControlMode() == ControlMode.Velocity && this.leftMotor2.getControlMode() == ControlMode.Velocity && this.rightMotor1.getControlMode() == ControlMode.Velocity && this.rightMotor2.getControlMode() == ControlMode.Velocity;
+	}
 	/**
 	 * @param joy
 	 *            The ps3 style joystick to use to drive tank style.

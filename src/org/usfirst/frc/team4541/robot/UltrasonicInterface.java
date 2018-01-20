@@ -45,6 +45,7 @@ public class UltrasonicInterface {
 	public double getUltrasonic(int i) {
 		byte[] sendBytes = {0x01, (byte)i};
 		byte[] receivedData = {0x00, 0x00, 0x00};
+		System.out.println("RECEIVED: " + receivedData);
 		i2c.transaction(sendBytes, sendBytes.length, receivedData, receivedData.length);
 		
 		int distance = (receivedData[0] & 0xFF) << 8;

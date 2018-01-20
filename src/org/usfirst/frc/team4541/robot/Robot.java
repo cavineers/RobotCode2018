@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team4541.robot.commands.FollowPath;
+import org.usfirst.frc.team4541.robot.paths.CenterDriveLeftSwitch;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
@@ -66,7 +69,7 @@ public class Robot extends TimedRobot {
 		lidar.beginInfiniteFastContinuous(); //lidar starts reading at 50hz indefinitely
 		
 		ultrasonic = new UltrasonicInterface();
-		ultrasonic.setUltrasonicsEnabled(false, false, false, false);
+		ultrasonic.setUltrasonicsEnabled(true, false, false, false);
 		
 		elevator = new Elevator();
 		drivetrain = new DriveTrain();
@@ -113,6 +116,7 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		FieldPositionHelper.beginIntegration();
+		new FollowPath(new CenterDriveLeftSwitch().buildPath()).start();
 	}
 
 	/**
