@@ -1,9 +1,5 @@
 package org.usfirst.frc.team4541.robot;
 
-import com.team254.lib.util.math.RigidTransform2d;
-import com.team254.lib.util.math.Rotation2d;
-import com.team254.lib.util.math.Translation2d;
-
 public class FieldPositionHelper {
 	private static volatile double FieldXPos = 0;
 	private static volatile double FieldYPos = 0;
@@ -40,10 +36,6 @@ public class FieldPositionHelper {
 			return FieldYPos;
 		}
 		return Double.MIN_VALUE;
-	}
-	public static RigidTransform2d getLatestPosition() {
-        RigidTransform2d pos = new RigidTransform2d(new Translation2d(getFieldXPos(), getFieldYPos()), Rotation2d.fromDegrees(Robot.gyro.getYaw()));
-        return pos;
 	}
 	
 }

@@ -10,24 +10,23 @@ public class TurnToAngle extends PIDCommand {
 	private int counter=0;
 	
 	public TurnToAngle(double TargetAngle) {
-		super(.2, .01, 1.6);
+		super(0.04, 0, 0.02);
 		requires(Robot.drivetrain);
-		setTimeout(30);
+		setTimeout(15);
 		getPIDController().setInputRange(-180,180);
-		getPIDController().setAbsoluteTolerance(.5);
-		getPIDController().setOutputRange(-.7, .7);
+		getPIDController().setAbsoluteTolerance(3);
+		getPIDController().setOutputRange(-1, 1);
 		getPIDController().setContinuous();
 		getPIDController().setSetpoint(TargetAngle);
 		SmartDashboard.putData(getPIDController());
 	}
 	@Override
 	protected double returnPIDInput() {
-		return Robot.gyro.getAngle();
+		return Robot.gyro.getYaw();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		//SmartDashboard.putNumber("Speed: ", output);
 		Robot.drivetrain.drive(0, output);
 	}
 	
@@ -42,6 +41,7 @@ public class TurnToAngle extends PIDCommand {
 	//empty because the PID runs in its own thread at its own period
 	@Override
 	protected void execute() {
+		
 	}
 
 	// Ends command when mouse tracker reaches the target within the specified tolerance or times out

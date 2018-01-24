@@ -18,8 +18,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4541.robot.commands.FollowPath;
-import org.usfirst.frc.team4541.robot.paths.CenterDriveLeftSwitch;
+import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
@@ -59,8 +58,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi =  new OI();
-		
 		gyro = new AHRS(SPI.Port.kMXP);
 		
 		trackball = new TrackBall();
@@ -71,13 +68,19 @@ public class Robot extends TimedRobot {
 		ultrasonic = new UltrasonicInterface();
 		ultrasonic.setUltrasonicsEnabled(true, false, false, false);
 		
-		elevator = new Elevator();
 		drivetrain = new DriveTrain();
+		oi =  new OI();
+		elevator = new Elevator();
+		
 		ramps = new Ramps();
 		intake = new Intake();
 		
+		
 		CameraServer.getInstance().startAutomaticCapture(0);
 		SmartDashboard.putString("driver station message: ", DriverStation.getInstance().getGameSpecificMessage());
+		while (true) {
+			System.out.println("U1: " + ultrasonic.getUltrasonic(1));
+		}
 	}
 
 	/**
@@ -116,7 +119,6 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		FieldPositionHelper.beginIntegration();
-		new FollowPath(new CenterDriveLeftSwitch().buildPath()).start();
 	}
 
 	/**
@@ -138,6 +140,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
 		Scheduler.getInstance().run();
 	}
 

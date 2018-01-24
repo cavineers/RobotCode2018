@@ -15,12 +15,13 @@ package org.usfirst.frc.team4541.robot;
  */
 public class RobotMap {
 	// CAN addresses
-	//Drive Motors
+//	//Drive Motors
 	public static final int leftDriveMotor1  = 1;
 	public static final int leftDriveMotor2  = 2;
 	
 	public static final int rightDriveMotor1 = 0;
 	public static final int rightDriveMotor2 = 3;
+	//Drive Motors
     //Intake Motors
 	public static final int intakeMotor1 = 4;
 	public static final int intakeMotor2 = 5;
