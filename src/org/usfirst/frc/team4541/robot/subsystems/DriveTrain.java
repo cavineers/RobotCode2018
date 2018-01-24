@@ -15,11 +15,14 @@ import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -68,6 +71,7 @@ public class DriveTrain extends Subsystem {
 		super();
 		leftMotor2.follow(leftMotor1);
 		rightMotor2.follow(rightMotor1);
+		this.configTalons();
 	}
 
 	/**
@@ -119,5 +123,32 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX getLeftTalon() {
 		return this.leftMotor1;
 	}
+	private void configTalons() {
+		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		rightMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
+		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
+		rightMotor1.config_kF(0, 0.076, Constants.kTimeoutMs);
+		rightMotor1.config_kP(0, 2.000, Constants.kTimeoutMs);
+		rightMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
+		rightMotor1.config_kD(0, 20.0, Constants.kTimeoutMs);
+
+		/* Our profile uses 50ms timing */
+		rightMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
+		/*
+		 * status 10 provides the trajectory target for motion profile AND
+		 * motion magic
+		 */
+		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
+		
+		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
+		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
+		leftMotor1.config_kF(0, 0.076, Constants.kTimeoutMs);
+		leftMotor1.config_kP(0, 2.000, Constants.kTimeoutMs);
+		leftMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
+		leftMotor1.config_kD(0, 20.0, Constants.kTimeoutMs);
+		leftMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
+		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
+	}
 }

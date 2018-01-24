@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4541.motionProfiling.PathHandler;
+import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
+import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
@@ -119,6 +122,7 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		FieldPositionHelper.beginIntegration();
+		new DrivePath(PATHS.DEFAULT_PATH).start();
 	}
 
 	/**
