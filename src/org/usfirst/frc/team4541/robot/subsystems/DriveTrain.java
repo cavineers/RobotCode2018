@@ -66,6 +66,8 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		super();
+		leftMotor2.follow(leftMotor1);
+		rightMotor2.follow(rightMotor1);
 	}
 
 	/**
@@ -92,8 +94,8 @@ public class DriveTrain extends Subsystem {
 	public void setVelocitySetpoint(double lSpeed, double rSpeed) {
 		leftMotor1.set(ControlMode.Velocity, lSpeed);
 		leftMotor2.set(ControlMode.Velocity, lSpeed);
-		rightMotor1.set(ControlMode.Velocity, rSpeed);
-		rightMotor2.set(ControlMode.Velocity, rSpeed);
+//		rightMotor1.set(ControlMode.Velocity, rSpeed);
+//		rightMotor2.set(ControlMode.Velocity, rSpeed);
 	}
 	public boolean isVelocityControlMode() {
 		return this.leftMotor1.getControlMode() == ControlMode.Velocity && this.leftMotor2.getControlMode() == ControlMode.Velocity && this.rightMotor1.getControlMode() == ControlMode.Velocity && this.rightMotor2.getControlMode() == ControlMode.Velocity;
@@ -108,6 +110,14 @@ public class DriveTrain extends Subsystem {
 	
 	public double getDistanceMoved() {
 		return (leftWheelEncoder.getDistance() + rightWheelEncoder.getDistance()) / 2;
+	}
+	
+	public WPI_TalonSRX getRightTalon() {
+		return this.rightMotor1;
+	}
+	
+	public WPI_TalonSRX getLeftTalon() {
+		return this.leftMotor1;
 	}
 
 }
