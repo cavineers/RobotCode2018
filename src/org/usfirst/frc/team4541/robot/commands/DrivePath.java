@@ -31,7 +31,6 @@ public class DrivePath extends Command {
     	
     	Robot.drivetrain.getRightTalon().setInverted(true);
     	Robot.drivetrain.getRightSlaveTalon().setInverted(true);
-		
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,11 +57,5 @@ public class DrivePath extends Command {
     	leftHandler.reset();
     	Robot.drivetrain.getRightTalon().setInverted(false);
     	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	this.end();
     }
 }
