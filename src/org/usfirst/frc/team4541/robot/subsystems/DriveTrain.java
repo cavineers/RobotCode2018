@@ -93,10 +93,23 @@ public class DriveTrain extends Subsystem {
 	}
 	/**
 	 * @param joy
-	 *            The ps3 style joystick to use to drive tank style.
+	 *            The xbox style joystick to use to drive tank style.
 	 */
 	public void drive(Joystick joy) {
-		this.drive(-joy.getRawAxis(1), joy.getRawAxis(4));
+		this.drive(this.addDeadZone(-joy.getRawAxis(1)), this.addDeadZone(joy.getRawAxis(4)));
+	}
+	
+	// modifies the input of a joystick axis by adding dead zones and squaring
+	// the inputs, intended to be used with XBOX controllers or other
+	// controllers with many predefined axes
+	public double addDeadZone(double input) {
+		if (Math.abs(input) <= .05)
+			input = 0;
+		else if (input < 0)
+			input = -Math.pow(input, 2);
+		else
+			input = Math.pow(input, 2);
+		return input;
 	}
 	
 	public WPI_TalonSRX getRightTalon() {
@@ -125,7 +138,7 @@ public class DriveTrain extends Subsystem {
 		 * status 10 provides the trajectory target for motion profile AND
 		 * motion magic
 		 */
-		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
+		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs);
 		
 		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
@@ -136,11 +149,11 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
 		
 		leftMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
-		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
+		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs);
 	}
 
 	public double getDistanceMoved() {
 		
-		return 0; //TODO: make work
+		return (this.leftMotor1.getSelectedSensorPosition(0) + this.rightMotor1.getSelectedSensorPosition(0)) / 2.0;
 	}
 }

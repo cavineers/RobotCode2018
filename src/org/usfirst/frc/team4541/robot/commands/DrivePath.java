@@ -16,8 +16,8 @@ public class DrivePath extends Command {
 	MotionProfileHandler leftHandler;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
-    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path));
-    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path));
+    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path), false);
+    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path), false);
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);
     	Robot.drivetrain.getLeftTalon().selectProfileSlot(0, 0);
     	rightHandler.reset();
@@ -63,9 +63,6 @@ public class DrivePath extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	rightHandler.reset();
-    	leftHandler.reset();
-    	Robot.drivetrain.getRightTalon().setInverted(false);
-    	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
+    	this.end();
     }
 }

@@ -18,7 +18,7 @@ public class MoveElevator extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.setElevatorSpeed(Robot.oi.getController().getTriggerAxis(Hand.kRight), Robot.oi.getController().getTriggerAxis(Hand.kLeft));
+    	Robot.elevator.setElevatorSpeed(Robot.oi.getJoystick().getRawAxis(-1), Robot.oi.getJoystick().getRawAxis(-1)); //TODO: set real axis for elevator
     }
 
     // Make this return true when this Command no longer needs to run execute()

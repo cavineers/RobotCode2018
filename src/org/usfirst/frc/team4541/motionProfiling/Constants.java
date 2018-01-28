@@ -40,4 +40,10 @@ public class Constants {
 	 * Motor deadband, set to 1%.
 	 */
 	public static final double kNeutralDeadband = 0.01;
+	
+	/**
+	 * Motion Profiling Stuff
+	 */
+	public static final double wheelDiameter = 0; //TODO: SET VALUE;
+	public static final double wheelCircumference = Math.PI * wheelDiameter;
 }

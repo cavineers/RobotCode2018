@@ -90,6 +90,8 @@ public class MotionProfileHandler {
 	
 	private double[][] path;
 	
+	private boolean isNativeUnits;
+	
 	/**
 	 * Lets create a periodic task to funnel our trajectory points into our talon.
 	 * It doesn't need to be very accurate, just needs to keep pace with the motion
@@ -110,8 +112,12 @@ public class MotionProfileHandler {
 	 * 
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
+	 * @param path
+	 * 			  the path to travel
+	 * @param isPathNativeUnits
+	 * 			  tells if path is in ft/sec or RPM
 	 */
-	public MotionProfileHandler(TalonSRX talon, double[][] path) {
+	public MotionProfileHandler(TalonSRX talon, double[][] path, boolean isNativeUnits) {
 		_talon = talon;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
@@ -120,6 +126,7 @@ public class MotionProfileHandler {
 		_talon.changeMotionControlFramePeriod(5);
 		_notifer.startPeriodic(0.005);
 		this.path = path;
+		this.isNativeUnits = isNativeUnits;
 	}
 
 	/**
@@ -299,6 +306,10 @@ public class MotionProfileHandler {
 		for (int i = 0; i < totalCnt; ++i) {
 			double positionRot = profile[i][0];
 			double velocityRPM = profile[i][1];
+			if (!this.isNativeUnits) {
+				positionRot = PathHandler.ftToRotations(positionRot);
+				velocityRPM = PathHandler.ftPerSecToRPM(velocityRPM);
+			}
 			/* for each point, fill our structure and pass it to API */
 			point.position = positionRot * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
 			point.velocity = velocityRPM * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms

@@ -32,7 +32,6 @@ public class OI {
 	};
 
 	Joystick joy = new Joystick(0);
-	XboxController cont = new XboxController(0);
 	
 	public OI() {
 		// Create some buttons
@@ -72,9 +71,6 @@ public class OI {
 
 	public Joystick getJoystick() {
 		return joy;
-	}
-	public XboxController getController() {
-		return cont;
 	}
 	public PIDSource getPIDSource(SENSOR sensor) {
 		return new PIDSource() {
