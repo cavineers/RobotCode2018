@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team4541.robot;
 
+import org.usfirst.frc.team4541.motionProfiling.PathHandler;
+import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -38,18 +41,32 @@ public class OI {
 		JoystickButton x_button = new JoystickButton(joy, 3);
 		JoystickButton y_button = new JoystickButton(joy, 4);
 
-		JoystickButton d_up = new JoystickButton(joy, 5);
-		JoystickButton d_right = new JoystickButton(joy, 6);
+		JoystickButton l_bump = new JoystickButton(joy, 5);
+		JoystickButton r_bump = new JoystickButton(joy, 6);
 		JoystickButton d_down = new JoystickButton(joy, 7);
 		JoystickButton d_left = new JoystickButton(joy, 8);
-		JoystickButton l2 = new JoystickButton(joy, 9);
-		JoystickButton r2 = new JoystickButton(joy, 10);
-		JoystickButton l1 = new JoystickButton(joy, 11);
-		JoystickButton r1 = new JoystickButton(joy, 12);
+		JoystickButton left_middle = new JoystickButton(joy, 9);
+		JoystickButton right_middle = new JoystickButton(joy, 10);
+		JoystickButton left_stick = new JoystickButton(joy, 11);
+		JoystickButton right_stick = new JoystickButton(joy, 12);
 
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
 		x_button.whenPressed(new TurnToAngle(90));
+		y_button.whenPressed(new Command() {
+		    protected void initialize() {
+		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
+		    	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
+		    }
+			
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			
+		});
+		l_bump.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
+		
 		
 	}
 
@@ -87,9 +104,9 @@ public class OI {
 				case VISION_TAPE:
 					return 0;
 				case ENCODER_RIGHT_WHEELS:
-					return Robot.drivetrain.rightWheelEncoder.getDistance();
+					return Robot.drivetrain.getRightTalon().getSelectedSensorPosition(0);
 				case ENCODER_LEFT_WHEELS:
-					return Robot.drivetrain.leftWheelEncoder.getDistance();	
+					return Robot.drivetrain.getLeftTalon().getSelectedSensorPosition(0);
 				case ENCODER_ELEVATOR:
 					return Robot.elevator.elevatorEncoder.getDistance();
 				}

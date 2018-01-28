@@ -80,10 +80,6 @@ public class Robot extends TimedRobot {
 		
 		
 		CameraServer.getInstance().startAutomaticCapture(0);
-		SmartDashboard.putString("driver station message: ", DriverStation.getInstance().getGameSpecificMessage());
-		while (true) {
-			System.out.println("U1: " + ultrasonic.getUltrasonic(1));
-		}
 	}
 
 	/**
@@ -145,6 +141,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
+		SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftTalon().getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
+		
+		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+		
 		Scheduler.getInstance().run();
 	}
 

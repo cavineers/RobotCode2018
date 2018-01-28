@@ -57,21 +57,18 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
 	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor2);
 	
-	public Encoder leftWheelEncoder  = new Encoder(0, 1, false, EncodingType.k4X);
-	public Encoder rightWheelEncoder = new Encoder(2, 3, false, EncodingType.k4X);
-	
-	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(leftMotor1,  leftMotor2);
-	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
+//	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(leftMotor1,  leftMotor2);
+//	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
 //	public static PowerDistributionPanel panel = new PowerDistributionPanel(0);
 
-	private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
+	private DifferentialDrive drive = new DifferentialDrive(leftMotor1, rightMotor1);
 
 	public DriveTrain() {
 		super();
+		this.configTalons();
 		leftMotor2.follow(leftMotor1);
 		rightMotor2.follow(rightMotor1);
-		this.configTalons();
 	}
 
 	/**
@@ -94,44 +91,33 @@ public class DriveTrain extends Subsystem {
 	public void drive(double forward, double rotate) {
 		drive.curvatureDrive(forward, rotate, true);
 	}
-	
-	public void setVelocitySetpoint(double lSpeed, double rSpeed) {
-		leftMotor1.set(ControlMode.Velocity, lSpeed);
-		leftMotor2.set(ControlMode.Velocity, lSpeed);
-//		rightMotor1.set(ControlMode.Velocity, rSpeed);
-//		rightMotor2.set(ControlMode.Velocity, rSpeed);
-	}
-	public boolean isVelocityControlMode() {
-		return this.leftMotor1.getControlMode() == ControlMode.Velocity && this.leftMotor2.getControlMode() == ControlMode.Velocity && this.rightMotor1.getControlMode() == ControlMode.Velocity && this.rightMotor2.getControlMode() == ControlMode.Velocity;
-	}
 	/**
 	 * @param joy
 	 *            The ps3 style joystick to use to drive tank style.
 	 */
 	public void drive(Joystick joy) {
-		this.drive(joy.getRawAxis(1), joy.getRawAxis(4));
-	}
-	
-	public double getDistanceMoved() {
-		return (leftWheelEncoder.getDistance() + rightWheelEncoder.getDistance()) / 2;
+		this.drive(-joy.getRawAxis(1), joy.getRawAxis(4));
 	}
 	
 	public WPI_TalonSRX getRightTalon() {
 		return this.rightMotor1;
 	}
+	public WPI_TalonSRX getRightSlaveTalon() {
+		return this.rightMotor2;
+	}
 	
 	public WPI_TalonSRX getLeftTalon() {
 		return this.leftMotor1;
 	}
-	private void configTalons() {
-		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+	public void configTalons() {
+		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		rightMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
-		rightMotor1.config_kF(0, 0.076, Constants.kTimeoutMs);
-		rightMotor1.config_kP(0, 2.000, Constants.kTimeoutMs);
+		rightMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
+		rightMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
 		rightMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
-		rightMotor1.config_kD(0, 20.0, Constants.kTimeoutMs);
+		rightMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
 
 		/* Our profile uses 50ms timing */
 		rightMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
@@ -141,14 +127,20 @@ public class DriveTrain extends Subsystem {
 		 */
 		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
 		
-		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
-		leftMotor1.config_kF(0, 0.076, Constants.kTimeoutMs);
-		leftMotor1.config_kP(0, 2.000, Constants.kTimeoutMs);
+		leftMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
+		leftMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
 		leftMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
-		leftMotor1.config_kD(0, 20.0, Constants.kTimeoutMs);
+		leftMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
+		
 		leftMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
 		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
+	}
+
+	public double getDistanceMoved() {
+		
+		return 0; //TODO: make work
 	}
 }

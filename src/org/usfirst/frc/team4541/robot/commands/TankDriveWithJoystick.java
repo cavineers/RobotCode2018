@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4541.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 /**
  * Have the robot drive tank style using the PS3 Joystick until interrupted.
  */
@@ -16,7 +18,11 @@ public class TankDriveWithJoystick extends Command {
 	public TankDriveWithJoystick() {
 		requires(Robot.drivetrain);
 	}
-
+	@Override
+	protected void initialize() {
+		Robot.drivetrain.getRightTalon().set(ControlMode.Velocity, 0);
+    	Robot.drivetrain.getLeftTalon().set(ControlMode.Velocity, 0);
+	}
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {

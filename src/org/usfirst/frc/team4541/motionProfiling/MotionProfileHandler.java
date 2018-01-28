@@ -151,7 +151,6 @@ public class MotionProfileHandler {
 	public void control() {
 		/* Get the motion profile status every loop */
 		_talon.getMotionProfileStatus(_status);
-
 		/*
 		 * track time, this is rudimentary but that's okay, we just want to make
 		 * sure things never get stuck.
