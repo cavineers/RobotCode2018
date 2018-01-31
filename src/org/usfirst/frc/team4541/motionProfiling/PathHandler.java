@@ -105,9 +105,9 @@ public class PathHandler {
 		return null;
 	}
 	public static double ftPerSecToRPM(double feetPerSec) {
-		return ftToRotations(feetPerSec)/60;
+		return ftToRotations(feetPerSec)*60;
 	}
 	public static double ftToRotations(double feet) {
-		return feet/Constants.wheelCircumference;
+		return feet/Constants.wheelCircumference*Constants.kDriveGearRatio;
 	}
 }

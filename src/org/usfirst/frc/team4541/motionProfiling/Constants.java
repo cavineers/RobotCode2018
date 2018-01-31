@@ -10,7 +10,8 @@ public class Constants {
 	 * 
 	 * @link https://github.com/CrossTheRoadElec/Phoenix-Documentation#what-are-the-units-of-my-sensor
 	 */
-	public static final double kSensorUnitsPerRotation = 4096;
+	public static final double kSensorUnitsPerRotation = 256;
+	//4 times 64
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -44,6 +45,8 @@ public class Constants {
 	/**
 	 * Motion Profiling Stuff
 	 */
-	public static final double wheelDiameter = 0; //TODO: SET VALUE;
+	
+	public static final double kDriveGearRatio = 13.46;
+	public static final double wheelDiameter = 7/12; 
 	public static final double wheelCircumference = Math.PI * wheelDiameter;
 }

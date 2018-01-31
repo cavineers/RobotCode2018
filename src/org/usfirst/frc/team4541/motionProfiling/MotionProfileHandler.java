@@ -155,7 +155,7 @@ public class MotionProfileHandler {
 	/**
 	 * Called every loop.
 	 */
-	public void control() {
+	public MotionProfileStatus control() {
 		/* Get the motion profile status every loop */
 		_talon.getMotionProfileStatus(_status);
 		/*
@@ -253,6 +253,7 @@ public class MotionProfileHandler {
 			/* printfs and/or logging */
 			Instrumentation.process(_status, _pos, _vel, _heading);
 		}
+		return _status;
 	}
 	/**
 	 * Find enum value if supported.

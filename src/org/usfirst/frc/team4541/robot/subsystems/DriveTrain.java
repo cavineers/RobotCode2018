@@ -1,49 +1,23 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Encoder;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.hal.HAL;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.hal.HAL;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-import org.usfirst.frc.team4541.robot.Robot;
-import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
@@ -96,13 +70,13 @@ public class DriveTrain extends Subsystem {
 	 *            The xbox style joystick to use to drive tank style.
 	 */
 	public void drive(Joystick joy) {
-		this.drive(this.addDeadZone(-joy.getRawAxis(1)), this.addDeadZone(joy.getRawAxis(4)));
+		this.drive(Robot.oi.addDeadZone(-joy.getRawAxis(1)), Robot.oi.addDeadZone(joy.getRawAxis(4)));
 	}
 	
 	// modifies the input of a joystick axis by adding dead zones and squaring
 	// the inputs, intended to be used with XBOX controllers or other
 	// controllers with many predefined axes
-	public double addDeadZone(double input) {
+/*	public double addDeadZone(double input) {
 		if (Math.abs(input) <= .05)
 			input = 0;
 		else if (input < 0)
@@ -110,7 +84,7 @@ public class DriveTrain extends Subsystem {
 		else
 			input = Math.pow(input, 2);
 		return input;
-	}
+	}*/
 	
 	public WPI_TalonSRX getRightTalon() {
 		return this.rightMotor1;

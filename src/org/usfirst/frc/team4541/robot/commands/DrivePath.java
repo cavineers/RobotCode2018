@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DrivePath extends Command {
 	MotionProfileHandler rightHandler;
 	MotionProfileHandler leftHandler;
+	MotionProfileStatus rightStatus;
+	MotionProfileStatus leftStatus;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
     	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path), false);
@@ -35,8 +37,8 @@ public class DrivePath extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	rightHandler.control();
-    	leftHandler.control();
+    	rightStatus = rightHandler.control();
+    	leftStatus = leftHandler.control();
     	
     	Robot.drivetrain.getRightTalon().set(ControlMode.MotionProfile, rightHandler.getSetValue().value);
     	Robot.drivetrain.getLeftTalon().set(ControlMode.MotionProfile, leftHandler.getSetValue().value);
@@ -44,10 +46,6 @@ public class DrivePath extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	MotionProfileStatus rightStatus = new MotionProfileStatus();
-    	Robot.drivetrain.getRightTalon().getMotionProfileStatus(rightStatus);
-    	MotionProfileStatus leftStatus = new MotionProfileStatus();
-    	Robot.drivetrain.getLeftTalon().getMotionProfileStatus(leftStatus);
         return rightStatus.isLast && leftStatus.isLast;
     }
 
