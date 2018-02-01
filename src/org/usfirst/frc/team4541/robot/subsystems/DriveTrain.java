@@ -101,7 +101,7 @@ public class DriveTrain extends Subsystem {
 		rightMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
-		rightMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
+		rightMotor1.config_kF(0, 0.6334, Constants.kTimeoutMs);
 		rightMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
 		rightMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		rightMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
