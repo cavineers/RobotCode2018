@@ -22,6 +22,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
@@ -49,6 +50,8 @@ public class Robot extends TimedRobot {
 	public static DriveTrain drivetrain;
 	public static Ramps ramps;
 	public static Intake intake;
+	public static CompressorSystem compressor;
+	
 	
 	@Deprecated //trackball will be removed soon in favor of encoders on wheels
 	public static TrackBall trackball;
@@ -77,7 +80,7 @@ public class Robot extends TimedRobot {
 		
 		ramps = new Ramps();
 		intake = new Intake();
-		
+		compressor = new CompressorSystem();
 		
 		CameraServer.getInstance().startAutomaticCapture(0);
 	}
@@ -132,6 +135,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		FieldPositionHelper.stopIntegration();
+		compressor.setCompressorState(true);
 		//make sure to .cancel() auto commands when this starts
 	}
 

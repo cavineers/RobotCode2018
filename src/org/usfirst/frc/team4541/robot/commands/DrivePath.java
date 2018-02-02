@@ -18,8 +18,8 @@ public class DrivePath extends Command {
 	MotionProfileStatus leftStatus;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
-    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path), false);
-    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path), false);
+    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path), true);
+    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path), true);
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);
     	Robot.drivetrain.getLeftTalon().selectProfileSlot(0, 0);
     	rightHandler.reset();

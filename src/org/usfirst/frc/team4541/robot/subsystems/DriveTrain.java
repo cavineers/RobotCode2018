@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,6 +31,7 @@ public class DriveTrain extends Subsystem {
 	
 	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
 	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor2);
+	private DoubleSolenoid sol;
 	
 //	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(leftMotor1,  leftMotor2);
 //	private SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
@@ -43,6 +45,7 @@ public class DriveTrain extends Subsystem {
 		this.configTalons();
 		leftMotor2.follow(leftMotor1);
 		rightMotor2.follow(rightMotor1);
+		sol = new DoubleSolenoid(5,0,1); //TODO: SET CANID
 	}
 
 	/**
@@ -54,6 +57,13 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new TankDriveWithJoystick());
 	}
 
+    public void setSolenoidOpen(boolean state){
+    	if (state) {
+    		sol.set(DoubleSolenoid.Value.kReverse);
+    	} else {
+    		sol.set(DoubleSolenoid.Value.kForward);
+    	}
+    }
 	/**
 	 * Tank style driving for the DriveTrain.
 	 * 
@@ -102,7 +112,7 @@ public class DriveTrain extends Subsystem {
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
 		rightMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
-		rightMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
+		rightMotor1.config_kP(0, 0.1, Constants.kTimeoutMs);
 		rightMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		rightMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
 
@@ -118,7 +128,7 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 		leftMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
-		leftMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
+		leftMotor1.config_kP(0, 0.1, Constants.kTimeoutMs);
 		leftMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		leftMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
 		

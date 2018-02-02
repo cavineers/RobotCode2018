@@ -11,6 +11,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 
@@ -64,7 +65,9 @@ public class OI {
 			}
 			
 		});
-		l_bump.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
+//		l_bump.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
+		l_bump.whenPressed(new ShiftGear(false));
+		l_bump.whenPressed(new ShiftGear(true));
 		
 		
 	}

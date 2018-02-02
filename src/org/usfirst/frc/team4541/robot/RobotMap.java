@@ -15,21 +15,39 @@ package org.usfirst.frc.team4541.robot;
  */
 public class RobotMap {
 	// CAN addresses
+////	//Drive Motors for ankle bot
+//	public static final int leftDriveMotor1  = 3; //1
+//	public static final int leftDriveMotor2  = 0; //2
+//	
+//	public static final int rightDriveMotor1 = 1; //0
+//	public static final int rightDriveMotor2 = 2; //3
 //	//Drive Motors
-	public static final int leftDriveMotor1  = 3; //1
-	public static final int leftDriveMotor2  = 0; //2
+//    //Intake Motors
+//	public static final int intakeMotor1 = 4;
+//	public static final int intakeMotor2 = 5;
+//    //Elevator Motors
+//	public static final int elevatorMotor1 = 6;
+//	public static final int elevatorMotor2 = 7;
+//	//PDP
+//	public static final int PDP = 8;
 	
-	public static final int rightDriveMotor1 = 1; //0
-	public static final int rightDriveMotor2 = 2; //3
+//	//Drive Motors for test bot
+	public static final int leftDriveMotor1  = 4; //1
+	public static final int leftDriveMotor2  = 5; //2
+	
+	public static final int rightDriveMotor1 = 7; //0
+	public static final int rightDriveMotor2 = 8; //3
 	//Drive Motors
     //Intake Motors
-	public static final int intakeMotor1 = 4;
-	public static final int intakeMotor2 = 5;
+	public static final int intakeMotor1 = 9;
+	public static final int intakeMotor2 = 2;
     //Elevator Motors
 	public static final int elevatorMotor1 = 6;
 	public static final int elevatorMotor2 = 7;
 	//PDP
-	public static final int PDP = 8;
+	public static final int PDP = 20;
+	//PCM
+	public static final int PCM = 0;
 	
 	
 }
