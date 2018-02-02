@@ -117,7 +117,7 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
-		leftMotor1.config_kF(0, 0.6, Constants.kTimeoutMs);
+		leftMotor1.config_kF(0, 0.6334, Constants.kTimeoutMs);
 		leftMotor1.config_kP(0, 0.06, Constants.kTimeoutMs);
 		leftMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		leftMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
