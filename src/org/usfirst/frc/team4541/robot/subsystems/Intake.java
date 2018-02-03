@@ -4,6 +4,7 @@ import org.usfirst.frc.team4541.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,6 +16,7 @@ public class Intake extends Subsystem {
     // here. Call these from Commands.
 	public WPI_TalonSRX intakeMotor1 = new WPI_TalonSRX(RobotMap.intakeMotor1);
 	public WPI_TalonSRX intakeMotor2 = new WPI_TalonSRX(RobotMap.intakeMotor1);
+	public DoubleSolenoid sol = new DoubleSolenoid(RobotMap.PCM, 2, 3);
 	
     public void initDefaultCommand() {
     	
@@ -26,14 +28,21 @@ public class Intake extends Subsystem {
     }
 	
     public void IntakePiston() {
-	sol = new DoubleSolenoid(RobotMap.PCM,2,3); 
+    	
     }
     
     public void setSolenoidOpen(boolean state){
     	if (state) {
-    		sol.set(DoubleSolenoid.Value.kReverse);
-    	} else {
     		sol.set(DoubleSolenoid.Value.kForward);
+    	} else {
+    		sol.set(DoubleSolenoid.Value.kReverse);
+    	}
+    }
+    public boolean isSolenoidOpen() {
+    	if (sol.get() == DoubleSolenoid.Value.kForward) {
+    		return true;
+    	} else {
+    		return false;
     	}
     }
     
