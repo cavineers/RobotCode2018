@@ -45,8 +45,12 @@ public class Constants {
 	/**
 	 * Motion Profiling Stuff
 	 */
+// test robot
+//	public static final double kDriveGearRatio = 13.46;
+//	public static final double wheelDiameter = 7/12; 
+//	public static final double wheelCircumference = Math.PI * wheelDiameter;
 	
 	public static final double kDriveGearRatio = 13.46;
-	public static final double wheelDiameter = 7/12; 
+	public static final double wheelDiameter = 6/12; 
 	public static final double wheelCircumference = Math.PI * wheelDiameter;
 }

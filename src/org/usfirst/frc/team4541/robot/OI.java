@@ -52,7 +52,7 @@ public class OI {
 
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
-		x_button.whenPressed(new TurnToAngle(90));
+		x_button.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
 		y_button.whenPressed(new Command() {
 		    protected void initialize() {
 		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
@@ -65,11 +65,8 @@ public class OI {
 			}
 			
 		});
-//		l_bump.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
-		l_bump.whenPressed(new ShiftGear(false));
-		r_bump.whenPressed(new ShiftGear(true));
-		
-		
+		r_bump.whenPressed(new ShiftGear(false));
+		l_bump.whenPressed(new ShiftGear(true));
 	}
 
 	public Joystick getJoystick() {
