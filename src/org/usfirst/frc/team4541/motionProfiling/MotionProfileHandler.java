@@ -249,6 +249,7 @@ public class MotionProfileHandler {
 			_heading = _talon.getActiveTrajectoryHeading();
 			_pos = _talon.getActiveTrajectoryPosition();
 			_vel = _talon.getActiveTrajectoryVelocity();
+			
 
 			/* printfs and/or logging */
 			Instrumentation.process(_status, _pos, _vel, _heading);
