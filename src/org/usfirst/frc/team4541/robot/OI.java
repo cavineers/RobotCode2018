@@ -67,7 +67,7 @@ public class OI {
 		});
 //		l_bump.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
 		l_bump.whenPressed(new ShiftGear(false));
-		l_bump.whenPressed(new ShiftGear(true));
+		r_bump.whenPressed(new ShiftGear(true));
 		
 		
 	}

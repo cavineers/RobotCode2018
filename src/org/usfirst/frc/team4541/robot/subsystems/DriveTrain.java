@@ -45,7 +45,13 @@ public class DriveTrain extends Subsystem {
 		this.configTalons();
 		leftMotor2.follow(leftMotor1);
 		rightMotor2.follow(rightMotor1);
-		sol = new DoubleSolenoid(5,0,1); //TODO: SET CANID
+		leftMotor1.setInverted(true);
+		leftMotor2.setInverted(true);
+		
+		rightMotor1.setInverted(true);
+		rightMotor2.setInverted(true);
+		
+		sol = new DoubleSolenoid(RobotMap.PCM, 0, 1);
 	}
 
 	/**

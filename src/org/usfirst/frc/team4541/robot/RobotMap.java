@@ -32,14 +32,14 @@ public class RobotMap {
 //	public static final int PDP = 8;
 	
 //	//Drive Motors for test bot
-	public static final int leftDriveMotor1  = 4; //1
-	public static final int leftDriveMotor2  = 5; //2
+	public static final int leftDriveMotor1  = 4;
+	public static final int leftDriveMotor2  = 5;
 	
-	public static final int rightDriveMotor1 = 7; //0
-	public static final int rightDriveMotor2 = 8; //3
+	public static final int rightDriveMotor1 = 9;//7
+	public static final int rightDriveMotor2 = 8;
 	//Drive Motors
     //Intake Motors
-	public static final int intakeMotor1 = 9;
+	public static final int intakeMotor1 = 3;//9
 	public static final int intakeMotor2 = 2;
     //Elevator Motors
 	public static final int elevatorMotor1 = 6;
