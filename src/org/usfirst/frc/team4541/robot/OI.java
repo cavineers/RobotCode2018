@@ -50,6 +50,8 @@ public class OI {
 		JoystickButton left_stick = new JoystickButton(joy, 11);
 		JoystickButton right_stick = new JoystickButton(joy, 12);
 
+		right_middle.whenPressed(new ToggleIntakePiston());
+		
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
 		x_button.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
