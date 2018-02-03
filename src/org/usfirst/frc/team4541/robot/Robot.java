@@ -25,6 +25,7 @@ import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
+import org.usfirst.frc.team4541.robot.subsystems.IntakePiston;
 import org.usfirst.frc.team4541.robot.subsystems.Ramps;
 import org.usfirst.frc.team4541.robot.subsystems.TrackBall;
 
@@ -49,6 +50,8 @@ public class Robot extends TimedRobot {
 	public static DriveTrain drivetrain;
 	public static Ramps ramps;
 	public static Intake intake;
+	public static IntakePiston intakePiston;
+
 	
 	@Deprecated //trackball will be removed soon in favor of encoders on wheels
 	public static TrackBall trackball;
