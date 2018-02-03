@@ -24,6 +24,23 @@ public class Intake extends Subsystem {
     	intakeMotor1.set(speed);
     	intakeMotor2.set(speed);
     }
+	
+    public void IntakePiston() {
+	sol = new DoubleSolenoid(RobotMap.PCM,2,3); 
+    }
+    
+    public void setSolenoidOpen(boolean state){
+    	if (state) {
+    		sol.set(DoubleSolenoid.Value.kReverse);
+    	} else {
+    		sol.set(DoubleSolenoid.Value.kForward);
+    	}
+    }
+    
+    public boolean getSolenoidState() {
+    	if (sol.get() == DoubleSolenoid.Value.kReverse) return true;
+    	return false;
+    }
     
 }
 
