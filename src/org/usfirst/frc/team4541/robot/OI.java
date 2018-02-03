@@ -14,6 +14,7 @@ import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -50,7 +51,7 @@ public class OI {
 		JoystickButton left_stick = new JoystickButton(joy, 11);
 		JoystickButton right_stick = new JoystickButton(joy, 12);
 
-		right_middle.whenPressed(new ToggleIntakePiston());
+		right_middle.whenPressed(new setIntakeContracted(!Robot.intake.getSolenoidState()));
 		
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
