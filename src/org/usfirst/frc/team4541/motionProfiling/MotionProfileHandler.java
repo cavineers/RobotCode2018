@@ -64,7 +64,7 @@ public class MotionProfileHandler {
 	 * timeout. Getting time-stamps would certainly work too, this is just
 	 * simple (no need to worry about timer overflows).
 	 */
-	private int _loopTimeout = -1;
+	public int _loopTimeout = -1;
 	/**
 	 * If start() gets called, this flag is set and in the control() we will
 	 * service it.

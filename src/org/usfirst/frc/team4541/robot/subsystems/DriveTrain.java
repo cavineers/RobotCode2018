@@ -42,6 +42,7 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		super();
+		drive.setSafetyEnabled(false);
 		this.configTalons();
 		leftMotor2.follow(leftMotor1);
 		rightMotor2.follow(rightMotor1);
@@ -114,11 +115,11 @@ public class DriveTrain extends Subsystem {
 	}
 	public void configTalons() {
 		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-		rightMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
+		rightMotor1.setSensorPhase(false); /* keep sensor and motor in phase */
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
 		rightMotor1.config_kF(0, 0.676, Constants.kTimeoutMs);
-		rightMotor1.config_kP(0, 0.2, Constants.kTimeoutMs);
+		rightMotor1.config_kP(0, 0.5, Constants.kTimeoutMs);
 
 		rightMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		rightMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
@@ -132,11 +133,11 @@ public class DriveTrain extends Subsystem {
 		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs);
 		
 		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-		leftMotor1.setSensorPhase(true); /* keep sensor and motor in phase */
+		leftMotor1.setSensorPhase(false); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
 		leftMotor1.config_kF(0, 0.645, Constants.kTimeoutMs);
-		leftMotor1.config_kP(0, 0.2, Constants.kTimeoutMs);
+		leftMotor1.config_kP(0, 0.5, Constants.kTimeoutMs);
 		leftMotor1.config_kI(0, 0.0, Constants.kTimeoutMs);
 		leftMotor1.config_kD(0, 0.0, Constants.kTimeoutMs);
 		

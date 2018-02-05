@@ -6,6 +6,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.robot.Robot;
 
 import com.ctre.phoenix.motion.MotionProfileStatus;
+import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,23 +23,21 @@ public class DrivePath extends Command {
     	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path), true);
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);
     	Robot.drivetrain.getLeftTalon().selectProfileSlot(0, 0);
-    	rightHandler.reset();
-    	leftHandler.reset();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	leftHandler.startMotionProfile();
-    	rightHandler.startMotionProfile();
-    	
+	    leftHandler.startMotionProfile();
+	    rightHandler.startMotionProfile();
     	Robot.drivetrain.getRightTalon().setInverted(false);
     	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
+    	execute();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	rightStatus = rightHandler.control();
-    	leftStatus = leftHandler.control();
+    	leftStatus  = leftHandler.control();
     	
     	Robot.drivetrain.getRightTalon().set(ControlMode.MotionProfile, rightHandler.getSetValue().value);
     	Robot.drivetrain.getLeftTalon().set(ControlMode.MotionProfile, leftHandler.getSetValue().value);
@@ -46,7 +45,7 @@ public class DrivePath extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return rightStatus.isLast && leftStatus.isLast;
+    	return (rightStatus.isLast && leftStatus.isLast) || (rightStatus.outputEnable == SetValueMotionProfile.Hold  && leftStatus.outputEnable == SetValueMotionProfile.Hold);
     }
 
     // Called once after isFinished returns true
@@ -55,5 +54,7 @@ public class DrivePath extends Command {
     	leftHandler.reset();
     	Robot.drivetrain.getRightTalon().setInverted(true);
     	Robot.drivetrain.getRightSlaveTalon().setInverted(true);
+    	Robot.drivetrain.getRightTalon().set(ControlMode.Velocity, 0);
+    	Robot.drivetrain.getRightTalon().set(ControlMode.Velocity, 0);
     }
 }

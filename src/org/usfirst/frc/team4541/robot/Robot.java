@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		FieldPositionHelper.beginIntegration();
+//		FieldPositionHelper.beginIntegration();
 		new DrivePath(PATHS.DEFAULT_PATH).start();
 	}
 
@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		FieldPositionHelper.stopIntegration();
+//		FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
 		//make sure to .cancel() auto commands when this starts
 	}
