@@ -76,13 +76,15 @@ public class Robot extends TimedRobot {
 		
 		drivetrain = new DriveTrain();
 		oi =  new OI();
-		elevator = new Elevator();
+//		elevator = new Elevator();
 		
 		ramps = new Ramps();
 		intake = new Intake();
 		compressor = new CompressorSystem();
 		
-		CameraServer.getInstance().startAutomaticCapture(0);
+		oi.initPostSubsystemButtons();
+		
+//		CameraServer.getInstance().startAutomaticCapture(0);
 	}
 
 	/**

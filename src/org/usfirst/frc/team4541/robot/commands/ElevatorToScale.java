@@ -27,8 +27,7 @@ public class ElevatorToScale extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		Robot.elevator.elevatorMotor1.set(output);
-		Robot.elevator.elevatorMotor2.set(output);
+		Robot.elevator.elevatorMotor.set(output);
 	}
 	
 	@Override

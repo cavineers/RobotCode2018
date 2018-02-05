@@ -17,8 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Elevator extends Subsystem {
-	public WPI_TalonSRX elevatorMotor1 = new WPI_TalonSRX(RobotMap.elevatorMotor1);
-	public WPI_TalonSRX elevatorMotor2 = new WPI_TalonSRX(RobotMap.elevatorMotor2);
+	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	public Encoder elevatorEncoder = new Encoder(4, 5, false, EncodingType.k4X);
 	private boolean maintainingPos = false; // whether the elevator is using input from controller or PID
 	
@@ -39,8 +38,7 @@ public class Elevator extends Subsystem {
     	setDefaultCommand(new MoveElevator());
     }
     public void setElevatorSpeed(double speed) {
-    	elevatorMotor1.set(speed);
-    	elevatorMotor2.set(speed);
+    	elevatorMotor.set(speed);
     }
     public void setElevatorPIDSpeed(double speed) {
     	if (Math.abs(speed) < 0.05) {  //effectively no speed -> maintain current pos

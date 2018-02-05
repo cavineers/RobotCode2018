@@ -14,10 +14,10 @@ public class ToggleIntake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.intake.intakeMotor1.get() > 0.9) {
+    	if (Robot.intake.intakeMotor1.get() > 0.25) {
     		Robot.intake.setIntakeSpeed(0);
     	} else {
-    		Robot.intake.setIntakeSpeed(1);
+    		Robot.intake.setIntakeSpeed(0.3);
     	}
     }
 

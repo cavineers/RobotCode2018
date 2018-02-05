@@ -33,28 +33,25 @@ public class OI {
 		ULTRASONIC_RIGHT, ULTRASONIC_LEFT, ULTRASONIC_FRONT, LIDAR_BACK, VISION_CUBE, VISION_TAPE, ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
 	};
 
-	Joystick joy = new Joystick(0);
+	public static Joystick joy = new Joystick(0);
+	public static JoystickButton a_button = new JoystickButton(joy, 1);
+	public static JoystickButton b_button = new JoystickButton(joy, 2);
+	public static JoystickButton x_button = new JoystickButton(joy, 3);
+	public static JoystickButton y_button = new JoystickButton(joy, 4);
+
+	public static JoystickButton l_bump = new JoystickButton(joy, 5);
+	public static JoystickButton r_bump = new JoystickButton(joy, 6);
+//	public static JoystickButton d_down = new JoystickButton(joy, 7);
+//	public static JoystickButton d_left = new JoystickButton(joy, 8);
+	public static JoystickButton left_middle = new JoystickButton(joy, 7);
+	public static JoystickButton right_middle = new JoystickButton(joy, 8);
+	public static JoystickButton left_stick = new JoystickButton(joy, 9);
+	public static JoystickButton right_stick = new JoystickButton(joy, 10);
 	
 	public OI() {
 		// Create some buttons
-		JoystickButton a_button = new JoystickButton(joy, 1);
-		JoystickButton b_button = new JoystickButton(joy, 2);
-		JoystickButton x_button = new JoystickButton(joy, 3);
-		JoystickButton y_button = new JoystickButton(joy, 4);
-
-		JoystickButton l_bump = new JoystickButton(joy, 5);
-		JoystickButton r_bump = new JoystickButton(joy, 6);
-		JoystickButton d_down = new JoystickButton(joy, 7);
-		JoystickButton d_left = new JoystickButton(joy, 8);
-		JoystickButton left_middle = new JoystickButton(joy, 9);
-		JoystickButton right_middle = new JoystickButton(joy, 10);
-		JoystickButton left_stick = new JoystickButton(joy, 11);
-		JoystickButton right_stick = new JoystickButton(joy, 12);
-
-		right_middle.whenPressed(new setIntakeContracted(!Robot.intake.getSolenoidState()));
 		
-		a_button.whenPressed(new EjectCube());
-		b_button.whenPressed(new ToggleIntake());
+
 		x_button.whenPressed(new DrivePath(PathHandler.PATHS.DEFAULT_PATH));
 		y_button.whenPressed(new Command() {
 		    protected void initialize() {
@@ -72,6 +69,13 @@ public class OI {
 		l_bump.whenPressed(new ShiftGear(true));
 	}
 
+	public void initPostSubsystemButtons() {
+		right_middle.whenPressed(new setIntakeContracted(true));
+		left_middle.whenPressed(new setIntakeContracted(false));
+		
+		a_button.whenPressed(new EjectCube());
+		b_button.whenPressed(new ToggleIntake());
+	}
 	public Joystick getJoystick() {
 		return joy;
 	}

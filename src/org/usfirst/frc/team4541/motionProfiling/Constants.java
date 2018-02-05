@@ -10,7 +10,7 @@ public class Constants {
 	 * 
 	 * @link https://github.com/CrossTheRoadElec/Phoenix-Documentation#what-are-the-units-of-my-sensor
 	 */
-	public static final double kSensorUnitsPerRotation = 256;
+	public static final double kSensorUnitsPerRotation = 64;
 	//4 times 64
 
 	/**
@@ -50,7 +50,7 @@ public class Constants {
 //	public static final double wheelDiameter = 7/12; 
 //	public static final double wheelCircumference = Math.PI * wheelDiameter;
 	
-	public static final double kDriveGearRatio = 13.46;
+	public static final double kDriveGearRatio = 6.6;
 	public static final double wheelDiameter = 6/12; 
 	public static final double wheelCircumference = Math.PI * wheelDiameter;
 }

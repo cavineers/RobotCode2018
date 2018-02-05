@@ -31,8 +31,8 @@ public class DrivePath extends Command {
     	leftHandler.startMotionProfile();
     	rightHandler.startMotionProfile();
     	
-    	Robot.drivetrain.getRightTalon().setInverted(true);
-    	Robot.drivetrain.getRightSlaveTalon().setInverted(true);
+    	Robot.drivetrain.getRightTalon().setInverted(false);
+    	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -53,7 +53,7 @@ public class DrivePath extends Command {
     protected void end() {
     	rightHandler.reset();
     	leftHandler.reset();
-    	Robot.drivetrain.getRightTalon().setInverted(false);
-    	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
+    	Robot.drivetrain.getRightTalon().setInverted(true);
+    	Robot.drivetrain.getRightSlaveTalon().setInverted(true);
     }
 }

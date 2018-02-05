@@ -15,11 +15,11 @@ public class Intake extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public WPI_TalonSRX intakeMotor1 = new WPI_TalonSRX(RobotMap.intakeMotor1);
-	public WPI_TalonSRX intakeMotor2 = new WPI_TalonSRX(RobotMap.intakeMotor1);
+	public WPI_TalonSRX intakeMotor2 = new WPI_TalonSRX(RobotMap.intakeMotor2);
 	public DoubleSolenoid sol = new DoubleSolenoid(RobotMap.PCM, 2, 3);
 	
     public void initDefaultCommand() {
-    	
+    	intakeMotor2.setInverted(true);
     }
     
     public void setIntakeSpeed(double speed) {
@@ -39,11 +39,7 @@ public class Intake extends Subsystem {
     	}
     }
     public boolean isSolenoidOpen() {
-    	if (sol.get() == DoubleSolenoid.Value.kForward) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return (sol.get() == DoubleSolenoid.Value.kForward);
     }
     
     public boolean getSolenoidState() {
