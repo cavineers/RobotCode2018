@@ -123,7 +123,7 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 //		FieldPositionHelper.beginIntegration();
-		new DrivePath(PATHS.DEFAULT_PATH).start();
+//		new DrivePath(PATHS.DEFAULT_PATH).start();
 	}
 
 	/**
@@ -132,6 +132,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.drive(0.2, 0);
+		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+
 	}
 
 	@Override
@@ -149,9 +153,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
 		SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
-		
-		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
 		
 		Scheduler.getInstance().run();
 	}
