@@ -2,7 +2,8 @@ package org.usfirst.frc.team4541.motionProfiling;
 
 public class PathHandler {
 	public enum PATHS {
-		DEFAULT_PATH
+		DEFAULT_PATH,
+		RIGHT_TURN
 	}
 	public static double[][] defaultPathRightStraight = new double[][] {
 			  { 0.009015, 0.144233, 50 },
@@ -257,6 +258,8 @@ public class PathHandler {
 	public static double[][] getRightPointsForPath(PATHS path) {
 		switch (path) {
 		case DEFAULT_PATH:
+			return defaultPathRightStraight;
+		case RIGHT_TURN:
 			return defaultPathRightTurn;
 		}
 		return null;
@@ -264,6 +267,8 @@ public class PathHandler {
 	public static double[][] getLeftPointsForPath(PATHS path) {
 		switch (path) {
 		case DEFAULT_PATH:
+			return defaultPathLeftTurn;
+		case RIGHT_TURN:
 			return defaultPathLeftTurn;
 		}
 		return null;
