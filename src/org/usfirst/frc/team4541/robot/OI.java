@@ -11,6 +11,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -30,7 +32,7 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class OI {
 	public enum SENSOR {
-		ULTRASONIC_RIGHT, ULTRASONIC_LEFT, ULTRASONIC_FRONT, LIDAR_BACK, VISION_CUBE, VISION_TAPE, ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
+		VISION_CUBE, ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
 	};
 
 	public static Joystick joy = new Joystick(0);
@@ -41,8 +43,6 @@ public class OI {
 
 	public static JoystickButton l_bump = new JoystickButton(joy, 5);
 	public static JoystickButton r_bump = new JoystickButton(joy, 6);
-//	public static JoystickButton d_down = new JoystickButton(joy, 7);
-//	public static JoystickButton d_left = new JoystickButton(joy, 8);
 	public static JoystickButton left_middle = new JoystickButton(joy, 7);
 	public static JoystickButton right_middle = new JoystickButton(joy, 8);
 	public static JoystickButton left_stick = new JoystickButton(joy, 9);
@@ -69,7 +69,29 @@ public class OI {
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
-
+	public void processDPADInput() {
+		switch (joy.getPOV()) {
+		case 0: {
+			//Top; move to scale avg
+		
+			break;
+		}
+		case 90: {
+			//Right; move to switch
+			
+			break;
+		}
+		case 180: {
+			//Bottom; move to bottom of elevator
+			
+			break;
+		}
+		case 270: {
+			//Left; move to max height of elevator
+			break;
+		}
+		}
+	}
 	public void initPostSubsystemButtons() {
 		right_middle.whenPressed(new setIntakeContracted(true));
 		left_middle.whenPressed(new setIntakeContracted(false));
@@ -95,24 +117,14 @@ public class OI {
 			@Override
 			public double pidGet() {
 				switch(sensor) {
-				case ULTRASONIC_LEFT:
-					return Robot.ultrasonic.getUltrasonic(2);
-				case ULTRASONIC_RIGHT:
-					return Robot.ultrasonic.getUltrasonic(3);
-				case ULTRASONIC_FRONT:
-					return Robot.ultrasonic.getUltrasonic(1);
-				case LIDAR_BACK:
-					return Robot.lidar.distanceContinuous();
 				case VISION_CUBE:
-					return 0;
-				case VISION_TAPE:
 					return 0;
 				case ENCODER_RIGHT_WHEELS:
 					return Robot.drivetrain.getRightTalon().getSelectedSensorPosition(0);
 				case ENCODER_LEFT_WHEELS:
 					return Robot.drivetrain.getLeftTalon().getSelectedSensorPosition(0);
 				case ENCODER_ELEVATOR:
-					return Robot.elevator.elevatorEncoder.getDistance();
+					return Robot.elevator.getElevatorPos();
 				}
 				return 0;
 			}
@@ -126,5 +138,12 @@ public class OI {
 		else
 			input = Math.pow(input, 2);
 		return input;
+	}
+	public void updateElevatorControl() {
+		double upTrig   = Robot.oi.getJoystick().getRawAxis(3);
+    	double downTrig = Robot.oi.getJoystick().getRawAxis(2);
+    	if (upTrig > 0.05 || downTrig > 0.05) {
+    		new ManualMoveElevator().start();
+    	}
 	}
 }

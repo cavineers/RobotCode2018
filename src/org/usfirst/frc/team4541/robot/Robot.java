@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
@@ -144,7 +145,7 @@ public class Robot extends TimedRobot {
 		compressor.setCompressorState(true);
 		//make sure to .cancel() auto commands when this starts
 	}
-
+	
 	/**
 	 * This function is called periodically during operator control.
 	 */
@@ -155,7 +156,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
 		
 		Scheduler.getInstance().run();
+		
+		oi.processDPADInput(); //runs elevator commands when D-Pad is pressed
+		oi.updateElevatorControl(); //checks to make sure that triggers are pressed
 	}
+
 
 	/**
 	 * This function is called periodically during test mode.
