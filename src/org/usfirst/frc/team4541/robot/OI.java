@@ -52,7 +52,8 @@ public class OI {
 		// Create some buttons
 		
 
-		x_button.whenPressed(new DrivePath(PathHandler.PATHS.RIGHT_TURN));
+//		x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
+		x_button.whenPressed(new TurnToAngle(90));
 		y_button.whenPressed(new Command() {
 		    protected void initialize() {
 		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);

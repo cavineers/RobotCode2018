@@ -19,8 +19,8 @@ public class DrivePath extends Command {
 	MotionProfileStatus leftStatus;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
-    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path), true);
-    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path), true);
+    	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path));
+    	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path));
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);
     	Robot.drivetrain.getLeftTalon().selectProfileSlot(0, 0);
     }
@@ -45,7 +45,8 @@ public class DrivePath extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (rightStatus.isLast && leftStatus.isLast) || (rightStatus.outputEnable == SetValueMotionProfile.Hold  && leftStatus.outputEnable == SetValueMotionProfile.Hold);
+//    	return (rightStatus.isLast && leftStatus.isLast) || (rightStatus.outputEnable == SetValueMotionProfile.Hold  && leftStatus.outputEnable == SetValueMotionProfile.Hold);
+    return false;
     }
 
     // Called once after isFinished returns true

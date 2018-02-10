@@ -26,6 +26,8 @@ package org.usfirst.frc.team4541.motionProfiling;
 
 import com.ctre.phoenix.motion.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Instrumentation {
 
 	static double timeout = 0;
@@ -92,6 +94,8 @@ public class Instrumentation {
 			System.out.format("%-9s\t", status.timeDurMs);
 
 			System.out.format("\n");
+			SmartDashboard.putNumber("Target Velocity", vel);
+			SmartDashboard.putNumber("Target Pos", pos);
 		}
 	}
 }

@@ -14,7 +14,7 @@ public class TurnToAngle extends PIDCommand {
 		requires(Robot.drivetrain);
 		setTimeout(15);
 		getPIDController().setInputRange(-180,180);
-		getPIDController().setAbsoluteTolerance(3);
+		getPIDController().setAbsoluteTolerance(2);
 		getPIDController().setOutputRange(-1, 1);
 		getPIDController().setContinuous();
 		getPIDController().setSetpoint(TargetAngle);
