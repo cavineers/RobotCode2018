@@ -6,6 +6,7 @@ import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -21,18 +22,10 @@ public class Elevator extends Subsystem {
 	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	private boolean maintainingPos = false; // whether the elevator is using input from controller or PID
 	
-	public PIDController elevatorController = new PIDController(0,0,0,0, Robot.oi.getPIDSource(OI.SENSOR.ENCODER_ELEVATOR), new PIDOutput() {
-		@Override
-		public void pidWrite(double output) {
-			elevatorMotor.set(ControlMode.PercentOutput, output);
-		}
-	});
 	public Elevator() {
-		elevatorController.setContinuous(false);
-		elevatorController.setInputRange(0, 60);
-		elevatorController.setOutputRange(-1, 1);
-		elevatorController.setPercentTolerance(1);
-		elevatorController.enable();
+		
+		elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		elevatorMotor.setSensorPhase(true); /* keep sensor and motor in phase */
 	}
 	
     public void initDefaultCommand() {

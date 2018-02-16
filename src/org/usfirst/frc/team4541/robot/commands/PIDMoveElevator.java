@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4541.robot.commands;
 
+import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.robot.Robot;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
@@ -10,12 +11,12 @@ public class PIDMoveElevator extends PIDCommand {
 	int counter = 0;
 	double setPoint = 0;
     public PIDMoveElevator(double setPoint) {
-    	super(0,0,0);
+    	super(0.00005,0,0);
         requires(Robot.elevator);
     	this.getPIDController().setContinuous(false);
-		this.getPIDController().setInputRange(0, 60);
+		this.getPIDController().setInputRange(0, Constants.maxElevatorHeight);
 		this.getPIDController().setOutputRange(-1, 1);
-		this.getPIDController().setAbsoluteTolerance(10);
+		this.getPIDController().setAbsoluteTolerance(300);
 		this.getPIDController().enable();
 		this.setPoint = setPoint;
     }
@@ -45,5 +46,8 @@ public class PIDMoveElevator extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		Robot.elevator.setElevatorSpeed(output);
+	}
+	public void freePID() {
+		this.getPIDController().free();
 	}
 }

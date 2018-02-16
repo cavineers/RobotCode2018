@@ -55,9 +55,8 @@ public class Constants {
 	public static final double wheelCircumference = Math.PI * wheelDiameter;
 	
 	//Elevator Class
-	public static final double triggerCoefficient = 100; //TODO: set actual trigger coeff. 
-	public static final double maxElevatorHeight  = 1000; //TODO: set actual max height (native units)
-	public static final double switchHeight       = 0; //TODO: set switch height (native units)
-	public static final double scaleHeight        = 0; //TODO: set scale height (native units)
-	public static final double maxScaleHeight     = 0; //TODO: set max scale height (native units)
+	public static final double triggerCoefficient = 5000; //TODO: set actual trigger coeff. 
+	public static final double maxElevatorHeight  = 100000; //TODO: set actual max height (native units)
+	public static final double switchHeight       = 600; //TODO: set switch height (native units)
+	public static final double avgScaleHeight     = 1200; //TODO: set scale height (native units)
 }

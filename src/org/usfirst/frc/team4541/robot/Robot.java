@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 		
 		drivetrain = new DriveTrain();
 		oi =  new OI();
-//		elevator = new Elevator();
+		elevator = new Elevator();
 		
 		ramps = new Ramps();
 		intake = new Intake();
@@ -136,7 +136,6 @@ public class Robot extends TimedRobot {
 		drivetrain.drive(0.2, 0);
 		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
 		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
-
 	}
 
 	@Override
@@ -154,11 +153,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
 		SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
-		
+		SmartDashboard.putNumber("ElevatorPos: ", elevator.elevatorMotor.getSelectedSensorPosition(0));
+
 		Scheduler.getInstance().run();
 		
-		oi.processDPADInput(); //runs elevator commands when D-Pad is pressed
-		oi.updateElevatorControl(); //checks to make sure that triggers are pressed
+//		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
+//		oi.updateElevatorControl(); //checks to make sure that triggers are pressed
 	}
 
 

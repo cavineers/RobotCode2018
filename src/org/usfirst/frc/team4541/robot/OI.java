@@ -7,11 +7,16 @@
 
 package org.usfirst.frc.team4541.robot;
 
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+
+import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
+import org.usfirst.frc.team4541.robot.commands.PIDMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
@@ -23,8 +28,10 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import java.util.Hashtable;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,49 +59,62 @@ public class OI {
 		// Create some buttons
 		
 
-//		x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
-		x_button.whenPressed(new TurnToAngle(90));
-		y_button.whenPressed(new Command() {
-		    protected void initialize() {
-		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
-		    	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
-		    }
-			
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-		});
+		x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
+//		x_button.whenPressed(new TurnToAngle(90));
+//		y_button.whenPressed(new Command() {
+//		    protected void initialize() {
+//		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
+//		    	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
+//		    }
+//			
+//			@Override
+//			protected boolean isFinished() {
+//				return true;
+//			}
+//			
+//		});
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
-	public void processDPADInput() {
+	public void processDPadInput() {
 		switch (joy.getPOV()) {
 		case 0: {
-			//Top; move to scale avg
-		
+			//Top; move to scale max height
+			clearElevatorPIDCommands();
+			new PIDMoveElevator(Constants.maxElevatorHeight).start();
 			break;
 		}
 		case 90: {
 			//Right; move to switch
-			
+			clearElevatorPIDCommands();
+			new PIDMoveElevator(Constants.switchHeight).start();
 			break;
 		}
 		case 180: {
 			//Bottom; move to bottom of elevator
-			
+			clearElevatorPIDCommands();
+			new PIDMoveElevator(0).start();
 			break;
 		}
 		case 270: {
-			//Left; move to max height of elevator
+			//Left; move to average height of elevator
+			clearElevatorPIDCommands();
+			new PIDMoveElevator(Constants.avgScaleHeight).start();
 			break;
 		}
 		}
 	}
+	public void clearElevatorPIDCommands() {
+		if (Robot.elevator.getCurrentCommand() instanceof PIDMoveElevator) {
+			//prevents out of memory exceptions caused by many PID loops running at once
+			PIDMoveElevator current = (PIDMoveElevator)Robot.elevator.getCurrentCommand();
+			current.freePID();
+			current.cancel();
+		}
+	}
 	public void initPostSubsystemButtons() {
-		right_middle.whenPressed(new setIntakeContracted(true));
-		left_middle.whenPressed(new setIntakeContracted(false));
+//		right_middle.whenPressed(new setIntakeContracted(true));
+//		left_middle.whenPressed(new setIntakeContracted(false));
 		
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
@@ -143,7 +163,9 @@ public class OI {
 		double upTrig   = Robot.oi.getJoystick().getRawAxis(3);
     	double downTrig = Robot.oi.getJoystick().getRawAxis(2);
     	if (upTrig > 0.05 || downTrig > 0.05) {
-    		new ManualMoveElevator().start();
+    		if (!Robot.elevator.getCurrentCommandName().equals(Robot.elevator.getDefaultCommandName())) {
+    			new ManualMoveElevator().start(); //Restart manual control if it had been suspended for PID control
+    		}
     	}
 	}
 }

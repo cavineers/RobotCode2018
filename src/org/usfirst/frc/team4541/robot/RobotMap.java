@@ -39,12 +39,15 @@ public class RobotMap {
 	public static final int rightDriveMotor2 = 5;
 	//Drive Motors
     //Intake Motors
-	public static final int intakeMotor1 = 4;
+	public static final int intakeMotor1 = 7; //4
 	public static final int intakeMotor2 = 6;
     //Elevator Motors
-	public static final int elevatorMotor = 8;
+	public static final int elevatorMotor = 4; //7
+	
+	public static final int climberMotor1 = 9;
+	public static final int climberMotor2 = 10;
 	//PDP
-	public static final int PDP = 7;
+	public static final int PDP = 8;
 	//PCM
 	public static final int PCM = 0;
 	
