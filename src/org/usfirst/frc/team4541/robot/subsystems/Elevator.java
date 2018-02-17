@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -49,6 +50,7 @@ public class Elevator extends Subsystem {
 	
 	public Elevator() {
 
+		
 	    limitSwitch = new DigitalInput(0); // change input later
 	    
 		
@@ -90,6 +92,7 @@ public class Elevator extends Subsystem {
 		pidVel.setPercentTolerance(1);
 		pidVel.disable();
 		//output of pidVel is setpoint of pidMotorOutput
+		//SmartDashboard.putData(pidVel.getSmartDashboardType(), pidVel);
 		
 		pidMotorOutput = new PIDController(P_Out, I_Out, D_Out, new PIDSource() {
 			PIDSourceType out_sourceType = PIDSourceType.kDisplacement;
@@ -153,5 +156,7 @@ public class Elevator extends Subsystem {
    public DigitalInput getLimitSwitch() {
 	   return limitSwitch;
    }
+   
+	
 }
 
