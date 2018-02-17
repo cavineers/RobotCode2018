@@ -143,6 +143,8 @@ public class Robot extends TimedRobot {
 //		FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
 		//make sure to .cancel() auto commands when this starts
+//		elevator.elevatorMotor.setSelectedSensorPosition(0, 0, 0);
+		
 	}
 	
 	/**
@@ -156,6 +158,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("ElevatorPos: ", elevator.elevatorMotor.getSelectedSensorPosition(0));
 
 		Scheduler.getInstance().run();
+		
 		
 //		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 //		oi.updateElevatorControl(); //checks to make sure that triggers are pressed

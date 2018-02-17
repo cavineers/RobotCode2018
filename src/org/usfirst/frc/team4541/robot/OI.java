@@ -15,8 +15,8 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
-import org.usfirst.frc.team4541.robot.commands.PIDMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
@@ -54,74 +54,72 @@ public class OI {
 	public static JoystickButton right_middle = new JoystickButton(joy, 8);
 	public static JoystickButton left_stick = new JoystickButton(joy, 9);
 	public static JoystickButton right_stick = new JoystickButton(joy, 10);
-	
+	public int lastDpad = -1;
+
 	public OI() {
 		// Create some buttons
-		
 
-		x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
-//		x_button.whenPressed(new TurnToAngle(90));
-//		y_button.whenPressed(new Command() {
-//		    protected void initialize() {
-//		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
-//		    	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
-//		    }
-//			
-//			@Override
-//			protected boolean isFinished() {
-//				return true;
-//			}
-//			
-//		});
+		// x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
+		x_button.whenPressed(new DriveToPosAtAngle(0, 2000));
+		// x_button.whenPressed(new TurnToAngle(90));
+		y_button.whenPressed(new Command() {
+			protected void initialize() {
+				Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
+				Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
+				Robot.gyro.zeroYaw();
+			}
+
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+
+		});
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
+
 	public void processDPadInput() {
-		switch (joy.getPOV()) {
-		case 0: {
-			//Top; move to scale max height
-			clearElevatorPIDCommands();
-			new PIDMoveElevator(Constants.maxElevatorHeight).start();
-			break;
+		if (lastDpad != joy.getPOV()) {
+			switch (joy.getPOV()) {
+			case 0: {
+				// Top; move to scale max height
+				new ElevatorToHeight(ElevatorConstants.maxElevatorHeight).start();
+				break;
+			}
+			case 90: {
+				// Right; move to switch
+				new ElevatorToHeight(ElevatorConstants.switchHeight).start();
+				break;
+			}
+			case 180: {
+				// Bottom; move to bottom of elevator
+				new ElevatorToHeight(0).start();
+				break;
+			}
+			case 270: {
+				// Left; move to average height of elevator
+				new ElevatorToHeight(ElevatorConstants.avgScaleHeight).start();
+				break;
+			}
+			}
 		}
-		case 90: {
-			//Right; move to switch
-			clearElevatorPIDCommands();
-			new PIDMoveElevator(Constants.switchHeight).start();
-			break;
-		}
-		case 180: {
-			//Bottom; move to bottom of elevator
-			clearElevatorPIDCommands();
-			new PIDMoveElevator(0).start();
-			break;
-		}
-		case 270: {
-			//Left; move to average height of elevator
-			clearElevatorPIDCommands();
-			new PIDMoveElevator(Constants.avgScaleHeight).start();
-			break;
-		}
-		}
+		lastDpad = joy.getPOV();
+
 	}
-	public void clearElevatorPIDCommands() {
-		if (Robot.elevator.getCurrentCommand() instanceof PIDMoveElevator) {
-			//prevents out of memory exceptions caused by many PID loops running at once
-			PIDMoveElevator current = (PIDMoveElevator)Robot.elevator.getCurrentCommand();
-			current.freePID();
-			current.cancel();
-		}
-	}
+
 	public void initPostSubsystemButtons() {
-//		right_middle.whenPressed(new setIntakeContracted(true));
-//		left_middle.whenPressed(new setIntakeContracted(false));
-		
+		// right_middle.whenPressed(new setIntakeContracted(true));
+		// left_middle.whenPressed(new setIntakeContracted(false));
+
 		a_button.whenPressed(new EjectCube());
 		b_button.whenPressed(new ToggleIntake());
 	}
+
 	public Joystick getJoystick() {
 		return joy;
 	}
+
 	public PIDSource getPIDSource(SENSOR sensor) {
 		return new PIDSource() {
 
@@ -136,7 +134,7 @@ public class OI {
 
 			@Override
 			public double pidGet() {
-				switch(sensor) {
+				switch (sensor) {
 				case VISION_CUBE:
 					return 0;
 				case ENCODER_RIGHT_WHEELS:
@@ -150,6 +148,7 @@ public class OI {
 			}
 		};
 	}
+
 	public double addDeadZone(double input) {
 		if (Math.abs(input) <= .05)
 			input = 0;
@@ -159,13 +158,16 @@ public class OI {
 			input = Math.pow(input, 2);
 		return input;
 	}
+
 	public void updateElevatorControl() {
-		double upTrig   = Robot.oi.getJoystick().getRawAxis(3);
-    	double downTrig = Robot.oi.getJoystick().getRawAxis(2);
-    	if (upTrig > 0.05 || downTrig > 0.05) {
-    		if (!Robot.elevator.getCurrentCommandName().equals(Robot.elevator.getDefaultCommandName())) {
-    			new ManualMoveElevator().start(); //Restart manual control if it had been suspended for PID control
-    		}
-    	}
+		double upTrig = Robot.oi.getJoystick().getRawAxis(3);
+		double downTrig = Robot.oi.getJoystick().getRawAxis(2);
+		if (upTrig > 0.05 || downTrig > 0.05) {
+			if (!Robot.elevator.getCurrentCommandName().equals(Robot.elevator.getDefaultCommandName())) {
+				new ManualMoveElevator().start(); // Restart manual control if
+													// it had been suspended for
+													// PID control
+			}
+		}
 	}
 }

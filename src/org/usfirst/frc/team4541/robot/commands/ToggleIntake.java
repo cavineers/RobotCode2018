@@ -17,7 +17,7 @@ public class ToggleIntake extends Command {
     	if (Robot.intake.intakeMotor1.get() > 0.25) {
     		Robot.intake.setIntakeSpeed(0);
     	} else {
-    		Robot.intake.setIntakeSpeed(0.3);
+    		Robot.intake.setIntakeSpeed(0.5);
     	}
     }
 
