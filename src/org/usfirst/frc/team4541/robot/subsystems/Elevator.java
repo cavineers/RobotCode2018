@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
+import org.usfirst.frc.team4541.motionProfiling.Constants;
+import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.OI;
 
 import org.usfirst.frc.team4541.robot.Robot;
@@ -41,13 +43,6 @@ public class Elevator extends Subsystem {
 	private double D_Vel = 0;
 	private double F_Vel = 0;
 	
-	private double maxHeight = 85; // max height in inches
-	private double minHeight = 0; // min height in inches
-	
-	private double encoderPulsesPerInch = 100;
-	private double desiredVelocity;
-	private double desiredMotorOutput;
-	
 	DigitalInput limitSwitch;
 	
 	
@@ -84,11 +79,11 @@ public class Elevator extends Subsystem {
 		new PIDOutput() { 
 			@Override
 			public void pidWrite(double d) {
-				desiredVelocity = d;
+				Robot.elevator.getPIDMotorOutput().setSetpoint(d);
 			}
 		});
-		
-		pidVel.setInputRange(minHeight*encoderPulsesPerInch, maxHeight*encoderPulsesPerInch);
+	
+		pidVel.setInputRange(ElevatorConstants.minElevatorHeight, ElevatorConstants.maxElevatorHeight);
 		pidVel.setSetpoint(0);
 		pidVel.setOutputRange(-100, 100);
 		pidVel.setContinuous(false);
@@ -118,7 +113,7 @@ public class Elevator extends Subsystem {
 	    new PIDOutput() {
 			@Override
 			public void pidWrite(double d) {
-				desiredMotorOutput = d;
+				elevatorMotor.set(ControlMode.PercentOutput, d);
 			}
 		});
 		

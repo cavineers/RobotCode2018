@@ -7,37 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualMoveElevator extends Command {
+public class ElevatorToHeight extends Command {
+	double targetHeight;
 	
-	
-	public ManualMoveElevator() {
+	public ElevatorToHeight(double tHeight) {
 	requires(Robot.elevator);
+	targetHeight = tHeight;
 	}
+	
     
 	protected void initiatlize() {
 		Robot.elevator.getPIDVel().enable();
 		Robot.elevator.getPIDMotorOutput().enable();
+		this.setSetpoint(targetHeight);
+		setTimeout(((ElevatorConstants.maxElevatorHeight/ElevatorConstants.maxSpeed)/10)*2);
 		
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double elevPos  = Robot.elevator.getElevatorPos();
-    	double upTrig   = Robot.oi.getJoystick().getRawAxis(3);
-    	double downTrig = Robot.oi.getJoystick().getRawAxis(2);
-    	if (upTrig <= 0.05 && downTrig <= 0.05 || upTrig  > 0.05 && downTrig > 0.05) { //if neither are pressed, or if both are pressed, do nothing
-    		//both or neither triggers pressed, maintain current pos
-          this.setSetpoint(elevPos);
-    		
-    	} else if (upTrig  > 0.05) {
-    		
-    		this.setSetpoint(elevPos + (upTrig * ElevatorConstants.triggerCoefficient));
-    		
-    	} else if (downTrig > 0.05) {
-    		
-    		this.setSetpoint(elevPos - (downTrig * ElevatorConstants.triggerCoefficient));
-    	}
     	
-    	
+    
     	
     	if(elevPos > ElevatorConstants.upperDangerZone) {
     		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed/2);
@@ -51,10 +41,11 @@ public class ManualMoveElevator extends Command {
     }
     
     protected void interrupted() {
-    	
+    	end();
     }
     protected boolean isFinished() {
-        return false;
+      return Robot.elevator.getPIDVel().onTarget() || isTimedOut();
+      
     }
     public void setSetpoint(double setPoint) {
     	if (setPoint < 0) {
@@ -67,6 +58,7 @@ public class ManualMoveElevator extends Command {
     }
 
     protected void end() {
+    	
     }
     
     
