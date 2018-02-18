@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Subsystem {
 	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	private boolean maintainingPos = false; // whether the elevator is using input from controller or PID
-	double twoInches = 100; //(number of pulses for two inches)
+	//double twoInches = 100; //(number of pulses for two inches)
     boolean isComplete = false;
     
     long startTime = System.currentTimeMillis();
@@ -140,7 +140,7 @@ public class Elevator extends Subsystem {
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
 		
 		while((System.currentTimeMillis()-startTime)<10000 || isComplete == false) {
-		  while(Robot.elevator.getElevatorPos() < twoInches) {
+		  while(Robot.elevator.getElevatorPos() < ElevatorConstants.twoInches) {
 			  Robot.elevator.getElevatorMotor().set(ControlMode.PercentOutput, .05);
 		  }
 		  Robot.elevator.getElevatorMotor().set(0);

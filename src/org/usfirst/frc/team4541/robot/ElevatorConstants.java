@@ -14,5 +14,6 @@ public class ElevatorConstants {
 	public static final double upperDangerZone = 80000;
 	public static final double lowerDangerZone = 20000;
 	public static final double maxSpeed = 0; //pulses per 100ms
+	public static final double twoInches = 100;
 	
 }
