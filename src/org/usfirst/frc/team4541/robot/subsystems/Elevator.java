@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
+import java.util.Timer;
+
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.OI;
@@ -10,6 +12,7 @@ import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -28,9 +31,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Subsystem {
 	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	private boolean maintainingPos = false; // whether the elevator is using input from controller or PID
+	double twoInches = 100; //(number of pulses for two inches)
+    boolean isComplete = false;
+    
+    long startTime = System.currentTimeMillis();
 	
-	private PIDController pidVel;
+    private PIDController pidVel;
 	private PIDController pidMotorOutput;
+	
 	
 
 	
@@ -57,6 +65,7 @@ public class Elevator extends Subsystem {
 		
 		elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		elevatorMotor.setSensorPhase(true); /* keep sensor and motor in phase */
+		
 		
 		pidVel = new PIDController(P_Vel, I_Vel, D_Vel, new PIDSource() {
 			PIDSourceType vel_sourceType = PIDSourceType.kDisplacement;
@@ -127,10 +136,31 @@ public class Elevator extends Subsystem {
 		pidMotorOutput.setSetpoint(0);
 		pidMotorOutput.disable();
 		
+		elevatorMotor.setSelectedSensorPosition(0,0,0); // zeroes encoder
+		elevatorMotor.setNeutralMode(NeutralMode.Brake);
+		
+		while((System.currentTimeMillis()-startTime)<10000 || isComplete == false) {
+		  while(Robot.elevator.getElevatorPos() < twoInches) {
+			  Robot.elevator.getElevatorMotor().set(ControlMode.PercentOutput, .05);
+		  }
+		  Robot.elevator.getElevatorMotor().set(0);
+		
+		  while(!Robot.elevator.getLimitSwitch().get()) {// until limit switch is pressed
+		  Robot.elevator.getElevatorMotor().set(ControlMode.PercentOutput, -.05);
+	      }
+	     
+	      Robot.elevator.getElevatorMotor().setSelectedSensorPosition(0,0,0); // zeroes encoder
+	      Robot.elevator.getElevatorMotor().stopMotor();
+	      isComplete = true;	
+		  }
+		
 	}
 	
+	//home
 	
 	
+    
+    
     public void initDefaultCommand() {
     	setDefaultCommand(new ManualMoveElevator());
     }

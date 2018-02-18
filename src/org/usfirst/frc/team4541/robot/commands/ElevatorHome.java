@@ -15,7 +15,7 @@ public class ElevatorHome extends Command {
 	double twoInches = 100; //(number of pulses for two inches)
     boolean isComplete = false;
     public ElevatorHome() {
-        requires(Robot.elevator);
+    requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
