@@ -43,11 +43,11 @@ public class Elevator extends Subsystem {
 
 	
 	// move to constant class
-	private double P_Out = 0;
+	private double P_Out = 0.1;
 	private double I_Out = 0;
 	private double D_Out = 0;
 	
-	private double P_Vel = 0;
+	private double P_Vel = 0.1;
 	private double I_Vel = 0;
 	private double D_Vel = 0;
 	private double F_Vel = 0;
