@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4541.robot.commands;
 
 import org.usfirst.frc.team4541.motionProfiling.Constants;
+import org.usfirst.frc.team4541.robot.OI;
 import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 
@@ -17,7 +18,7 @@ public class ManualMoveElevator extends PIDCommand {
 	boolean didSavePos;
     public ManualMoveElevator() {
 //    	super(0.0001,0,0);
-    	super(0.00001,0,0);
+    	super(0.00007, 0.000001, 0.0001);
     	requires(Robot.elevator);
 		this.getPIDController().setContinuous(false);
 		this.getPIDController().setInputRange(0, Constants.maxElevatorHeight);
@@ -27,6 +28,9 @@ public class ManualMoveElevator extends PIDCommand {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if (Robot.oi.currentTriggerSetting != OI.TRIG_MODE.ELEVATOR) {
+    		return;
+    	}
     	double elevPos  = Robot.elevator.getElevatorPos();
     	double upTrig   = Robot.oi.getJoystick().getRawAxis(3);
     	double downTrig = Robot.oi.getJoystick().getRawAxis(2);

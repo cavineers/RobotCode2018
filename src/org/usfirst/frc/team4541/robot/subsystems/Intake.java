@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
 import org.usfirst.frc.team4541.robot.RobotMap;
+import org.usfirst.frc.team4541.robot.commands.MoveIntake;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -19,7 +20,7 @@ public class Intake extends Subsystem {
 	public DoubleSolenoid sol = new DoubleSolenoid(RobotMap.PCM, 2, 3);
 	
     public void initDefaultCommand() {
-    	intakeMotor2.setInverted(true);
+    	this.setDefaultCommand(new MoveIntake());
     }
     
     public void setIntakeSpeed(double speed) {
@@ -28,7 +29,7 @@ public class Intake extends Subsystem {
     }
 	
     public void IntakePiston() {
-    	
+    	intakeMotor2.setInverted(true);
     }
     
     public void setSolenoidOpen(boolean state){

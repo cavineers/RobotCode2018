@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ToggleIntake extends Command {
 
     public ToggleIntake() {
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time

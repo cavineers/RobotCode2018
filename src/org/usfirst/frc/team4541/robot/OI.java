@@ -12,6 +12,7 @@ import java.util.Hashtable;
 
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
+import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
@@ -39,8 +40,12 @@ import java.util.Hashtable;
  */
 public class OI {
 	public enum SENSOR {
-		VISION_CUBE, ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
+		ENCODER_RIGHT_WHEELS, ENCODER_LEFT_WHEELS, ENCODER_ELEVATOR
 	};
+	public enum TRIG_MODE {
+		ELEVATOR, INTAKE, CLIMBER
+	}
+	public TRIG_MODE currentTriggerSetting;
 
 	public static Joystick joy = new Joystick(0);
 	public static JoystickButton a_button = new JoystickButton(joy, 1);
@@ -58,21 +63,6 @@ public class OI {
 	public OI() {
 		// Create some buttons
 		
-
-		x_button.whenPressed(new DrivePath(PathHandler.PATHS.LEFT_SWITCH));
-//		x_button.whenPressed(new TurnToAngle(90));
-//		y_button.whenPressed(new Command() {
-//		    protected void initialize() {
-//		    	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
-//		    	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
-//		    }
-//			
-//			@Override
-//			protected boolean isFinished() {
-//				return true;
-//			}
-//			
-//		});
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
@@ -113,11 +103,40 @@ public class OI {
 		}
 	}
 	public void initPostSubsystemButtons() {
-//		right_middle.whenPressed(new setIntakeContracted(true));
-//		left_middle.whenPressed(new setIntakeContracted(false));
+		x_button.whenPressed(new setIntakeContracted(true));
+		b_button.whenPressed(new setIntakeContracted(false));
+		y_button.whenPressed(new EjectCube());
+		a_button.whenPressed(new ToggleIntake());
 		
-		a_button.whenPressed(new EjectCube());
-		b_button.whenPressed(new ToggleIntake());
+		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
+			 protected void initialize() { 
+				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
+					new ChangeTriggerMode(TRIG_MODE.CLIMBER);
+				} else {
+					new ChangeTriggerMode(TRIG_MODE.ELEVATOR);
+				}
+			 }
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			
+		});
+		right_middle.whenPressed(new Command() { //Toggle between elevator and climber
+			 protected void initialize() { 
+				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
+					new ChangeTriggerMode(TRIG_MODE.INTAKE);
+				} else {
+					new ChangeTriggerMode(TRIG_MODE.ELEVATOR);
+				}
+			 }
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			
+		});
+		
 	}
 	public Joystick getJoystick() {
 		return joy;
@@ -137,8 +156,6 @@ public class OI {
 			@Override
 			public double pidGet() {
 				switch(sensor) {
-				case VISION_CUBE:
-					return 0;
 				case ENCODER_RIGHT_WHEELS:
 					return Robot.drivetrain.getRightTalon().getSelectedSensorPosition(0);
 				case ENCODER_LEFT_WHEELS:

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,11 +24,11 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
-import org.usfirst.frc.team4541.robot.subsystems.Ramps;
 import org.usfirst.frc.team4541.robot.subsystems.TrackBall;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -49,16 +50,17 @@ public class Robot extends TimedRobot {
 	//subsystems
 	public static Elevator elevator;
 	public static DriveTrain drivetrain;
-	public static Ramps ramps;
 	public static Intake intake;
 	public static CompressorSystem compressor;
 	
 	
 	@Deprecated //trackball will be removed soon in favor of encoders on wheels
 	public static TrackBall trackball;
+	public static Climber climber;
 	
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -79,9 +81,9 @@ public class Robot extends TimedRobot {
 		oi =  new OI();
 		elevator = new Elevator();
 		
-		ramps = new Ramps();
 		intake = new Intake();
 		compressor = new CompressorSystem();
+		climber = new Climber();
 		
 		oi.initPostSubsystemButtons();
 		
