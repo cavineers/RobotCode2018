@@ -111,9 +111,9 @@ public class OI {
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
 			 protected void initialize() { 
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-					new ChangeTriggerMode(TRIG_MODE.CLIMBER);
+					Robot.oi.currentTriggerSetting = TRIG_MODE.CLIMBER;
 				} else {
-					new ChangeTriggerMode(TRIG_MODE.ELEVATOR);
+					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
 			 }
 			@Override
@@ -122,12 +122,12 @@ public class OI {
 			}
 			
 		});
-		right_middle.whenPressed(new Command() { //Toggle between elevator and climber
+		right_middle.whenPressed(new Command() { //Toggle between intake and climber
 			 protected void initialize() { 
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-					new ChangeTriggerMode(TRIG_MODE.INTAKE);
+					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
 				} else {
-					new ChangeTriggerMode(TRIG_MODE.ELEVATOR);
+					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
 			 }
 			@Override
