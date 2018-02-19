@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
+import org.usfirst.frc.team4541.robot.commandGroups.LeftSwitch;
+import org.usfirst.frc.team4541.robot.commandGroups.RightSwitch;
 import org.usfirst.frc.team4541.robot.commands.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
@@ -64,6 +66,8 @@ public class Robot extends TimedRobot {
 
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	public static String[] autoList = {"straight", "middle switch"};
+//	LeftSwitch leftSwitch;
+//	RightSwitch rightSwitch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -92,7 +96,9 @@ public class Robot extends TimedRobot {
 
 		oi.initPostSubsystemButtons();
 		SmartDashboard.putStringArray("Auto List",autoList);
-
+		
+//		leftSwitch = new LeftSwitch();
+//		rightSwitch = new RightSwitch();
 		// CameraServer.getInstance().startAutomaticCapture(0);
 	}
 
@@ -125,32 +131,30 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		String autoSelected = SmartDashboard.getString("Auto List", "straight");
-		switch (autoSelected) {
-		case "straight":
-			new CommandGroup() {
-				protected void initialize() {
-					this.addSequential(new DriveForward(4));					
-				}
-			}.start();
-			break;
-		case "middle switch":
-			new CommandGroup() {
-				protected void initialize() {
-					if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
-						this.addSequential(new DrivePath(PATHS.LEFT_SWITCH));	
-					} else {
-						this.addSequential(new DrivePath(PATHS.RIGHT_SWITCH));	
-					}
-					this.addParallel(new PIDMoveElevator(Constants.maxElevatorHeight / 4));
-					this.addSequential(new EjectCube());
-				}
-			}.start();
-		}
+		
+//		String autoSelected = SmartDashboard.getString("Auto List", "straight");
+//		switch (autoSelected) {
+//		case "straight":
+//			new CommandGroup() {
+//				protected void initialize() {
+//					this.addSequential(new DriveForward(4));					
+//				}
+//			}.start();
+//			break;
+//		case "middle switch":
+//		switchAuto.start();
+//		new DrivePath(PATHS.LEFT_SWITCH).start();
+//		new PIDMoveElevator(Constants.maxElevatorHeight / 4).start();
+//		this.leftSwitch.start();
+//		}
+		new DriveForward(4).start();					
 
-		// FieldPositionHelper.beginIntegration();
-		// new DrivePath(PATHS.DEFAULT_PATH).start();
+//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
+//			this.leftSwitch.start();
+//		} else {
+//			this.rightSwitch.start();
+//		}
 	}
 
 	/**
@@ -159,15 +163,22 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.drive(0.2, 0);
-		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+//		drivetrain.drive(0.2, 0);
+//		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
 	}
 
 	@Override
 	public void teleopInit() {
+//		leftSwitch.cancel();
+//		leftSwitch.free();
+//		rightSwitch.cancel();
+//		rightSwitch.free();
+		
+		
 		// FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
+		Robot.elevator.elevatorMotor.setSelectedSensorPosition(0,0,0);
 		// make sure to .cancel() auto commands when this starts
 	}
 

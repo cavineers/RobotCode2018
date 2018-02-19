@@ -45,7 +45,7 @@ public class OI {
 	public enum TRIG_MODE {
 		ELEVATOR, INTAKE, CLIMBER
 	}
-	public TRIG_MODE currentTriggerSetting;
+	public TRIG_MODE currentTriggerSetting = TRIG_MODE.ELEVATOR;
 
 	public static Joystick joy = new Joystick(0);
 	public static JoystickButton a_button = new JoystickButton(joy, 1);

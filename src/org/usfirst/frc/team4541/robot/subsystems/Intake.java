@@ -24,12 +24,13 @@ public class Intake extends Subsystem {
     }
     
     public void setIntakeSpeed(double speed) {
-    	intakeMotor1.set(speed);
+    	intakeMotor1.set(-speed);
     	intakeMotor2.set(speed);
     }
 	
     public void IntakePiston() {
-    	intakeMotor2.setInverted(true);
+    	intakeMotor1.setInverted(false);
+    	intakeMotor2.setInverted(false);
     }
     
     public void setSolenoidOpen(boolean state){
