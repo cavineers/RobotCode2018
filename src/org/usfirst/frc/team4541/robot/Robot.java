@@ -29,7 +29,6 @@ import org.usfirst.frc.team4541.robot.commands.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
-import org.usfirst.frc.team4541.robot.commands.PIDMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
@@ -178,7 +177,6 @@ public class Robot extends TimedRobot {
 		
 		// FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
-		Robot.elevator.elevatorMotor.setSelectedSensorPosition(0,0,0);
 		// make sure to .cancel() auto commands when this starts
 	}
 
@@ -193,10 +191,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("ElevatorPos: ", elevator.elevatorMotor.getSelectedSensorPosition(0));
 
 		Scheduler.getInstance().run();
-
 		// oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
-		// oi.updateElevatorControl(); //checks to make sure that triggers are
-		// pressed
 	}
 
 	/**

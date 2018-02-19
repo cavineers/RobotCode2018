@@ -48,7 +48,7 @@ public class DriveToPosAtAngle extends Command {
 				rMovement = output;
 			}
 		};
-		aController = new PIDController(.2, .01, 1.6, 0, aSource, aOutput); //same p,i,d as turn to angle
+		aController = new PIDController(.1, .0, 0, 0, aSource, aOutput); //same p,i,d as turn to angle
 		aController.setInputRange(-180, 180);
 		aController.setOutputRange(-1, 1);
 		aController.setContinuous(true);
@@ -76,7 +76,7 @@ public class DriveToPosAtAngle extends Command {
 				fMovement = output;
 			}
 		};
-		yController = new PIDController(0, 0, 0, 0, ySource, yOutput); //TODO: tune these values; all 0 for now. 
+		yController = new PIDController(0.05, 0, 0, 0, ySource, yOutput); //TODO: tune these values; all 0 for now. 
 		yController.setInputRange(-50, 50);
 		yController.setOutputRange(-0.7, 0.7);
 		yController.setPercentTolerance(1);

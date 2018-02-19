@@ -10,6 +10,7 @@ import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class DrivePath extends Command {
@@ -42,6 +43,8 @@ public class DrivePath extends Command {
     	
     	Robot.drivetrain.getRightTalon().set(ControlMode.MotionProfile, rightHandler.getSetValue().value);
     	Robot.drivetrain.getLeftTalon().set(ControlMode.MotionProfile, leftHandler.getSetValue().value);
+    	SmartDashboard.putNumber("Right Error: ", Robot.drivetrain.getRightTalon().getClosedLoopError(0));
+    	SmartDashboard.putNumber("Left  Error: ", Robot.drivetrain.getRightTalon().getClosedLoopError(0));
     }
 
     // Make this return true when this Command no longer needs to run execute()
