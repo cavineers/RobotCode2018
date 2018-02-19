@@ -19,6 +19,7 @@ public class DrivePath extends Command {
 	MotionProfileStatus leftStatus;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
+    	this.setTimeout(7); //times out after 7 seconds
     	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path));
     	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path));
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);
@@ -45,7 +46,7 @@ public class DrivePath extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (rightStatus.isLast && leftStatus.isLast);
+    	return (rightStatus.isLast && leftStatus.isLast) || this.isTimedOut();
 //    return false;
     }
 

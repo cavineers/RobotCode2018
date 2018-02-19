@@ -146,6 +146,6 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double getDistanceMoved() {
-		return (this.leftMotor1.getSelectedSensorPosition(0) + this.rightMotor1.getSelectedSensorPosition(0)) / 2.0;
+		return (Math.abs(this.leftMotor1.getSelectedSensorPosition(0)) + Math.abs(this.rightMotor1.getSelectedSensorPosition(0))) / 2.0;
 	}
 }
