@@ -25,7 +25,7 @@ public class MoveClimber extends Command {
 			Robot.climber.setClimberVelocity(upTrig);
 		} else if (downTrig > 0.05) {
 			//Move down
-			Robot.climber.setClimberVelocity(downTrig);
+			Robot.climber.setClimberVelocity(-downTrig);
 		}
 	}
 

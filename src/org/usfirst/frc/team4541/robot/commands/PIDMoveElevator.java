@@ -11,7 +11,7 @@ public class PIDMoveElevator extends PIDCommand {
 	int counter = 0;
 	double setPoint = 0;
     public PIDMoveElevator(double setPoint) {
-    	super(0.00007, 0.000001, 0.0001);
+    	super(0.000075, 0, 0.0001);
         requires(Robot.elevator);
     	this.getPIDController().setContinuous(false);
 		this.getPIDController().setInputRange(0, Constants.maxElevatorHeight);
@@ -49,5 +49,9 @@ public class PIDMoveElevator extends PIDCommand {
 	}
 	public void freePID() {
 		this.getPIDController().free();
+	}
+	protected void end() {
+	   this.getPIDController().disable();
+	   this.getPIDController().free();
 	}
 }

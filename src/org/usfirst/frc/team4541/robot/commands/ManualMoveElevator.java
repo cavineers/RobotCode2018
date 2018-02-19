@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -18,13 +19,16 @@ public class ManualMoveElevator extends PIDCommand {
 	boolean didSavePos;
     public ManualMoveElevator() {
 //    	super(0.0001,0,0);
-    	super(0.00007, 0.000001, 0.0001);
+    	super(0.000075, 0, 0.0001); //0.000001 for i
     	requires(Robot.elevator);
 		this.getPIDController().setContinuous(false);
 		this.getPIDController().setInputRange(0, Constants.maxElevatorHeight);
 		this.getPIDController().setOutputRange(-1, 1);
-		this.getPIDController().setAbsoluteTolerance(5);
+		this.getPIDController().setAbsoluteTolerance(10);
 		this.getPIDController().enable();
+		Robot.elevator.elevatorMotor.setSelectedSensorPosition(0,0,0);
+		this.setSetpoint(Robot.elevator.getElevatorPos());
+		didSavePos = true;
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -48,6 +52,8 @@ public class ManualMoveElevator extends PIDCommand {
     		didSavePos = false;
     		this.setSetpoint(elevPos - (downTrig * Constants.triggerCoefficient));
     	}
+    	SmartDashboard.putNumber("elevator Setpoint: ", this.getSetpoint());
+    	SmartDashboard.putData(this.getPIDController());
     }
     
     protected void interrupted() {
@@ -66,9 +72,6 @@ public class ManualMoveElevator extends PIDCommand {
     	}
     }
 
-    protected void end() {
-    }
-    
     @Override
     protected void initialize() {
     	didSavePos = false;
@@ -79,7 +82,12 @@ public class ManualMoveElevator extends PIDCommand {
 	}
 	@Override
 	protected void usePIDOutput(double output) {
-		Robot.elevator.setElevatorSpeed(output);
-		
+//		double elevPos  = Robot.elevator.getElevatorPos();
+//		if (elevPos > 20 && output < 0.05) {
+//			Robot.elevator.setElevatorSpeed(0);
+//		} else {
+			Robot.elevator.setElevatorSpeed(output);
+			SmartDashboard.putNumber("elevator output: ", output);
+//		}
 	}
 }

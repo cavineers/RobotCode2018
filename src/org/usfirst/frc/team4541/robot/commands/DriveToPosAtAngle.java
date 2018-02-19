@@ -67,7 +67,7 @@ public class DriveToPosAtAngle extends Command {
 			
 			@Override
 			public double pidGet() {
-				return Robot.trackball.getPos()[1];
+				return Robot.drivetrain.getDistanceMoved();
 			}
 		};
 		yOutput = new PIDOutput() {

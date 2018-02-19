@@ -25,7 +25,7 @@ public class MoveIntake extends Command {
 
 		} else if (downTrig > 0.05) {
 			//Move down
-			Robot.intake.setIntakeSpeed(downTrig);
+			Robot.intake.setIntakeSpeed(-downTrig);
 		}
 	}
 
