@@ -30,6 +30,9 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
+
+import org.usfirst.frc.team4541.robot.Robot;
+
 import com.ctre.phoenix.motion.*;
 import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 
@@ -246,7 +249,11 @@ public class MotionProfileHandler {
 			_heading = _talon.getActiveTrajectoryHeading();
 			_pos = _talon.getActiveTrajectoryPosition();
 			_vel = _talon.getActiveTrajectoryVelocity();
-			
+			System.out.print(edu.wpi.first.wpilibj.Timer.getFPGATimestamp());
+			System.out.print(",");
+			System.out.print(Robot.drivetrain.getRightTalon().getClosedLoopError(0));
+			System.out.print(",");
+			System.out.println(Robot.drivetrain.getLeftTalon().getClosedLoopError(0));
 
 			/* printfs and/or logging */
 			Instrumentation.process(_status, _pos, _vel, _heading);

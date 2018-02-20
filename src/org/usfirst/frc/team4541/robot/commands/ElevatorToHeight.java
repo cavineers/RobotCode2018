@@ -17,8 +17,8 @@ public class ElevatorToHeight extends Command {
 	
     
 	protected void initiatlize() {
-		Robot.elevator.getPIDVel().enable();
-		Robot.elevator.getPIDMotorOutput().enable();
+//		Robot.elevator.getPIDVel().enable();
+//		Robot.elevator.getPIDMotorOutput().enable();
 		this.setSetpoint(targetHeight);
 		setTimeout(((ElevatorConstants.maxElevatorHeight/ElevatorConstants.maxSpeed)/10)*2);
 		
@@ -29,32 +29,32 @@ public class ElevatorToHeight extends Command {
     	
     
     	
-    	if(elevPos > ElevatorConstants.upperDangerZone) {
-    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed/2);
-    	}
-    	else if(elevPos< ElevatorConstants.lowerDangerZone) {
-    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed/2, ElevatorConstants.maxSpeed);
-    	}
-    	else {
-    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
-    	}
+//    	if(elevPos > ElevatorConstants.upperDangerZone) {
+//    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed/2);
+//    	}
+//    	else if(elevPos< ElevatorConstants.lowerDangerZone) {
+//    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed/2, ElevatorConstants.maxSpeed);
+//    	}
+//    	else {
+//    		Robot.elevator.getPIDVel().setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
+//    	}
     }
     
     protected void interrupted() {
     	end();
     }
     protected boolean isFinished() {
-      return Robot.elevator.getPIDVel().onTarget() || isTimedOut();
-      
+//      return Robot.elevator.getPIDVel().onTarget() || isTimedOut();
+      return false;
     }
     public void setSetpoint(double setPoint) {
-    	if (setPoint < 0) {
-    		Robot.elevator.getPIDVel().setSetpoint(0);
-    	} else if (setPoint > ElevatorConstants.maxElevatorHeight) {
-    		Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
-    	} else {
-    		Robot.elevator.getPIDVel().setSetpoint(setPoint);
-    	}
+//    	if (setPoint < 0) {
+//    		Robot.elevator.getPIDVel().setSetpoint(0);
+//    	} else if (setPoint > ElevatorConstants.maxElevatorHeight) {
+//    		Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
+//    	} else {
+//    		Robot.elevator.getPIDVel().setSetpoint(setPoint);
+//    	}
     }
 
     protected void end() {

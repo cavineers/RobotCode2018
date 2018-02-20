@@ -10,11 +10,11 @@ public class TurnToAngle extends PIDCommand {
 	private int counter=0;
 	
 	public TurnToAngle(double TargetAngle) {
-		super(0.04, 0, 0.02);
+		super(0.03, 0, 0.026);// 0.023 for p
 		requires(Robot.drivetrain);
 		setTimeout(15);
 		getPIDController().setInputRange(-180,180);
-		getPIDController().setAbsoluteTolerance(2);
+		getPIDController().setAbsoluteTolerance(5);
 		getPIDController().setOutputRange(-1, 1);
 		getPIDController().setContinuous();
 		getPIDController().setSetpoint(TargetAngle);
@@ -51,7 +51,7 @@ public class TurnToAngle extends PIDCommand {
 			counter++;
 		else
 			counter=0;
-		return(counter >= 50 || isTimedOut());
+		return(counter >= 10 || isTimedOut());
 	}
 	
 	protected void end() {

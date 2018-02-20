@@ -189,7 +189,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("ElevatorPos: ", elevator.elevatorMotor.getSelectedSensorPosition(0));
-
+		SmartDashboard.putNumber("Left Error: ", drivetrain.getLeftTalon().getClosedLoopError(0));
+		SmartDashboard.putNumber("Right Error: ", drivetrain.getRightTalon().getClosedLoopError(0));
 		Scheduler.getInstance().run();
 		// oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 	}
