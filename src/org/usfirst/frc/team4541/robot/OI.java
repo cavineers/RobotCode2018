@@ -106,9 +106,11 @@ public class OI {
 		}
 	}
 	public void initPostSubsystemButtons() {
-		b_button.whenPressed(new ToggleIntakeContracted());
-		y_button.whenPressed(new EjectCube());
 		a_button.whenPressed(new ToggleIntake());
+		b_button.whenPressed(new ToggleIntakeContracted());
+		x_button.whenPressed(new ElevatorHome());
+		y_button.whenPressed(new EjectCube());
+		
 		SmartDashboard.putData("Elevator Home", new ElevatorHome());
 		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber

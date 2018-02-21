@@ -55,10 +55,10 @@ public class ManualMoveElevator extends PIDCommand {
     	}
     	SmartDashboard.putNumber("elevator Setpoint: ", this.getSetpoint());
     	SmartDashboard.putData(this.getPIDController());
-    	System.out.print(Timer.getFPGATimestamp() + ",");
-    	System.out.print(Robot.elevator.elevatorMotor.getSelectedSensorVelocity(0) + ",");
-    	System.out.print(this.getPIDController().get());
-    	System.out.println();
+//    	System.out.print(Timer.getFPGATimestamp() + ",");
+//    	System.out.print(Robot.elevator.elevatorMotor.getSelectedSensorVelocity(0) + ",");
+//    	System.out.print(this.getPIDController().get());
+//    	System.out.println();
     }
     
     protected void interrupted() {

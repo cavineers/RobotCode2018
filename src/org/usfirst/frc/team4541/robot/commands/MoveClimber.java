@@ -22,10 +22,10 @@ public class MoveClimber extends Command {
 			Robot.climber.setClimberVelocity(0);
 		} else if (upTrig > 0.05) {
 			//Move up
-			Robot.climber.setClimberVelocity(upTrig);
+			Robot.climber.setClimberVelocity(-upTrig);
 		} else if (downTrig > 0.05) {
 			//Move down
-			Robot.climber.setClimberVelocity(-downTrig);
+			Robot.climber.setClimberVelocity(downTrig);
 		}
 	}
 
