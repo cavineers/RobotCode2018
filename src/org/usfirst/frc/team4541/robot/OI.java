@@ -22,6 +22,7 @@ import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
+import org.usfirst.frc.team4541.robot.commands.ToggleIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 
@@ -116,8 +117,7 @@ public class OI {
 	}
 
 	public void initPostSubsystemButtons() {
-		x_button.whenPressed(new setIntakeContracted(true));
-		b_button.whenPressed(new setIntakeContracted(false));
+		b_button.whenPressed(new ToggleIntakeContracted());
 		y_button.whenPressed(new EjectCube());
 		a_button.whenPressed(new ToggleIntake());
 		

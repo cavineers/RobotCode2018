@@ -21,6 +21,6 @@ public class LeftSwitch extends CommandGroup {
     	addSequential(new TurnToAngle(90));
     	addSequential(new DriveToPosAtAngle(4, 90));
     	addSequential(new TurnToAngle(0));
-    	addSequential(new DriveToPosAtAngle(5, 0));
+    	addSequential(new DriveToPosAtAngle(4.5, 0));
     }
 }

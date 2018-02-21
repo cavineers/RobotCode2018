@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.filters.LinearDigitalFilter;
@@ -25,6 +26,8 @@ public class DriveToPosAtAngle extends Command {
 	double fMovement;
 	double angleObj;
 	double distObj;
+	double lastYPos;
+	double startTime;
 	LinearDigitalFilter filter;
 	public DriveToPosAtAngle(double yObj, double aObj) {
 		this.requires(Robot.drivetrain);
@@ -98,28 +101,30 @@ public class DriveToPosAtAngle extends Command {
 
 			@Override
 			public double pidGet() {
-				return yController.getError();
+				System.out.println(pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos);
+				return pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos;
 			}
 			
 		}, 10);
 	}
 	protected void initialize() {
-    	aController.enable();
-    	yController.enable();
     	filter.reset();
     	Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
     	Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
-	}
-    protected void execute() {
+    	lastYPos = pulsesToFt(Robot.drivetrain.getDistanceMoved());
     	aController.setSetpoint(angleObj);
     	yController.setSetpoint(distObj);
+    	aController.enable();
+    	yController.enable();
+    	startTime = Timer.getFPGATimestamp();
+	}
+    protected void execute() {
     	SmartDashboard.putNumber("YController Setpoint", distObj);
-    	SmartDashboard.putNumber("avg error", filter.get());
+    	SmartDashboard.putNumber("avg error", filter.pidGet());
     	Robot.drivetrain.drive(fMovement, rMovement);
-    	filter.pidGet();
+    	lastYPos = pulsesToFt(Robot.drivetrain.getDistanceMoved());
     }
     
-    int counter = 0;
     protected boolean isFinished() {
 //        if (yController.onTarget() && aController.onTarget() ) {
 //        	counter++;
@@ -127,7 +132,7 @@ public class DriveToPosAtAngle extends Command {
 //        	counter = 0;
 //        }
 //        return counter > 30;
-        if (yController.onTarget() && aController.onTarget() && filter.get() < 0.2) {
+        if (yController.onTarget() && aController.onTarget() && filter.pidGet() == 0 && (Timer.getFPGATimestamp() - this.startTime) > 1) {
         	return true;
         }
         return false;
