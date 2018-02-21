@@ -56,7 +56,7 @@ public class Constants {
 	
 	//Elevator Class
 	public static final double triggerCoefficient = 10000; //TODO: set actual trigger coeff. 
-	public static final double maxElevatorHeight  = 42000; //TODO: set actual max height (native units)
+	public static final double maxElevatorHeight  = 44000; //TODO: set actual max height (native units)
 	public static final double switchHeight       = 600; //TODO: set switch height (native units)
 	public static final double avgScaleHeight     = 1200; //TODO: set scale height (native units)
 }

@@ -7,6 +7,7 @@ import org.usfirst.frc.team4541.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -54,6 +55,10 @@ public class ManualMoveElevator extends PIDCommand {
     	}
     	SmartDashboard.putNumber("elevator Setpoint: ", this.getSetpoint());
     	SmartDashboard.putData(this.getPIDController());
+    	System.out.print(Timer.getFPGATimestamp() + ",");
+    	System.out.print(Robot.elevator.elevatorMotor.getSelectedSensorVelocity(0) + ",");
+    	System.out.print(this.getPIDController().get());
+    	System.out.println();
     }
     
     protected void interrupted() {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import org.usfirst.frc.team4541.robot.OI;
 import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
@@ -21,11 +22,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Elevator extends Subsystem {
 	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	private boolean maintainingPos = false; // whether the elevator is using input from controller or PID
-	
+	public DigitalInput limitSwitch;
 	public Elevator() {
 		
 		elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		elevatorMotor.setSensorPhase(true); /* keep sensor and motor in phase */
+		limitSwitch = new DigitalInput(0);
 	}
 	
     public void initDefaultCommand() {

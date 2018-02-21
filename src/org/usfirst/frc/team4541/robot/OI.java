@@ -16,10 +16,12 @@ import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.PIDMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
+import org.usfirst.frc.team4541.robot.commands.ToggleIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 
@@ -30,6 +32,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import java.util.Hashtable;
@@ -103,10 +106,10 @@ public class OI {
 		}
 	}
 	public void initPostSubsystemButtons() {
-		x_button.whenPressed(new setIntakeContracted(true));
-		b_button.whenPressed(new setIntakeContracted(false));
+		b_button.whenPressed(new ToggleIntakeContracted());
 		y_button.whenPressed(new EjectCube());
 		a_button.whenPressed(new ToggleIntake());
+		SmartDashboard.putData("Elevator Home", new ElevatorHome());
 		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
 			 protected void initialize() { 

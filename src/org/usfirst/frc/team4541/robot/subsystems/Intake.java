@@ -31,6 +31,16 @@ public class Intake extends Subsystem {
     public void IntakePiston() {
     	intakeMotor1.setInverted(false);
     	intakeMotor2.setInverted(false);
+    	
+    	intakeMotor1.configContinuousCurrentLimit(10, 0);
+    	intakeMotor1.configPeakCurrentLimit(80, 0);
+    	intakeMotor1.configPeakCurrentDuration(500, 0);
+    	intakeMotor1.enableCurrentLimit(true);
+    	
+    	intakeMotor2.configContinuousCurrentLimit(10, 0);
+    	intakeMotor2.configPeakCurrentLimit(80, 0);
+    	intakeMotor2.configPeakCurrentDuration(500, 0);
+    	intakeMotor2.enableCurrentLimit(true);
     }
     
     public void setSolenoidOpen(boolean state){
@@ -45,7 +55,7 @@ public class Intake extends Subsystem {
     }
     
     public boolean getSolenoidState() {
-    	if (sol.get() == DoubleSolenoid.Value.kReverse) return true;
+    	if (sol.get() == DoubleSolenoid.Value.kForward) return true;
     	return false;
     }
     
