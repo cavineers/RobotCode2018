@@ -15,7 +15,8 @@ public class TurnToAngle extends PIDCommand {
 	double targetAngle;
 	double startTime;
 	public TurnToAngle(double TargetAngle) {
-		super(0.020, 0.00023, 0.020);// 0.023 for p
+//		super(0.020, 0.00023, 0.020);// 0.023 for p
+		super(0.035, 0, 0.07);
 		this.targetAngle = TargetAngle;
 		requires(Robot.drivetrain);
 		setTimeout(15);
@@ -41,7 +42,7 @@ public class TurnToAngle extends PIDCommand {
 				return Robot.gyro.getYaw() - lastAngle;
 			}
 			
-		}, 10);
+		}, 20);
 	}
 	@Override
 	protected double returnPIDInput() {

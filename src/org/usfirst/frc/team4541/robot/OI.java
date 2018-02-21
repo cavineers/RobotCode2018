@@ -14,6 +14,7 @@ import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.commandGroups.LeftSwitch;
+import org.usfirst.frc.team4541.robot.commandGroups.RightSwitch;
 import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
@@ -69,7 +70,7 @@ public class OI {
 //		 x_button.whenPressed(new DrivePath(PATHS.TEN_FT_TEST));
 //		x_button.whenPressed(new DriveToPosAtAngle(4, 0));
 //		x_button.whenPressed(new TurnToAngle(90));
-		x_button.whenPressed(new LeftSwitch());
+		x_button.whenPressed(new RightSwitch());
 		y_button.whenPressed(new Command() {
 			protected void initialize() {
 				Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
