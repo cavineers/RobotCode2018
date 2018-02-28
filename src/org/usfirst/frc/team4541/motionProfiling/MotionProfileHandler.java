@@ -121,11 +121,11 @@ public class MotionProfileHandler {
 	public MotionProfileHandler(TalonSRX talon, double[][] path) {
 		_talon = talon;
 		/*
-		 * since our MP is 50ms per point, set the control frame rate and the
+		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talon.changeMotionControlFramePeriod(25);
-		_notifer.startPeriodic(0.025);
+		_talon.changeMotionControlFramePeriod(5);
+		_notifer.startPeriodic(0.005);
 		this.path = path;
 	}
 

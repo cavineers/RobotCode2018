@@ -67,10 +67,10 @@ public class OI {
 
 	public OI() {
 		// Create some buttons
-//		 x_button.whenPressed(new DrivePath(PATHS.TEN_FT_TEST));
+		 x_button.whenPressed(new DrivePath(PATHS.TEN_FT_TEST));
 //		x_button.whenPressed(new DriveToPosAtAngle(4, 0));
 //		x_button.whenPressed(new TurnToAngle(90));
-		x_button.whenPressed(new RightSwitch());
+//		x_button.whenPressed(new RightSwitch());
 		y_button.whenPressed(new Command() {
 			protected void initialize() {
 				Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
@@ -119,7 +119,6 @@ public class OI {
 
 	public void initPostSubsystemButtons() {
 		b_button.whenPressed(new ToggleIntakeContracted());
-		y_button.whenPressed(new EjectCube());
 		a_button.whenPressed(new ToggleIntake());
 		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
@@ -151,8 +150,6 @@ public class OI {
 			
 		});
 		
-		// right_middle.whenPressed(new setIntakeContracted(true));
-		// left_middle.whenPressed(new setIntakeContracted(false));
 	}
 
 	public Joystick getJoystick() {

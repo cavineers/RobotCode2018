@@ -59,7 +59,6 @@ public class DriveToPosAtAngle extends Command {
 		aController.setOutputRange(-1, 1);
 		aController.setContinuous(true);
 		aController.setPercentTolerance(1);
-		SmartDashboard.putData(aController);
 		
 		ySource = new PIDSource() {
 			@Override

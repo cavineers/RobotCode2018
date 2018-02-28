@@ -114,36 +114,40 @@ public class DriveTrain extends Subsystem {
 		return this.leftMotor1;
 	}
 	public void configTalons() {
-		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 50);
+		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		rightMotor1.setSensorPhase(false); /* keep sensor and motor in phase */
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
-		rightMotor1.config_kF(0, 1.1, Constants.kTimeoutMs);
-		rightMotor1.config_kP(0, 2, Constants.kTimeoutMs); //was 0.8
+		rightMotor1.config_kF(0, 0.8525, Constants.kTimeoutMs);
+		rightMotor1.config_kP(0, 0.181, Constants.kTimeoutMs); //was 0.8
 
 		rightMotor1.config_kI(0, 0, Constants.kTimeoutMs); //0.045
-		rightMotor1.config_kD(0, 50, Constants.kTimeoutMs);
+		rightMotor1.config_kD(0, 0, Constants.kTimeoutMs);
 
 		/* Our profile uses 50ms timing */
-		rightMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
+		rightMotor1.configMotionProfileTrajectoryPeriod(10, Constants.kTimeoutMs); 
 		/*
 		 * status 10 provides the trajectory target for motion profile AND
 		 * motion magic
 		 */
-		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs);
+		rightMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
 		
-		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 50);
+		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		leftMotor1.setSensorPhase(false); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
-		leftMotor1.config_kF(0, 1.1, Constants.kTimeoutMs); //1.7 according to math; was 1.2 for other carpet
-		leftMotor1.config_kP(0, 2, Constants.kTimeoutMs); //0.45 at first
+		leftMotor1.config_kF(0, 0.8525, Constants.kTimeoutMs); //1.7 according to math; was 1.2 for other carpet
+		leftMotor1.config_kP(0, 0.181, Constants.kTimeoutMs); //0.45 at first, 0.5
 		leftMotor1.config_kI(0, 0, Constants.kTimeoutMs); //2.5, 0, 50
-		leftMotor1.config_kD(0, 50, Constants.kTimeoutMs);
+		leftMotor1.config_kD(0, 1.8, Constants.kTimeoutMs);
 		
 	
-		leftMotor1.configMotionProfileTrajectoryPeriod(50, Constants.kTimeoutMs); 
-		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs);
+		leftMotor1.configMotionProfileTrajectoryPeriod(10, Constants.kTimeoutMs); 
+		/*
+		 * status 10 provides the trajectory target for motion profile AND
+		 * motion magic
+		 */
+		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
 	}
 
 	public double getDistanceMoved() {

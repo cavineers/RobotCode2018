@@ -50,8 +50,6 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	// Robot wide sensors
 	public static AHRS gyro;
-	public static LidarInterface lidar;
-	public static UltrasonicInterface ultrasonic;
 
 	// subsystems
 	public static Elevator elevator;
@@ -60,13 +58,13 @@ public class Robot extends TimedRobot {
 	public static CompressorSystem compressor;
 
 	@Deprecated // trackball will be removed soon in favor of encoders on wheels
-	public static TrackBall trackball;
 	public static Climber climber;
 
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-	public static String[] autoList = {"straight", "middle switch"};
-//	LeftSwitch leftSwitch;
-//	RightSwitch rightSwitch;
+	public static String[] autoList = { "straight", "middle switch" };
+
+	// LeftSwitch leftSwitch;
+	// RightSwitch rightSwitch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -74,16 +72,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		gyro = new AHRS(SPI.Port.kMXP);
-
-		trackball = new TrackBall();
-
-		lidar = new LidarInterface(0x62, 0); // TODO: make sure that 0x62 is the
-												// correct i2c address
-		lidar.beginInfiniteFastContinuous(); // lidar starts reading at 50hz
-												// indefinitely
-
-		ultrasonic = new UltrasonicInterface();
-		ultrasonic.setUltrasonicsEnabled(true, false, false, false);
 
 		drivetrain = new DriveTrain();
 		oi = new OI();
@@ -94,10 +82,10 @@ public class Robot extends TimedRobot {
 		climber = new Climber();
 
 		oi.initPostSubsystemButtons();
-		SmartDashboard.putStringArray("Auto List",autoList);
-		
-//		leftSwitch = new LeftSwitch();
-//		rightSwitch = new RightSwitch();
+		SmartDashboard.putStringArray("Auto List", autoList);
+
+		// leftSwitch = new LeftSwitch();
+		// rightSwitch = new RightSwitch();
 		// CameraServer.getInstance().startAutomaticCapture(0);
 	}
 
@@ -130,30 +118,32 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
-//		String autoSelected = SmartDashboard.getString("Auto List", "straight");
-//		switch (autoSelected) {
-//		case "straight":
-//			new CommandGroup() {
-//				protected void initialize() {
-//					this.addSequential(new DriveForward(4));					
-//				}
-//			}.start();
-//			break;
-//		case "middle switch":
-//		switchAuto.start();
-//		new DrivePath(PATHS.LEFT_SWITCH).start();
-//		new PIDMoveElevator(Constants.maxElevatorHeight / 4).start();
-//		this.leftSwitch.start();
-//		}
-		new DriveForward(4).start();					
 
-//		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
-//			this.leftSwitch.start();
-//		} else {
-//			this.rightSwitch.start();
-//		}
+		// String autoSelected = SmartDashboard.getString("Auto List",
+		// "straight");
+		// switch (autoSelected) {
+		// case "straight":
+		// new CommandGroup() {
+		// protected void initialize() {
+		// this.addSequential(new DriveForward(4));
+		// }
+		// }.start();
+		// break;
+		// case "middle switch":
+		// switchAuto.start();
+		// new DrivePath(PATHS.LEFT_SWITCH).start();
+		// new PIDMoveElevator(Constants.maxElevatorHeight / 4).start();
+		// this.leftSwitch.start();
+		// }
+//		new DriveForward(4).start();
+
+		// String gameData =
+		// DriverStation.getInstance().getGameSpecificMessage();
+		// if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
+		// this.leftSwitch.start();
+		// } else {
+		// this.rightSwitch.start();
+		// }
 	}
 
 	/**
@@ -162,19 +152,30 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-//		drivetrain.drive(0.2, 0);
-//		SmartDashboard.putNumber("Left Speed: ", drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
-//		SmartDashboard.putNumber("Right Speed: ", drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+		 drivetrain.drive(0.5, 0);
+		// SmartDashboard.putNumber("Left Speed: ",
+		// drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+		// SmartDashboard.putNumber("Right Speed: ",
+		// drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+		if (this.isEnabled()) {
+			System.out.print(drivetrain.getRightTalon().get());
+			System.out.print(",");
+			System.out.print(drivetrain.getLeftTalon().get());
+			System.out.print(",");
+			System.out.print(drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+			System.out.print(",");
+			System.out.print(drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+			System.out.println();
+		}
 	}
 
 	@Override
 	public void teleopInit() {
-//		leftSwitch.cancel();
-//		leftSwitch.free();
-//		rightSwitch.cancel();
-//		rightSwitch.free();
-		
-		
+		// leftSwitch.cancel();
+		// leftSwitch.free();
+		// rightSwitch.cancel();
+		// rightSwitch.free();
+
 		// FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
 		// make sure to .cancel() auto commands when this starts
@@ -185,12 +186,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
-		SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftTalon().getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightTalon().getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("ElevatorPos: ", elevator.elevatorMotor.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Error: ", drivetrain.getLeftTalon().getClosedLoopError(0));
-		SmartDashboard.putNumber("Right Error: ", drivetrain.getRightTalon().getClosedLoopError(0));
+		// SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
+		// SmartDashboard.putNumber("Left Encoder: ",
+		// drivetrain.getLeftTalon().getSelectedSensorPosition(0));
+		// SmartDashboard.putNumber("Right Encoder: ",
+		// drivetrain.getRightTalon().getSelectedSensorPosition(0));
+		// SmartDashboard.putNumber("ElevatorPos: ",
+		// elevator.elevatorMotor.getSelectedSensorPosition(0));
+		// SmartDashboard.putNumber("Left Error: ",
+		// drivetrain.getLeftTalon().getClosedLoopError(0));
+		// SmartDashboard.putNumber("Right Error: ",
+		// drivetrain.getRightTalon().getClosedLoopError(0));
 		Scheduler.getInstance().run();
 		// oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 	}
