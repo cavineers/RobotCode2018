@@ -85,10 +85,6 @@ public class OI {
 //
 //		});
 		
-		a_button.whenPressed(new ToggleIntake());
-  		b_button.whenPressed(new ToggleIntakeContracted());
-  		y_button.whenPressed(new EjectCube());
-  		
   		right_middle.whenPressed(new ElevatorHome());
   		
 		r_bump.whenPressed(new ShiftGear(false));
@@ -125,9 +121,10 @@ public class OI {
 	}
 
 	public void initPostSubsystemButtons() {
-		b_button.whenPressed(new ToggleIntakeContracted());
 		a_button.whenPressed(new ToggleIntake());
-		
+  		b_button.whenPressed(new ToggleIntakeContracted());
+  		y_button.whenPressed(new EjectCube());
+  		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
 			 protected void initialize() { 
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
