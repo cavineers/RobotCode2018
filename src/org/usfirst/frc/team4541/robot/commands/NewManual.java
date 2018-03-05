@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4541.robot.commands;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
+import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,7 +31,9 @@ public class NewManual extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
+		if (Robot.oi.currentTriggerSetting != TRIG_MODE.ELEVATOR) {
+			return;
+		}
 		elevPos = Robot.elevator.getElevatorPos();
 		upTrig = Robot.oi.getJoystick().getRawAxis(3);
 		downTrig = Robot.oi.getJoystick().getRawAxis(2);

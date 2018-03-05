@@ -19,6 +19,7 @@ import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
@@ -66,23 +67,30 @@ public class OI {
 
 	public OI() {
 		// Create some buttons
-		 x_button.whenPressed(new DrivePath(PATHS.TEN_FT_TEST));
+//		 x_button.whenPressed(new DrivePath(PATHS.TEN_FT_TEST));
 //		x_button.whenPressed(new DriveToPosAtAngle(4, 0));
 //		x_button.whenPressed(new TurnToAngle(90));
 //		x_button.whenPressed(new RightSwitch());
-		y_button.whenPressed(new Command() {
-			protected void initialize() {
-				Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
-				Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
-				Robot.gyro.zeroYaw();
-			}
-
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-
-		});
+//		y_button.whenPressed(new Command() {
+//			protected void initialize() {
+//				Robot.drivetrain.getLeftTalon().setSelectedSensorPosition(0, 0, 0);
+//				Robot.drivetrain.getRightTalon().setSelectedSensorPosition(0, 0, 0);
+//				Robot.gyro.zeroYaw();
+//			}
+//
+//			@Override
+//			protected boolean isFinished() {
+//				return true;
+//			}
+//
+//		});
+		
+		a_button.whenPressed(new ToggleIntake());
+  		b_button.whenPressed(new ToggleIntakeContracted());
+  		y_button.whenPressed(new EjectCube());
+  		
+  		right_middle.whenPressed(new ElevatorHome());
+  		
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
@@ -134,7 +142,7 @@ public class OI {
 			}
 			
 		});
-		right_middle.whenPressed(new Command() { //Toggle between intake and climber
+		x_button.whenPressed(new Command() { //Toggle between intake and climber
 			 protected void initialize() { 
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
