@@ -28,7 +28,6 @@ import org.usfirst.frc.team4541.robot.commandGroups.RightSwitch;
 import org.usfirst.frc.team4541.robot.commands.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
-import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
@@ -197,7 +196,7 @@ public class Robot extends TimedRobot {
 		// SmartDashboard.putNumber("Right Error: ",
 		// drivetrain.getRightTalon().getClosedLoopError(0));
 		Scheduler.getInstance().run();
-		// oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
+		 oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 	}
 
 	/**

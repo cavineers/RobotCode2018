@@ -20,7 +20,6 @@ import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
-import org.usfirst.frc.team4541.robot.commands.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntakeContracted;
@@ -191,17 +190,5 @@ public class OI {
 		else
 			input = Math.pow(input, 2);
 		return input;
-	}
-
-	public void updateElevatorControl() {
-		double upTrig = Robot.oi.getJoystick().getRawAxis(3);
-		double downTrig = Robot.oi.getJoystick().getRawAxis(2);
-		if (upTrig > 0.05 || downTrig > 0.05) {
-			if (!Robot.elevator.getCurrentCommandName().equals(Robot.elevator.getDefaultCommandName())) {
-				new ManualMoveElevator().start(); // Restart manual control if
-													// it had been suspended for
-													// PID control
-			}
-		}
 	}
 }
