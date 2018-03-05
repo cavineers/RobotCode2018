@@ -57,7 +57,6 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static CompressorSystem compressor;
 
-	@Deprecated // trackball will be removed soon in favor of encoders on wheels
 	public static Climber climber;
 
 	SendableChooser<Command> m_chooser = new SendableChooser<>();

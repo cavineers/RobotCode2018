@@ -119,10 +119,10 @@ public class DriveTrain extends Subsystem {
 		rightMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
 		rightMotor1.config_kF(0, 0.8525, Constants.kTimeoutMs);
-		rightMotor1.config_kP(0, 0.181, Constants.kTimeoutMs); //was 0.8
+		rightMotor1.config_kP(0, 10, Constants.kTimeoutMs); //was 0.8
 
-		rightMotor1.config_kI(0, 0, Constants.kTimeoutMs); //0.045
-		rightMotor1.config_kD(0, 0, Constants.kTimeoutMs);
+		rightMotor1.config_kI(0, 0.04, Constants.kTimeoutMs); //0.045
+		rightMotor1.config_kD(0, 90, Constants.kTimeoutMs);
 
 		/* Our profile uses 50ms timing */
 		rightMotor1.configMotionProfileTrajectoryPeriod(10, Constants.kTimeoutMs); 
@@ -136,10 +136,10 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.setSensorPhase(false); /* keep sensor and motor in phase */
 		leftMotor1.configNeutralDeadband(Constants.kNeutralDeadband, Constants.kTimeoutMs);
 
-		leftMotor1.config_kF(0, 0.8525, Constants.kTimeoutMs); //1.7 according to math; was 1.2 for other carpet
-		leftMotor1.config_kP(0, 0.181, Constants.kTimeoutMs); //0.45 at first, 0.5
-		leftMotor1.config_kI(0, 0, Constants.kTimeoutMs); //2.5, 0, 50
-		leftMotor1.config_kD(0, 1.8, Constants.kTimeoutMs);
+		leftMotor1.config_kF(0, 0.86, Constants.kTimeoutMs); //1.7 according to math; was 1.2 for other carpet
+		leftMotor1.config_kP(0, 10, Constants.kTimeoutMs); //0.45 at first, 0.5
+		leftMotor1.config_kI(0, 0.04, Constants.kTimeoutMs); //2.5, 0
+		leftMotor1.config_kD(0, 90, Constants.kTimeoutMs); //50
 		
 	
 		leftMotor1.configMotionProfileTrajectoryPeriod(10, Constants.kTimeoutMs); 
