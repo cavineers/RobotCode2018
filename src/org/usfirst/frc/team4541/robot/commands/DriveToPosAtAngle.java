@@ -59,7 +59,6 @@ public class DriveToPosAtAngle extends Command {
 		aController.setOutputRange(-1, 1);
 		aController.setContinuous(true);
 		aController.setPercentTolerance(1);
-		
 		ySource = new PIDSource() {
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {

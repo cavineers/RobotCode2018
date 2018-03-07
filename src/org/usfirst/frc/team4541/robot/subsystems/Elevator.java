@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4541.robot.subsystems;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
-
+import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.NewManual;
 import org.usfirst.frc.team4541.robot.commands.TestMotorOutput;
 
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Elevator extends Subsystem {
-	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(0);
+	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor);
 	private PIDController pidVel;
 	private PIDController pidMotorOutput;
 	private double manualVelocity = 9999;
@@ -127,6 +127,8 @@ public class Elevator extends Subsystem {
 
 		elevatorMotor.setSelectedSensorPosition(0, 0, 0); // TODO: zeroes encoder
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
+		
+		pidVel.setSetpoint(500);
 	}
 
 	public void initDefaultCommand() {

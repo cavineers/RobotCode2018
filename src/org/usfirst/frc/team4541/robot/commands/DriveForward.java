@@ -5,13 +5,15 @@ import org.usfirst.frc.team4541.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForward extends Command{
-	public DriveForward (double timeout) {
+	double velocity;
+	public DriveForward (double velocity, double timeout) {
 		this.setTimeout(timeout);
 		requires(Robot.drivetrain);
+		this.velocity = velocity;
 	}
 	
 	protected void initialize() {
-		Robot.drivetrain.drive(0.3, 0);
+		Robot.drivetrain.drive(velocity, 0);
 	}
 	@Override
 	protected boolean isFinished() {

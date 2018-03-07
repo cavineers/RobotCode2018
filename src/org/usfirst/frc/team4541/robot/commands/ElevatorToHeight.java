@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4541.robot.commands;
 
+import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,7 +45,7 @@ public class ElevatorToHeight extends Command {
 	protected boolean isFinished() {
 		double upTrig = Robot.oi.getJoystick().getRawAxis(3);
 		double downTrig = Robot.oi.getJoystick().getRawAxis(2);
-		return Robot.elevator.getPIDVel().onTarget() || upTrig > 0.05 || downTrig > 0.05;
+		return Robot.elevator.getPIDVel().onTarget() || ((upTrig > 0.05 || downTrig > 0.05) && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR);
 
 	}
 
