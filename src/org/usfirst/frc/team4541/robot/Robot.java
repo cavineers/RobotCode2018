@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team4541.robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,8 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
-import org.usfirst.frc.team4541.robot.commandGroups.LeftSwitchPointTurn;
-import org.usfirst.frc.team4541.robot.commandGroups.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.commands.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
@@ -81,10 +82,22 @@ public class Robot extends TimedRobot {
 
 		oi.initPostSubsystemButtons();
 		SmartDashboard.putStringArray("Auto List", autoList);
+		
+		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
+		cam0.setWhiteBalanceAuto();
+		cam0.setExposureAuto();
+		cam0.setFPS(20);
+		cam0.setResolution(330, (int)(330*(9.0/16.0)));
+		
+		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+		cam1.setWhiteBalanceAuto();
+		cam1.setExposureAuto();
+		cam1.setFPS(20);
+		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		
 		// leftSwitch = new LeftSwitch();
 		// rightSwitch = new RightSwitch();
-		// CameraServer.getInstance().startAutomaticCapture(0);
 	}
 
 	/**
