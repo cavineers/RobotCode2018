@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4541.robot.commands;
+package org.usfirst.frc.team4541.robot.commands.auto;
 
 import org.usfirst.frc.team4541.motionProfiling.MotionProfileHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;

@@ -26,16 +26,15 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
-import org.usfirst.frc.team4541.robot.commands.DriveForward;
-import org.usfirst.frc.team4541.robot.commands.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
-import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
-import org.usfirst.frc.team4541.robot.subsystems.TrackBall;
 
 import com.kauailabs.navx.frc.AHRS;
 

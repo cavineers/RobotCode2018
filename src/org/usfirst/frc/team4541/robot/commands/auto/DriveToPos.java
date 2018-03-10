@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4541.robot.commands;
+package org.usfirst.frc.team4541.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;

@@ -2,8 +2,8 @@ package org.usfirst.frc.team4541.robot.subsystems;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.RobotMap;
-import org.usfirst.frc.team4541.robot.commands.NewManual;
-import org.usfirst.frc.team4541.robot.commands.TestMotorOutput;
+import org.usfirst.frc.team4541.robot.commands.elevator.NewManual;
+import org.usfirst.frc.team4541.robot.commands.elevator.TestMotorOutput;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -35,8 +35,8 @@ public class Elevator extends Subsystem {
 	private double I_Vel = 0;
 	private double D_Vel = 0;
 
-	private double period = .025; 
-	
+	private double period = .025;
+
 	public DigitalInput limitSwitch;
 
 	public boolean limitSwitch2;
@@ -92,23 +92,21 @@ public class Elevator extends Subsystem {
 				return vel_sourceType;
 			}
 
-		},
+		}, new PIDOutput() {
+			@Override
+			public void pidWrite(double d) {
+				// compare what PID says to trigger
 
-				new PIDOutput() {
-					@Override
-					public void pidWrite(double d) {
-						// compare what PID says to trigger
+				if (manualVelocity == 9999)
+					getPIDMotorOutput().setSetpoint(d);
 
-						if (manualVelocity == 9999)
-							getPIDMotorOutput().setSetpoint(d);
+				else if (manualVelocity > 0)
+					getPIDMotorOutput().setSetpoint(Math.min(d, manualVelocity));
+				else
+					getPIDMotorOutput().setSetpoint(Math.max(d, manualVelocity));
 
-						else if (manualVelocity > 0)
-							getPIDMotorOutput().setSetpoint(Math.min(d, manualVelocity));
-						else
-							getPIDMotorOutput().setSetpoint(Math.max(d, manualVelocity));
-
-					}
-				}, period );
+			}
+		}, period);
 
 		pidVel.setInputRange(ElevatorConstants.minElevatorHeight, ElevatorConstants.maxElevatorHeight);
 		pidVel.setSetpoint(0);
@@ -125,15 +123,16 @@ public class Elevator extends Subsystem {
 		pidMotorOutput.setSetpoint(0);
 		pidMotorOutput.disable();
 
-		elevatorMotor.setSelectedSensorPosition(0, 0, 0); // TODO: zeroes encoder
+		elevatorMotor.setSelectedSensorPosition(0, 0, 0); // TODO: zeroes
+															// encoder
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
-		
+
 		pidVel.setSetpoint(500);
 	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new NewManual());
-		//setDefaultCommand(new TestMotorOutput());
+		// setDefaultCommand(new TestMotorOutput());
 	}
 
 	public WPI_TalonSRX getElevatorMotor() {

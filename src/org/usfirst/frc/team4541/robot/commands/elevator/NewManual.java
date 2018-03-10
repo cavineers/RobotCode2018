@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4541.robot.commands;
+package org.usfirst.frc.team4541.robot.commands.elevator;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;

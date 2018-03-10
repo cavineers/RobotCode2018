@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToggleIntake extends Command {
+public class ToggleIntakeWheels extends Command {
 
-	public ToggleIntake() {
+	public ToggleIntakeWheels() {
 		requires(Robot.intake);
 	}
 

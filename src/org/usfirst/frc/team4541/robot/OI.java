@@ -15,18 +15,18 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
-import org.usfirst.frc.team4541.robot.commands.BriefRumble;
-import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
-import org.usfirst.frc.team4541.robot.commands.DrivePath;
-import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
+import org.usfirst.frc.team4541.robot.commands.control.BriefRumble;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
-import org.usfirst.frc.team4541.robot.commands.ElevatorHome;
-import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
+import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
+import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
-import org.usfirst.frc.team4541.robot.commands.ToggleIntake;
+import org.usfirst.frc.team4541.robot.commands.ToggleIntakeWheels;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntakeContracted;
-import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
+import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.control.ChangeTriggerMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -122,7 +122,7 @@ public class OI {
 	}
 
 	public void initPostSubsystemButtons() {
-		a_button.whenPressed(new ToggleIntake());
+		a_button.whenPressed(new ToggleIntakeWheels());
   		b_button.whenPressed(new ToggleIntakeContracted());
   		y_button.whenPressed(new EjectCube());
   		

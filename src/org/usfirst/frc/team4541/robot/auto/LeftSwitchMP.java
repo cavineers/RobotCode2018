@@ -2,11 +2,11 @@ package org.usfirst.frc.team4541.robot.auto;
 
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
-import org.usfirst.frc.team4541.robot.commands.DriveForward;
-import org.usfirst.frc.team4541.robot.commands.DrivePath;
-import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
-import org.usfirst.frc.team4541.robot.commands.ElevatorToHeight;
-import org.usfirst.frc.team4541.robot.commands.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
+import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 

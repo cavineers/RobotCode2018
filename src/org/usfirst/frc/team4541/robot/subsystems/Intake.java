@@ -2,6 +2,7 @@ package org.usfirst.frc.team4541.robot.subsystems;
 
 import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
+import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.commands.MoveIntake;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -24,7 +25,7 @@ public class Intake extends Subsystem {
 	private double highCurrentStartTime = -1;
 	
 	private static final double maxCurrent      = 30; //30A 
-	private static final double highCurrentTimeAllowed = 0.5; //30A 
+	private static final double highCurrentTimeAllowed = 0.5; //half a second
 	
     public void initDefaultCommand() {
     	this.setDefaultCommand(new MoveIntake());
@@ -65,9 +66,12 @@ public class Intake extends Subsystem {
     	return false;
     }
     
-    public void updateCurrentLimit() { //if current is being limited and 
+    public void updateCurrentLimit() {
     	if (!this.isCurrentLimited) return;
-    	
+    	if (Robot.oi.currentTriggerSetting == TRIG_MODE.INTAKE) {
+    		this.isCurrentLimited = false;
+    		return;
+    	}
     	if (this.intakeMotor1.getOutputCurrent() > maxCurrent || this.intakeMotor1.getOutputCurrent() > maxCurrent) {
     		if (this.highCurrentStartTime == -1) { 
     			//Grabber just started exceeding current limit; log time
