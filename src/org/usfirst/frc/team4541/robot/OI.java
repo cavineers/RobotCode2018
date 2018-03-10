@@ -15,6 +15,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.commands.BriefRumble;
 import org.usfirst.frc.team4541.robot.commands.ChangeTriggerMode;
 import org.usfirst.frc.team4541.robot.commands.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.DriveToPosAtAngle;
@@ -36,6 +37,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+
 import java.util.Hashtable;
 
 /**
@@ -127,9 +130,13 @@ public class OI {
   		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
 			 protected void initialize() { 
+				Robot.oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+				Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 0.5);
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.CLIMBER;
 				} else {
+					Robot.oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0);
+					Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 0);
 					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
 			 }
@@ -141,8 +148,10 @@ public class OI {
 		});
 		x_button.whenPressed(new Command() { //Toggle between intake and climber
 			 protected void initialize() { 
+				new BriefRumble().start();
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
+					
 				} else {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}

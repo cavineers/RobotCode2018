@@ -58,7 +58,6 @@ public class Robot extends TimedRobot {
 	public static CompressorSystem compressor;
 
 	public static Climber climber;
-
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	public static String[] autoList = { "straight", "middle switch" };
 
@@ -95,6 +94,8 @@ public class Robot extends TimedRobot {
 		cam1.setExposureAuto();
 		cam1.setFPS(20);
 		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		
+		
 		
 		// leftSwitch = new LeftSwitch();
 		// rightSwitch = new RightSwitch();
@@ -182,11 +183,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// leftSwitch.cancel();
-		// leftSwitch.free();
-		// rightSwitch.cancel();
-		// rightSwitch.free();
-
 		// FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
 		// make sure to .cancel() auto commands when this starts
@@ -208,8 +204,10 @@ public class Robot extends TimedRobot {
 		// drivetrain.getLeftTalon().getClosedLoopError(0));
 		// SmartDashboard.putNumber("Right Error: ",
 		// drivetrain.getRightTalon().getClosedLoopError(0));
+		
 		Scheduler.getInstance().run();
-		 oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
+		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
+		intake.updateCurrentLimit();
 	}
 
 	/**
