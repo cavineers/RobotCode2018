@@ -1,3 +1,2 @@
 # RobotCode2018
-An early version of the robot code for First Robotics Team 4541. #omgrobots
-Test!1
+The 2018 robot code for First Robotics Team 4541. #omgrobots
