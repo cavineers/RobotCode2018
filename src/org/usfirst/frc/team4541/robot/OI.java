@@ -14,8 +14,11 @@ import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.LeftSwitchSide;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.RightSwitchSide;
 import org.usfirst.frc.team4541.robot.commands.control.BriefRumble;
+import org.usfirst.frc.team4541.robot.commands.control.BriefRumble.ControllerSide;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
@@ -23,6 +26,7 @@ import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntakeWheels;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
@@ -87,7 +91,6 @@ public class OI {
 //			}
 //
 //		});
-		
 		r_bump.whenPressed(new ShiftGear(false));
 		l_bump.whenPressed(new ShiftGear(true));
 	}
@@ -125,6 +128,10 @@ public class OI {
 		a_button.whenPressed(new ToggleIntakeWheels());
   		b_button.whenPressed(new ToggleIntakeContracted());
   		y_button.whenPressed(new EjectCube());
+//  		x_button.whenPressed(new DrivePath(PATHS.LEFT_SWITCH));
+//  		x_button.whenPressed(new TurnToAngle(90));
+//  		x_button.whenPressed(new DriveForward(0.2, 0.2));
+  		x_button.whenPressed(new RightSwitchSide());
   		
   		right_middle.whenPressed(new ElevatorHome());
   		
@@ -146,23 +153,22 @@ public class OI {
 			}
 			
 		});
-		x_button.whenPressed(new Command() { //Toggle between intake and climber
-			 protected void initialize() { 
-				new BriefRumble().start();
-				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
-					
-				} else {
-					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
-				}
-			 }
-			@Override
-			protected boolean isFinished() {
-				return true;
-			}
-			
-		});
-		
+//		x_button.whenPressed(new Command() { //Toggle between intake and climber
+//			 protected void initialize() { 
+//				new BriefRumble(0.25, ControllerSide.BOTH).start();
+//				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
+//					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
+//					
+//				} else {
+//					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
+//				}
+//			 }
+//			@Override
+//			protected boolean isFinished() {
+//				return true;
+//			}
+//			
+//		});
 	}
 
 	public Joystick getJoystick() {

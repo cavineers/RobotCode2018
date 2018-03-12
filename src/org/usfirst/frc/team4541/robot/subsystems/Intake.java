@@ -4,6 +4,7 @@ import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.commands.MoveIntake;
+import org.usfirst.frc.team4541.robot.commands.control.rightLeftRumble;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -80,6 +81,8 @@ public class Intake extends Subsystem {
 				//Grabber exceeded max current for longer than allowed; shut off timer
 				Robot.intake.setIntakeSpeed(0);
 	    		Robot.intake.isCurrentLimited = false;
+	    		new rightLeftRumble().start();
+	    		System.out.println("GRABBER EXCEEDED CURRENT LIMIT");
     		}
     	} else {
     		//if neither of the grabber motors are exceeding the current limit, set currentStartTime to -1

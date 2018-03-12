@@ -15,6 +15,7 @@ public class NewManual extends Command {
 	double upTrig;
 	double downTrig;
 	boolean changePos = false;
+	double velI;
 
 	public NewManual() {
 
@@ -27,6 +28,8 @@ public class NewManual extends Command {
 		Robot.elevator.getPIDVel().enable();
 		elevPos = Robot.elevator.getElevatorPos();
 		SmartDashboard.putNumber("Elevator Height (NewManual)", elevPos);
+		velI = Robot.elevator.getPIDVel().getI();
+		Robot.elevator.getPIDVel().setI(0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -69,8 +72,9 @@ public class NewManual extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevator.getPIDMotorOutput().disable();
-		Robot.elevator.getPIDVel().disable();
+		Robot.elevator.getPIDMotorOutput().reset();
+		Robot.elevator.getPIDVel().reset();
+		Robot.elevator.getPIDVel().setI(this.velI);
 	}
 
 	// Called when another command which requires one or more of the same

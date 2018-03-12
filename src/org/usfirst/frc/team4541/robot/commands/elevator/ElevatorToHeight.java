@@ -14,8 +14,6 @@ public class ElevatorToHeight extends Command {
 	public ElevatorToHeight(double theight) {
 		requires(Robot.elevator);
 		this.targetHeight = theight;
-
-		SmartDashboard.putNumber("Target Height (ElevatorToHeight)", targetHeight);
 	}
 
 	protected void initialize() {
@@ -27,15 +25,8 @@ public class ElevatorToHeight extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
-		double elevPos = Robot.elevator.getElevatorPos();
-		targetHeight = SmartDashboard.getNumber("Target Height (ElevatorToHeight)", -1);
-		Robot.elevator.getPIDVel().setSetpoint(targetHeight);
-
-		SmartDashboard.putNumber("Current Height (ElevatorToHeight)",
-				Robot.elevator.getElevatorMotor().getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Height Error (ElevatorToHeight)", Robot.elevator.getPIDVel().getError());
-
+		Robot.elevator.getPIDVel().setSetpoint(this.targetHeight);
+		SmartDashboard.putNumber("Current Height (ElevatorToHeight)", Robot.elevator.getElevatorPos());
 	}
 
 	protected void interrupted() {
@@ -50,8 +41,8 @@ public class ElevatorToHeight extends Command {
 	}
 
 	protected void end() {
-		Robot.elevator.getPIDVel().disable();
-		Robot.elevator.getPIDMotorOutput().disable();
+		Robot.elevator.getPIDVel().reset();
+		Robot.elevator.getPIDMotorOutput().reset();
 	}
 
 }

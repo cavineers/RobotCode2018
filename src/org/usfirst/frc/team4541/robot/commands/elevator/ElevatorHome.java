@@ -23,15 +23,12 @@ public class ElevatorHome extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.getPIDVel().disable();
-		Robot.elevator.getPIDMotorOutput().disable();
-		Robot.elevator.getElevatorMotor().setSelectedSensorPosition(0, 0, 0); // zeroes encoder
-		Robot.elevator.getPIDVel().setSetpoint(0);
+		Robot.elevator.getPIDVel().reset();
+		Robot.elevator.getPIDMotorOutput().reset();
 		Robot.elevator.getElevatorMotor().setNeutralMode(NeutralMode.Brake);
 		Robot.elevator.getElevatorMotor().set(ControlMode.PercentOutput, .7);
 		step = 1;
-		setTimeout(30);
-		Robot.elevator.limitSwitch2 = false;
+		setTimeout(5);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -46,7 +43,7 @@ public class ElevatorHome extends Command {
 			break;
 
 		case 2:
-			if (Robot.elevator.limitSwitch2) {
+			if (!Robot.elevator.limitSwitch.get()) {
 				Robot.elevator.getElevatorMotor().setSelectedSensorPosition(0, 0, 0);
 				Robot.elevator.getPIDVel().setSetpoint(0);
 				Robot.elevator.getElevatorMotor().stopMotor();

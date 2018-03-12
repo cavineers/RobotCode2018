@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		// SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
+		 SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
 		// SmartDashboard.putNumber("Left Encoder: ",
 		// drivetrain.getLeftTalon().getSelectedSensorPosition(0));
 		// SmartDashboard.putNumber("Right Encoder: ",
@@ -207,6 +207,8 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 		intake.updateCurrentLimit();
+		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
+		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
 	}
 
 	/**

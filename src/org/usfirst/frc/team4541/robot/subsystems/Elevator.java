@@ -29,17 +29,15 @@ public class Elevator extends Subsystem {
 	private double P_Out = 0.00001;
 	private double I_Out = 0;
 	private double D_Out = 0.0001;
-	private double F_Out = .0005;
+	private double F_Out = 1.0/3000.0;
 
-	private double P_Vel = 0.1;
-	private double I_Vel = 0;
-	private double D_Vel = 0;
+	private double P_Vel = 0.95;
+	private double I_Vel = 0.0001;
+	private double D_Vel = 1.0;
 
 	private double period = .025;
 
 	public DigitalInput limitSwitch;
-
-	public boolean limitSwitch2;
 
 	public Elevator() {
 
@@ -112,7 +110,7 @@ public class Elevator extends Subsystem {
 		pidVel.setSetpoint(0);
 		pidVel.setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
 		pidVel.setContinuous(false);
-		pidVel.setPercentTolerance(.05);
+		pidVel.setPercentTolerance(.5);
 		pidVel.disable();
 		// output of pidVel is setpoint of pidMotorOutput
 
@@ -123,11 +121,8 @@ public class Elevator extends Subsystem {
 		pidMotorOutput.setSetpoint(0);
 		pidMotorOutput.disable();
 
-		elevatorMotor.setSelectedSensorPosition(0, 0, 0); // TODO: zeroes
-															// encoder
+		elevatorMotor.setSelectedSensorPosition(-500, 0, 0);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
-
-		pidVel.setSetpoint(500);
 	}
 
 	public void initDefaultCommand() {

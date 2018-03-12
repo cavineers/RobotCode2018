@@ -7,6 +7,7 @@ import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
@@ -20,6 +21,7 @@ public class LeftSwitchPointTurn extends CommandGroup {
 //    	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight / 2));
 //    	addSequential(new DrivePath(PATHS.LEFT_SWITCH));
 //    	addSequential(new EjectCube());
+    	addSequential(new ZeroYaw());
     	addSequential(new setIntakeContracted(true)); 
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator
     	
