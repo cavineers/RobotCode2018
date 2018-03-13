@@ -34,7 +34,7 @@ public class NewManual extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.elevator.updatePIDVals(false);
+		Robot.elevator.updatePIDVals();
 		if (Robot.oi.currentTriggerSetting != TRIG_MODE.ELEVATOR) {
 			return;
 		}
