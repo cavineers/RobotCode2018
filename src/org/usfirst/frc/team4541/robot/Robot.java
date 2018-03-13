@@ -205,6 +205,7 @@ public class Robot extends TimedRobot {
 		// drivetrain.getRightTalon().getClosedLoopError(0));
 		
 		Scheduler.getInstance().run();
+		
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 		intake.updateCurrentLimit();
 		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());

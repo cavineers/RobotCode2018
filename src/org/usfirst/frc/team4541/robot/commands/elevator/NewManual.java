@@ -15,6 +15,7 @@ public class NewManual extends Command {
 	double upTrig;
 	double downTrig;
 	boolean changePos = false;
+	boolean isLastUp    = false;
 	double velI;
 
 	public NewManual() {
@@ -46,19 +47,25 @@ public class NewManual extends Command {
 
 		if (upTrig < 0.05 && downTrig < 0.05 || upTrig > 0.05 && downTrig > 0.05) {
 			if (changePos) {
-				Robot.elevator.getPIDVel().setSetpoint(elevPos);
 				changePos = false;
 				Robot.elevator.setTriggerValue(9999);
+				if(isLastUp) {
+					Robot.elevator.getPIDVel().setSetpoint(elevPos + 300);
+				} else {
+					Robot.elevator.getPIDVel().setSetpoint(elevPos - 300);
+				}
 			}
 		}
 
 		if (upTrig > 0.05 && downTrig < 0.05) {
-			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * upTrig);
+			isLastUp = true;
+			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
 			changePos = true;
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
 		}
 		if (downTrig > 0.05 && upTrig < 0.05) {
-			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * downTrig));
+			isLastUp = false;
+			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
 			changePos = true;
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.minElevatorHeight);
 		}
