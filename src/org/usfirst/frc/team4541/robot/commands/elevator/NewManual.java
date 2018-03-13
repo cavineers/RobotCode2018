@@ -19,14 +19,11 @@ public class NewManual extends Command {
 	double velI;
 
 	public NewManual() {
-
 		requires(Robot.elevator);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.getPIDMotorOutput().enable();
-		Robot.elevator.getPIDVel().enable();
 		elevPos = Robot.elevator.getElevatorPos();
 		SmartDashboard.putNumber("Elevator Height (NewManual)", elevPos);
 		velI = Robot.elevator.getPIDVel().getI();
@@ -79,8 +76,6 @@ public class NewManual extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevator.getPIDMotorOutput().reset();
-		Robot.elevator.getPIDVel().reset();
 	}
 
 	// Called when another command which requires one or more of the same

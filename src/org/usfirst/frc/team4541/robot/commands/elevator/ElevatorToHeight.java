@@ -17,8 +17,6 @@ public class ElevatorToHeight extends Command {
 	}
 
 	protected void initialize() {
-		Robot.elevator.getPIDVel().enable();
-		Robot.elevator.getPIDMotorOutput().enable();
 		Robot.elevator.getPIDVel().setSetpoint(targetHeight);
 
 	}
@@ -42,8 +40,6 @@ public class ElevatorToHeight extends Command {
 	}
 
 	protected void end() {
-		Robot.elevator.getPIDVel().reset();
-		Robot.elevator.getPIDMotorOutput().reset();
 	}
 
 }

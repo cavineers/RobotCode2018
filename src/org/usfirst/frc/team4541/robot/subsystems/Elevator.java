@@ -116,7 +116,7 @@ public class Elevator extends Subsystem {
 		pidVel.setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
 		pidVel.setContinuous(false);
 		pidVel.setPercentTolerance(.5);
-		pidVel.disable();
+		pidVel.enable();
 		// output of pidVel is setpoint of pidMotorOutput
 
 		pidMotorOutput.setInputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
@@ -124,7 +124,7 @@ public class Elevator extends Subsystem {
 		pidMotorOutput.setContinuous(false);
 		pidMotorOutput.setPercentTolerance(1);
 		pidMotorOutput.setSetpoint(0);
-		pidMotorOutput.disable();
+		pidMotorOutput.enable();
 
 		elevatorMotor.setSelectedSensorPosition(-500, 0, 0);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
