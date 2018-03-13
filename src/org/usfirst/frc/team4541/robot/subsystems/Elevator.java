@@ -26,14 +26,23 @@ public class Elevator extends Subsystem {
 	private PIDController pidMotorOutput;
 	private double manualVelocity = 9999;
 
-	private double P_Out = 0.00001;
-	private double I_Out = 0;
-	private double D_Out = 0.0001;
-	private double F_Out = 1.0/3000.0;
+	private double P_Out_Up = 0.00001;
+	private double I_Out_Up = 0;
+	private double D_Out_Up = 0.0001;
+	private double F_Out_Up = 1.0 / 3000.0;
 
-	private double P_Vel = 0.95;
-	private double I_Vel = 0.0001;
-	private double D_Vel = 1.0;
+	private double P_Vel_Up = 0.95;
+	private double I_Vel_Up = 0.0001;
+	private double D_Vel_Up = 1.0;
+
+	private double P_Out_Down = 0.00001;
+	private double I_Out_Down = 0;
+	private double D_Out_Down = 0.0005;
+	private double F_Out_Down = 0.0001;
+
+	private double P_Vel_Down = 0.95;
+	private double I_Vel_Down = 0.0001;
+	private double D_Vel_Down = 1.0;
 
 	private double period = .025;
 
@@ -46,7 +55,7 @@ public class Elevator extends Subsystem {
 		elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		elevatorMotor.setSensorPhase(true); /* keep sensor and motor in phase */
 
-		pidMotorOutput = new PIDController(P_Out, I_Out, D_Out, F_Out, new PIDSource() {
+		pidMotorOutput = new PIDController(P_Out_Up, I_Out_Up, D_Out_Up, F_Out_Up, new PIDSource() {
 			PIDSourceType out_sourceType = PIDSourceType.kRate;
 
 			@Override
@@ -72,7 +81,7 @@ public class Elevator extends Subsystem {
 					}
 				}, period);
 
-		pidVel = new PIDController(P_Vel, I_Vel, D_Vel, new PIDSource() {
+		pidVel = new PIDController(P_Vel_Up, I_Vel_Up, D_Vel_Up, new PIDSource() {
 			PIDSourceType vel_sourceType = PIDSourceType.kDisplacement;
 
 			@Override
@@ -128,6 +137,50 @@ public class Elevator extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new NewManual());
 		// setDefaultCommand(new TestMotorOutput());
+	}
+
+	/*
+	 * called in execute() for all commands using elevator; changes PID vals
+	 * based on direction
+	 */
+	public void updatePIDVals(boolean useI) {
+		if (pidVel.get() > 0) { // moving up
+			this.getPIDVel().setP(P_Vel_Up);
+			this.getPIDVel().setD(D_Vel_Up);
+
+			this.getPIDMotorOutput().setP(F_Out_Up);
+			this.getPIDMotorOutput().setP(P_Out_Up);
+			this.getPIDMotorOutput().setD(D_Out_Up);
+			
+			if (useI) {
+				this.getPIDMotorOutput().setI(I_Out_Up);
+			} else {
+				this.getPIDMotorOutput().setI(0);
+			}
+			if (useI) {
+				this.getPIDVel().setI(I_Vel_Up);
+			} else {
+				this.getPIDVel().setI(0);
+			}
+		} else {
+			this.getPIDVel().setP(P_Vel_Down);
+			this.getPIDVel().setD(D_Vel_Down);
+			
+			this.getPIDMotorOutput().setP(F_Out_Down);
+			this.getPIDMotorOutput().setP(P_Out_Down);
+			this.getPIDMotorOutput().setD(D_Out_Down);
+			
+			if (useI) {
+				this.getPIDVel().setI(I_Vel_Down);
+			} else {
+				this.getPIDVel().setI(0);
+			}
+			if (useI) {
+				this.getPIDMotorOutput().setI(I_Out_Down);
+			} else {
+				this.getPIDMotorOutput().setI(0);
+			}
+		}
 	}
 
 	public WPI_TalonSRX getElevatorMotor() {

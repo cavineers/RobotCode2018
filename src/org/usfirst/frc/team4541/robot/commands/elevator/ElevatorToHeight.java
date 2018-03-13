@@ -25,6 +25,7 @@ public class ElevatorToHeight extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.elevator.updatePIDVals(true);
 		Robot.elevator.getPIDVel().setSetpoint(this.targetHeight);
 		SmartDashboard.putNumber("Current Height (ElevatorToHeight)", Robot.elevator.getElevatorPos());
 	}
