@@ -149,11 +149,11 @@ public class Robot extends TimedRobot {
 //		new DriveForward(4).start();
 
 		// String gameData =
-		// DriverStation.getInstance().getGameSpecificMessage();
+//		 DriverStation.getInstance().getGameSpecificMessage();
 		// if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
 		// this.leftSwitch.start();
 		// } else {
-		// this.rightSwitch.start();
+//		 this.rightSwitch.start();
 		// }
 	}
 
