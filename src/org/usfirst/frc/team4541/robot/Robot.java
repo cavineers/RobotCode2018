@@ -25,8 +25,8 @@ import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.auto.FieldState;
-import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
@@ -139,21 +139,20 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		 drivetrain.drive(0.5, 0);
 		// SmartDashboard.putNumber("Left Speed: ",
 		// drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
 		// SmartDashboard.putNumber("Right Speed: ",
 		// drivetrain.getRightTalon().getSelectedSensorVelocity(0));
-		if (this.isEnabled()) {
-			System.out.print(drivetrain.getRightTalon().get());
-			System.out.print(",");
-			System.out.print(drivetrain.getLeftTalon().get());
-			System.out.print(",");
-			System.out.print(drivetrain.getRightTalon().getSelectedSensorVelocity(0));
-			System.out.print(",");
-			System.out.print(drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
-			System.out.println();
-		}
+//		if (this.isEnabled()) {
+//			System.out.print(drivetrain.getRightTalon().get());
+//			System.out.print(",");
+//			System.out.print(drivetrain.getLeftTalon().get());
+//			System.out.print(",");
+//			System.out.print(drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+//			System.out.print(",");
+//			System.out.print(drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
+//			System.out.println();
+//		}
 	}
 
 	@Override
@@ -169,10 +168,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		 SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
-		// SmartDashboard.putNumber("Left Encoder: ",
-		// drivetrain.getLeftTalon().getSelectedSensorPosition(0));
-		// SmartDashboard.putNumber("Right Encoder: ",
-		// drivetrain.getRightTalon().getSelectedSensorPosition(0));
+		 SmartDashboard.putNumber("Left Encoder: ",
+		 drivetrain.getLeftTalon().getSelectedSensorPosition(0));
+		 SmartDashboard.putNumber("Right Encoder: ",
+		 drivetrain.getRightTalon().getSelectedSensorPosition(0));
 		// SmartDashboard.putNumber("ElevatorPos: ",
 		// elevator.elevatorMotor.getSelectedSensorPosition(0));
 		// SmartDashboard.putNumber("Left Error: ",

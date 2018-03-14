@@ -13,10 +13,10 @@ import java.util.Hashtable;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
-import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
-import org.usfirst.frc.team4541.robot.auto.LeftSwitchSide;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchSide;
+import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.LeftSwitchSide;
 import org.usfirst.frc.team4541.robot.commands.control.BriefRumble;
 import org.usfirst.frc.team4541.robot.commands.control.BriefRumble.ControllerSide;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
@@ -131,7 +131,7 @@ public class OI {
 //  		x_button.whenPressed(new DrivePath(PATHS.LEFT_SWITCH));
 //  		x_button.whenPressed(new TurnToAngle(90));
 //  		x_button.whenPressed(new DriveForward(0.2, 0.2));
-  		x_button.whenPressed(new RightSwitchSide());
+  		x_button.whenPressed(new LeftSwitchSide());
   		
   		right_middle.whenPressed(new ElevatorHome());
   		
