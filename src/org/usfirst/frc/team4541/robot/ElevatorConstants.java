@@ -13,5 +13,7 @@ public class ElevatorConstants {
 	public static final double pulsesPerInch = 500; 
 	public static final double maxSpeed = 3000; //pulses per 100ms
 	public static final double twoInches = 2*pulsesPerInch;
+	public static final double maxA = 1600; //pulses per 100ms ^2
+
 	
 }
