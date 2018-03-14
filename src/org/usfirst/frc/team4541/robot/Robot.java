@@ -24,8 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
+import org.usfirst.frc.team4541.robot.auto.FieldState;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
@@ -57,11 +59,10 @@ public class Robot extends TimedRobot {
 	public static CompressorSystem compressor;
 
 	public static Climber climber;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
-	public static String[] autoList = { "straight", "middle switch" };
+	SendableChooser<FieldState.RobotPos> posChooser = new SendableChooser<>();
+	public static String[] posList = { "middle", "right", "left" };
+	public static FieldState fieldState;
 
-	// LeftSwitch leftSwitch;
-	// RightSwitch rightSwitch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -79,7 +80,12 @@ public class Robot extends TimedRobot {
 		climber = new Climber();
 
 		oi.initPostSubsystemButtons();
-		SmartDashboard.putStringArray("Auto List", autoList);
+		
+		posChooser = new SendableChooser<RobotPos>();
+		posChooser.addDefault("Middle", FieldState.RobotPos.MIDDLE);
+		posChooser.addObject("Right", FieldState.RobotPos.RIGHT);
+		posChooser.addObject("Left", FieldState.RobotPos.LEFT);
+		SmartDashboard.putData(posChooser);
 		
 		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
@@ -93,11 +99,6 @@ public class Robot extends TimedRobot {
 		cam1.setExposureAuto();
 		cam1.setFPS(20);
 		cam1.setResolution(330, (int)(330*(9.0/16.0)));
-		
-		
-		
-		// leftSwitch = new LeftSwitch();
-		// rightSwitch = new RightSwitch();
 	}
 
 	/**
@@ -107,7 +108,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
@@ -129,32 +129,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-		// String autoSelected = SmartDashboard.getString("Auto List",
-		// "straight");
-		// switch (autoSelected) {
-		// case "straight":
-		// new CommandGroup() {
-		// protected void initialize() {
-		// this.addSequential(new DriveForward(4));
-		// }
-		// }.start();
-		// break;
-		// case "middle switch":
-		// switchAuto.start();
-		// new DrivePath(PATHS.LEFT_SWITCH).start();
-		// new PIDMoveElevator(Constants.maxElevatorHeight / 4).start();
-		// this.leftSwitch.start();
-		// }
-//		new DriveForward(4).start();
-
-		// String gameData =
-//		 DriverStation.getInstance().getGameSpecificMessage();
-		// if (gameData.charAt(0) == 'L' || gameData.charAt(0) == 'l') {
-		// this.leftSwitch.start();
-		// } else {
-//		 this.rightSwitch.start();
-		// }
+		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), posChooser.getSelected());
+		fieldState.getDesiredAuto().start();
 	}
 
 	/**
