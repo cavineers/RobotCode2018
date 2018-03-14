@@ -25,6 +25,7 @@ public class Elevator extends Subsystem {
 	private PIDController pidVel;
 	private PIDController pidMotorOutput;
 	private double manualVelocity = 9999;
+	private double prevOutput = 0;
 
 	private double P_Out_Up = 0.00001;
 	private double D_Out_Up = 0.0001;
@@ -99,7 +100,17 @@ public class Elevator extends Subsystem {
 			@Override
 			public void pidWrite(double d) {
 				// compare what PID says to trigger
-
+				if(Math.abs(d-prevOutput) > ElevatorConstants.maxA/4) {
+					if(d>prevOutput) {
+						d=prevOutput + ElevatorConstants.maxA/4;
+					}
+					else {
+						d=prevOutput - ElevatorConstants.maxA/4;
+					}
+				}
+				
+				prevOutput = d;
+     
 				if (manualVelocity == 9999)
 					getPIDMotorOutput().setSetpoint(d);
 
@@ -136,28 +147,19 @@ public class Elevator extends Subsystem {
 	}
 
 	/*
-	 * called in execute() for all commands using elevator; changes PID vals
-	 * based on direction
+	 * called in execute() for all commands using elevator; changes PID vals based
+	 * on direction
 	 */
 	public void updatePIDVals() {
-		if (pidVel.get() > 0) { // moving up
-			this.getPIDVel().setP(P_Vel_Up);
-			this.getPIDVel().setI(0);
-			this.getPIDVel().setD(D_Vel_Up);
+		if (pidVel.getError() >= 0) { // moving up
+			this.getPIDVel().setPID(P_Vel_Up, 0, D_Vel_Up);
 
-			this.getPIDMotorOutput().setF(F_Out_Up);
-			this.getPIDMotorOutput().setP(P_Out_Up);
-			this.getPIDMotorOutput().setI(0);
-			this.getPIDMotorOutput().setD(D_Out_Up);
+			this.getPIDMotorOutput().setPID(P_Out_Up, 0, D_Out_Up, F_Out_Up);
+
 		} else {
-			this.getPIDVel().setP(P_Vel_Down);
-			this.getPIDVel().setI(0);
-			this.getPIDVel().setD(D_Vel_Down);
-			
-			this.getPIDMotorOutput().setF(F_Out_Down);
-			this.getPIDMotorOutput().setP(P_Out_Down);
-			this.getPIDMotorOutput().setI(0);
-			this.getPIDMotorOutput().setD(D_Out_Down);
+			this.getPIDVel().setPID(P_Vel_Down, 0, D_Vel_Down);
+
+			this.getPIDMotorOutput().setPID(P_Out_Down, 0, D_Out_Down, F_Out_Down);
 		}
 	}
 
@@ -183,6 +185,10 @@ public class Elevator extends Subsystem {
 
 	public void setTriggerValue(double trigger) {
 		manualVelocity = trigger;
+	}
+	
+	public double getElevatorVel() {
+		return elevatorMotor.getSelectedSensorVelocity(0);
 	}
 
 }

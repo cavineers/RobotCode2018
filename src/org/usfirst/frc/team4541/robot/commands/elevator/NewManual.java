@@ -17,6 +17,8 @@ public class NewManual extends Command {
 	boolean changePos = false;
 	boolean isLastUp    = false;
 	double velI;
+	double time;
+	double newPos;
 
 	public NewManual() {
 		requires(Robot.elevator);
@@ -45,11 +47,16 @@ public class NewManual extends Command {
 		if (upTrig < 0.05 && downTrig < 0.05 || upTrig > 0.05 && downTrig > 0.05) {
 			if (changePos) {
 				changePos = false;
+				time = Math.abs(Robot.elevator.getElevatorVel()/ElevatorConstants.maxA);
+				
+				
 				Robot.elevator.setTriggerValue(9999);
 				if(isLastUp) {
-					Robot.elevator.getPIDVel().setSetpoint(elevPos + 300);
+					newPos = elevPos + Robot.elevator.getElevatorVel()*time-1/2*ElevatorConstants.maxA*Math.pow(time, 2);
+					Robot.elevator.getPIDVel().setSetpoint(newPos);
 				} else {
-					Robot.elevator.getPIDVel().setSetpoint(elevPos - 300);
+					newPos = elevPos - Robot.elevator.getElevatorVel()*time+1/2*ElevatorConstants.maxA*Math.pow(time, 2);
+					Robot.elevator.getPIDVel().setSetpoint(newPos);
 				}
 			}
 		}
