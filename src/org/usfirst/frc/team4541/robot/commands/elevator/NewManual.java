@@ -52,11 +52,14 @@ public class NewManual extends Command {
 				
 				Robot.elevator.setTriggerValue(9999);
 				if(isLastUp) {
-					newPos = elevPos + Robot.elevator.getElevatorVel()*time-1/2*ElevatorConstants.maxA*Math.pow(time, 2);
-					Robot.elevator.getPIDVel().setSetpoint(newPos);
+					
+					Robot.elevator.getPIDVel().setSetpoint(elevPos + 300);
+					//newPos = elevPos + Robot.elevator.getElevatorVel()*time-1/2*ElevatorConstants.maxA*Math.pow(time, 2);
+					//Robot.elevator.getPIDVel().setSetpoint(newPos);
 				} else {
-					newPos = elevPos - Robot.elevator.getElevatorVel()*time+1/2*ElevatorConstants.maxA*Math.pow(time, 2);
-					Robot.elevator.getPIDVel().setSetpoint(newPos);
+					Robot.elevator.getPIDVel().setSetpoint(elevPos - 300);
+					//newPos = elevPos - Robot.elevator.getElevatorVel()*time+1/2*ElevatorConstants.maxA*Math.pow(time, 2);
+					//Robot.elevator.getPIDVel().setSetpoint(newPos);
 				}
 			}
 		}
