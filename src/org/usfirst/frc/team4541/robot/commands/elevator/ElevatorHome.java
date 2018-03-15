@@ -28,7 +28,7 @@ public class ElevatorHome extends Command {
 		Robot.elevator.getElevatorMotor().setNeutralMode(NeutralMode.Brake);
 		Robot.elevator.getElevatorMotor().set(ControlMode.PercentOutput, .7);
 		step = 1;
-		setTimeout(5);
+		setTimeout(20);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
