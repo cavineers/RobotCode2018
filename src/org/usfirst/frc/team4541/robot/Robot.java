@@ -31,6 +31,7 @@ import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
@@ -108,6 +109,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+//		Scheduler.getInstance().removeAll();
+//		elevator.getPIDMotorOutput().reset();
+//		elevator.getPIDVel().reset();
 	}
 
 	@Override
@@ -157,9 +161,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// FieldPositionHelper.stopIntegration();
 		compressor.setCompressorState(true);
-		// make sure to .cancel() auto commands when this starts
 	}
 
 	/**

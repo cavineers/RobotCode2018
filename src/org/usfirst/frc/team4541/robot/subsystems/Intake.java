@@ -52,6 +52,7 @@ public class Intake extends Subsystem {
     }
     
     public void setSolenoidOpen(boolean state){
+    	System.out.println(state);
     	if (state) {
     		sol.set(DoubleSolenoid.Value.kForward);
     	} else {
@@ -63,8 +64,8 @@ public class Intake extends Subsystem {
     }
     
     public boolean getSolenoidState() {
-    	if (sol.get() == DoubleSolenoid.Value.kReverse) return true;
-    	return false;
+    	if (sol.get() == DoubleSolenoid.Value.kReverse) return false;
+    	return true;
     }
     
     public void updateCurrentLimit() {

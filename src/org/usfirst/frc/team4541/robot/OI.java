@@ -131,7 +131,7 @@ public class OI {
 //  		x_button.whenPressed(new DrivePath(PATHS.LEFT_SWITCH));
 //  		x_button.whenPressed(new TurnToAngle(90));
 //  		x_button.whenPressed(new DriveForward(0.2, 0.2));
-  		x_button.whenPressed(new LeftSwitchSide());
+//  		x_button.whenPressed(new LeftSwitchSide());
   		
   		right_middle.whenPressed(new ElevatorHome());
   		
@@ -153,22 +153,22 @@ public class OI {
 			}
 			
 		});
-//		x_button.whenPressed(new Command() { //Toggle between intake and climber
-//			 protected void initialize() { 
-//				new BriefRumble(0.25, ControllerSide.BOTH).start();
-//				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-//					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
-//					
-//				} else {
-//					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
-//				}
-//			 }
-//			@Override
-//			protected boolean isFinished() {
-//				return true;
-//			}
-//			
-//		});
+		x_button.whenPressed(new Command() { //Toggle between intake and climber
+			 protected void initialize() { 
+				new BriefRumble(0.25, ControllerSide.BOTH).start();
+				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
+					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
+					
+				} else {
+					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
+				}
+			 }
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			
+		});
 	}
 
 	public Joystick getJoystick() {

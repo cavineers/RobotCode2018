@@ -81,7 +81,11 @@ public class DriveToPosAtAngle extends Command {
 			}
 		};
 		yController = new PIDController(0.8, 0.0, 1.3, 0, ySource, yOutput);
-		yController.setInputRange(0, yObj);
+		if (yObj > 0) {
+			yController.setInputRange(0, yObj);
+		} else {
+			yController.setInputRange(yObj, 0);
+		}
 		yController.setOutputRange(-0.7, 0.7);
 		yController.setPercentTolerance(5);
 		SmartDashboard.putData(yController);
