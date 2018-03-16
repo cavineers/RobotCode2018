@@ -88,7 +88,7 @@ public class DriveToPosAtAngle extends Command {
 		}
 		yController.setOutputRange(-0.7, 0.7);
 		yController.setPercentTolerance(5);
-		SmartDashboard.putData(yController);
+//		SmartDashboard.putData(yController);
 		filter = LinearDigitalFilter.movingAverage(new PIDSource() {
 
 			@Override
@@ -103,7 +103,7 @@ public class DriveToPosAtAngle extends Command {
 
 			@Override
 			public double pidGet() {
-				System.out.println(pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos);
+//				System.out.println(pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos);
 				return pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos;
 			}
 			
@@ -121,8 +121,8 @@ public class DriveToPosAtAngle extends Command {
     	startTime = Timer.getFPGATimestamp();
 	}
     protected void execute() {
-    	SmartDashboard.putNumber("YController Setpoint", distObj);
-    	SmartDashboard.putNumber("avg error", filter.pidGet());
+//    	SmartDashboard.putNumber("YController Setpoint", distObj);
+//    	SmartDashboard.putNumber("avg error", filter.pidGet());
     	Robot.drivetrain.drive(fMovement, rMovement);
     	lastYPos = pulsesToFt(Robot.drivetrain.getDistanceMoved());
     }

@@ -24,7 +24,7 @@ public class TurnToAngle extends PIDCommand {
 		getPIDController().setAbsoluteTolerance(5);
 		getPIDController().setOutputRange(-1, 1);
 		getPIDController().setContinuous();
-		SmartDashboard.putData(getPIDController());
+//		SmartDashboard.putData(getPIDController());
 		filter = LinearDigitalFilter.movingAverage(new PIDSource() {
 
 			@Override
@@ -56,7 +56,6 @@ public class TurnToAngle extends PIDCommand {
 	
 	@Override
 	protected void initialize() {
-		SmartDashboard.putData(getPIDController());
 		getPIDController().setSetpoint(targetAngle);
 		startTime = Timer.getFPGATimestamp();
 	}

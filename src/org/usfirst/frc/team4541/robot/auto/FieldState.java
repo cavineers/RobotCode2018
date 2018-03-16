@@ -7,7 +7,7 @@ public class FieldState {
 		RIGHT, LEFT, INVALID
 	}
 	public enum RobotPos {
-		RIGHT, LEFT, MIDDLE
+		RIGHT, LEFT, MIDDLE, INVALID
 	}
 	FieldPos switchPos;
 	FieldPos scalePos;
@@ -18,6 +18,9 @@ public class FieldState {
 		this.robotPos = robotPos;
 	}
 	public Command getDesiredAuto() {
+		if (robotPos == RobotPos.INVALID) {
+			return new DriveToAutoLine(); 
+		}
 		if (robotPos == RobotPos.RIGHT) {
 			if (this.scalePos == FieldPos.RIGHT) {
 				return new RightScale();

@@ -24,8 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
+import org.usfirst.frc.team4541.robot.auto.DriveToAutoLine;
 import org.usfirst.frc.team4541.robot.auto.FieldState;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.TestEncoders;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
@@ -61,7 +63,6 @@ public class Robot extends TimedRobot {
 
 	public static Climber climber;
 	SendableChooser<FieldState.RobotPos> posChooser = new SendableChooser<>();
-	public static String[] posList = { "middle", "right", "left" };
 	public static FieldState fieldState;
 
 	/**
@@ -86,6 +87,7 @@ public class Robot extends TimedRobot {
 		posChooser.addDefault("Middle", FieldState.RobotPos.MIDDLE);
 		posChooser.addObject("Right", FieldState.RobotPos.RIGHT);
 		posChooser.addObject("Left", FieldState.RobotPos.LEFT);
+		posChooser.addObject("Straight Override", RobotPos.INVALID);
 		SmartDashboard.putData(posChooser);
 		
 		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -100,6 +102,8 @@ public class Robot extends TimedRobot {
 		cam1.setExposureAuto();
 		cam1.setFPS(20);
 		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		SmartDashboard.putData(new TestEncoders());
+		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
 	}
 
 	/**
@@ -109,9 +113,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-//		Scheduler.getInstance().removeAll();
-//		elevator.getPIDMotorOutput().reset();
-//		elevator.getPIDVel().reset();
+		Scheduler.getInstance().removeAll();
+		elevator.getPIDMotorOutput().reset();
+		elevator.getPIDVel().reset();
 	}
 
 	@Override

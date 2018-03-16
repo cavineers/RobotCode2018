@@ -150,7 +150,7 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs);
 	}
 
-	public double getDistanceMoved() {
-		return (Math.abs(this.leftMotor1.getSelectedSensorPosition(0)) + Math.abs(this.rightMotor1.getSelectedSensorPosition(0))) / 2.0;
+	public double getDistanceMoved() { //Note: right is negative as forward is the negative direction on the right side.
+		return (this.leftMotor1.getSelectedSensorPosition(0) + -this.rightMotor1.getSelectedSensorPosition(0)) / 2.0;
 	}
 }

@@ -32,8 +32,11 @@ public class RightSwitchSide extends CommandGroup {
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving at half speed for half a second
     	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at half speed while opening grabber
     	addSequential(new setIntakeContracted(false));
-    	addSequential(new DriveForward(-AutoConstants.driveForwardVel, 1.522)); //make sure that we're touching the wall by driving at half speed for half a second
-    	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at half speed whi
+    	
+    	addSequential(new TimedCommand(2));
+    	addSequential(new DriveToPosAtAngle(-2.5, -90)); //back away from the switch
+    	addSequential(new setIntakeSpeed(0));
+    	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));
     	
     }
 }

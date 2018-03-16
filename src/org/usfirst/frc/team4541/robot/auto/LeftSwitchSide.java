@@ -14,12 +14,15 @@ import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class LeftSwitchSide extends CommandGroup {
 
     public LeftSwitchSide() {
     	addSequential(new ZeroYaw());
-    	addSequential(new setIntakeContracted(true)); 
+    	addSequential(new setIntakeContracted(true));
+    	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));
+    	addSequential(new TimedCommand(1));
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator
     	
     	addSequential(new DriveToPosAtAngle(13, 0)); //drive to side of left switch
@@ -27,8 +30,12 @@ public class LeftSwitchSide extends CommandGroup {
     	addSequential(new DriveToPosAtAngle(1.5, 90));
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving at half speed for half a second
-    	addParallel(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at half speed while opening grabber
+    	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at half speed while opening grabber
     	addSequential(new setIntakeContracted(false));
     	
+    	addSequential(new TimedCommand(2));
+    	addSequential(new DriveToPosAtAngle(-2.5, 90)); //back away from the switch
+    	addSequential(new setIntakeSpeed(0));
+    	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));
     }
 }
