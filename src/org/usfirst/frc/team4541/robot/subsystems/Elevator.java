@@ -123,11 +123,9 @@ public class Elevator extends Subsystem {
 		}, period);
 
 		pidVel.setInputRange(ElevatorConstants.minElevatorHeight, ElevatorConstants.maxElevatorHeight);
-		pidVel.setSetpoint(0);
 		pidVel.setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
 		pidVel.setContinuous(false);
 		pidVel.setPercentTolerance(.5);
-		pidVel.enable();
 		// output of pidVel is setpoint of pidMotorOutput
 
 		pidMotorOutput.setInputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
@@ -135,9 +133,8 @@ public class Elevator extends Subsystem {
 		pidMotorOutput.setContinuous(false);
 		pidMotorOutput.setPercentTolerance(1);
 		pidMotorOutput.setSetpoint(0);
-		pidMotorOutput.enable();
 
-		elevatorMotor.setSelectedSensorPosition(-500, 0, 0);
+		elevatorMotor.setSelectedSensorPosition(-250, 0, 0);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
 	}
 
@@ -151,16 +148,17 @@ public class Elevator extends Subsystem {
 	 * on direction
 	 */
 	public void updatePIDVals() {
-		if (pidVel.getError() >= 0) { // moving up
-			this.getPIDVel().setPID(P_Vel_Up, 0, D_Vel_Up);
+		this.getPIDVel().setPID(P_Vel_Up, 0, D_Vel_Up);
 
-			this.getPIDMotorOutput().setPID(P_Out_Up, 0, D_Out_Up, F_Out_Up);
-
-		} else {
+		this.getPIDMotorOutput().setPID(P_Out_Up, 0, D_Out_Up, F_Out_Up);
+		
+		if (pidVel.getError() <= 0) { // moving down
 			this.getPIDVel().setPID(P_Vel_Down, 0, D_Vel_Down);
 
 			this.getPIDMotorOutput().setPID(P_Out_Down, 0, D_Out_Down, F_Out_Down);
-		}
+			
+
+		} 
 	}
 
 	public WPI_TalonSRX getElevatorMotor() {
