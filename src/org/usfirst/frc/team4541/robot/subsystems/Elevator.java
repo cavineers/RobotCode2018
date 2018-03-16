@@ -28,7 +28,8 @@ public class Elevator extends Subsystem {
 	private double manualVelocity = 9999;
 	private double prevOutput = 0;
 
-	private double P_Out_Up = 0.00001;
+	//1600 maxA up and down are different, ran on test field on 3/13/18
+	/*private double P_Out_Up = 0.00001;
 	private double D_Out_Up = 0.0001;
 	private double F_Out_Up = 1.0 / 3000.0;
 
@@ -40,7 +41,23 @@ public class Elevator extends Subsystem {
 	private double F_Out_Down = 0.0001;
 
 	private double P_Vel_Down = 0.95;
-	private double D_Vel_Down = 1.0;
+	private double D_Vel_Down = 1.0; */
+	
+	//same values- based on 800 maxA
+	private double P_Out_Up = 0.00005;
+	private double D_Out_Up = 0.0005;
+	private double F_Out_Up = .65 / 3000.0;
+
+	private double P_Vel_Up = 1.0;
+	private double D_Vel_Up = 6.0;
+
+	private double P_Out_Down = 0.00005;
+	private double D_Out_Down = 0.0005;
+	private double F_Out_Down = .65/3000.0;
+
+	private double P_Vel_Down = 1.0;
+	private double D_Vel_Down = 6.0;
+
 
 	private double period = .025;
 
