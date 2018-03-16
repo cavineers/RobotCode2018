@@ -2,6 +2,7 @@ package org.usfirst.frc.team4541.robot.subsystems;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.RobotMap;
+import org.usfirst.frc.team4541.robot.commands.elevator.ManualMoveElevator;
 import org.usfirst.frc.team4541.robot.commands.elevator.NewManual;
 import org.usfirst.frc.team4541.robot.commands.elevator.TestMotorOutput;
 
@@ -139,7 +140,7 @@ public class Elevator extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new NewManual());
+		setDefaultCommand(new ManualMoveElevator());
 		// setDefaultCommand(new TestMotorOutput());
 	}
 
