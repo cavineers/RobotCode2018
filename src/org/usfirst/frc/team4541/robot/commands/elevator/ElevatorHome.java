@@ -63,8 +63,7 @@ public class ElevatorHome extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevator.getPIDVel().enable();
-		Robot.elevator.getPIDMotorOutput().enable();
+		
 		Robot.elevator.elevatorMotor.stopMotor();
 
 	}
