@@ -52,7 +52,7 @@ public class Intake extends Subsystem {
     }
     
     public void setSolenoidOpen(boolean state){
-    	System.out.println(state);
+//    	System.out.println(state);
     	if (state) {
     		sol.set(DoubleSolenoid.Value.kForward);
     	} else {

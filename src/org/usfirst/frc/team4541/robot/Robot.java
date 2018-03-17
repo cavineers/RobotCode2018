@@ -97,11 +97,11 @@ public class Robot extends TimedRobot {
 		cam0.setFPS(20);
 		cam0.setResolution(330, (int)(330*(9.0/16.0)));
 		
-		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-		cam1.setWhiteBalanceAuto();
-		cam1.setExposureAuto();
-		cam1.setFPS(20);
-		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+//		cam1.setWhiteBalanceAuto();
+//		cam1.setExposureAuto();
+//		cam1.setFPS(20);
+//		cam1.setResolution(330, (int)(330*(9.0/16.0)));
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
 	}
@@ -173,11 +173,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		 SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
-		 SmartDashboard.putNumber("Left Encoder: ",
-		 drivetrain.getLeftTalon().getSelectedSensorPosition(0));
-		 SmartDashboard.putNumber("Right Encoder: ",
-		 drivetrain.getRightTalon().getSelectedSensorPosition(0));
+//		 SmartDashboard.putNumber("Angle: ", Robot.gyro.getYaw());
+//		 SmartDashboard.putNumber("Left Encoder: ",
+//		 drivetrain.getLeftTalon().getSelectedSensorPosition(0));
+//		 SmartDashboard.putNumber("Right Encoder: ",
+//		 drivetrain.getRightTalon().getSelectedSensorPosition(0));
 		// SmartDashboard.putNumber("ElevatorPos: ",
 		// elevator.elevatorMotor.getSelectedSensorPosition(0));
 		// SmartDashboard.putNumber("Left Error: ",
@@ -188,7 +188,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
-		//intake.updateCurrentLimit();
+		intake.updateCurrentLimit();
 		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
 		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
 	}
