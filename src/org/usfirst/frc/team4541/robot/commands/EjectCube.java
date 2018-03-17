@@ -15,7 +15,7 @@ public class EjectCube extends TimedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intake.setIntakeSpeed(-1);
+    	Robot.intake.setIntakeSpeed(-0.7);
     }
 
     // Called repeatedly when this Command is scheduled to run

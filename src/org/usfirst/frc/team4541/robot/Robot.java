@@ -188,7 +188,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
-		intake.updateCurrentLimit();
+		//intake.updateCurrentLimit();
 		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
 		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
 	}
