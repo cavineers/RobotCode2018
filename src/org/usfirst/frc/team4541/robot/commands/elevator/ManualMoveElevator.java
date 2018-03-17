@@ -57,7 +57,9 @@ public class ManualMoveElevator extends Command {
 			if (!Robot.elevator.getPIDVel().onTarget()) {
 				Robot.elevator.getPIDVel().setSetpoint(Robot.elevator.getElevatorPos());
 				Robot.elevator.updatePIDVals();
+				System.out.println("not on target");
 			}
+			
 
 		}
 

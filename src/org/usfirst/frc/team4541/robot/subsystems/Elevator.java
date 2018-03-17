@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -44,19 +45,19 @@ public class Elevator extends Subsystem {
 	private double D_Vel_Down = 1.0; */
 	
 	//same values- based on 800 maxA
-	private double P_Out_Up = 0.00005;
-	private double D_Out_Up = 0.0005;
-	private double F_Out_Up = .65 / 3000.0;
+	private double P_Out_Up = 0.000005;
+	private double D_Out_Up = 0.00005;
+	private double F_Out_Up = .65/3000.0;
 
 	private double P_Vel_Up = 1.0;
-	private double D_Vel_Up = 6.0;
+	private double D_Vel_Up = 4.0;
 
-	private double P_Out_Down = 0.00005;
-	private double D_Out_Down = 0.0005;
+	private double P_Out_Down = 0.000005;
+	private double D_Out_Down = 0.00005;
 	private double F_Out_Down = .65/3000.0;
 
 	private double P_Vel_Down = 1.0;
-	private double D_Vel_Down = 6.0;
+	private double D_Vel_Down = 4.0;
 
 
 	private double period = .025;
@@ -143,7 +144,7 @@ public class Elevator extends Subsystem {
 		pidVel.setInputRange(ElevatorConstants.minElevatorHeight, ElevatorConstants.maxElevatorHeight);
 		pidVel.setOutputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
 		pidVel.setContinuous(false);
-		pidVel.setPercentTolerance(.5);
+		pidVel.setPercentTolerance(5);
 		// output of pidVel is setpoint of pidMotorOutput
 
 		pidMotorOutput.setInputRange(-ElevatorConstants.maxSpeed, ElevatorConstants.maxSpeed);
@@ -154,6 +155,9 @@ public class Elevator extends Subsystem {
 
 		elevatorMotor.setSelectedSensorPosition(-250, 0, 0);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
+		
+		SmartDashboard.putData(pidVel);
+		SmartDashboard.putData(pidMotorOutput);
 	}
 
 	public void initDefaultCommand() {
