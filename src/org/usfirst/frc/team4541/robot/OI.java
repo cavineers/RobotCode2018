@@ -105,7 +105,7 @@ public class OI {
 			}
 			case 90: {
 				// Right; move to switch
-				new ElevatorToHeight(ElevatorConstants.switchHeight).start();
+				new ElevatorToHeight(ElevatorConstants.avgScaleHeight).start();
 				break;
 			}
 			case 180: {
@@ -115,7 +115,7 @@ public class OI {
 			}
 			case 270: {
 				// Left; move to average height of elevator
-				new ElevatorToHeight(ElevatorConstants.avgScaleHeight).start();
+				new ElevatorToHeight(ElevatorConstants.switchHeight).start();
 				break;
 			}
 			}
