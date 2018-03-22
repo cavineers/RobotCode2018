@@ -17,6 +17,7 @@ public class FieldState {
 	public static DigitalInput left = new DigitalInput(1);
 	public static DigitalInput middle = new DigitalInput(2);
 	public static DigitalInput right = new DigitalInput(3);
+	public static boolean favorScale = true;
 	
 	public FieldState(String fConfig, RobotPos robotPos) {
 		this.configFieldStates(fConfig);
@@ -29,10 +30,14 @@ public class FieldState {
 		if (robotPos == RobotPos.RIGHT) {
 			if (this.scalePos == FieldPos.RIGHT) {
 				return new RightScale();
-			} else if (this.switchPos == FieldPos.RIGHT) {
-				return new RightSwitchSide();
-			} else {
-				return new DriveToAutoLine();
+			} else if (this.switchPos == FieldPos.RIGHT) { //switch is on side but scale is not
+				if (favorScale) {
+					return new RightOppScale();
+				} else {
+					return new RightSwitchSide();
+				}
+			} else {  //nothing is on our side
+				return new RightOppScale();
 			}
 		} else if (robotPos == RobotPos.MIDDLE) {
 			if (this.switchPos == FieldPos.RIGHT) {
@@ -43,10 +48,14 @@ public class FieldState {
 		} else if (robotPos == RobotPos.LEFT) {
 			if (this.scalePos == FieldPos.LEFT) {
 				return new LeftScale();
-			} else if (this.switchPos == FieldPos.LEFT) {
-				return new LeftSwitchSide();
-			} else {
-				return new DriveToAutoLine();
+			} else if (this.switchPos == FieldPos.LEFT) { //switch is on side but scale is not
+				if (favorScale) {
+					return new LeftOppScale();
+				} else {
+					return new LeftSwitchSide();
+				}
+			} else { //nothing is on our side
+				return new LeftOppScale();
 			}
 		}
 		return null;
