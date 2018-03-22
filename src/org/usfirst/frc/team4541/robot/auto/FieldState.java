@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4541.robot.auto;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FieldState {
@@ -13,6 +14,10 @@ public class FieldState {
 	FieldPos scalePos;
 	FieldPos oppSwitchPos;
 	RobotPos robotPos;
+	public static DigitalInput left = new DigitalInput(1);
+	public static DigitalInput middle = new DigitalInput(2);
+	public static DigitalInput right = new DigitalInput(3);
+	
 	public FieldState(String fConfig, RobotPos robotPos) {
 		this.configFieldStates(fConfig);
 		this.robotPos = robotPos;
@@ -81,5 +86,32 @@ public class FieldState {
 			System.out.println("INVALID FIELD STATE");
 			oppSwitchPos = FieldPos.INVALID;
 		}
+	}
+	public static RobotPos getCurrentPositionFromJumpers() {
+		boolean m = !middle.get(); //if the inputs are low - active, otherwise inactive
+		boolean r = !left.get();
+		boolean l = !right.get();
+		
+		if (m && !l && !r) { //middle is selected from jumpers
+			return RobotPos.MIDDLE;
+		} else if (r && !m && !l) { //left is selected
+			return RobotPos.RIGHT;
+		} else if (l && !m && !r) { //right is selected
+			return RobotPos.LEFT;
+		} else { //invalid combination
+			return RobotPos.INVALID;
+		}
+	}
+	public static String getNameFromRobotPos(RobotPos pos) {
+		if (pos == RobotPos.MIDDLE) {
+			return "MIDDLE";
+		}
+		if (pos == RobotPos.LEFT) {
+			return "LEFT";
+		}
+		if (pos == RobotPos.RIGHT) {
+			return "RIGHT";
+		}
+		return "INVALID";
 	}
 }

@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
+import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.auto.DriveToAutoLine;
 import org.usfirst.frc.team4541.robot.auto.FieldState;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
@@ -32,7 +33,9 @@ import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.OverrideAutoPosition;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
+import org.usfirst.frc.team4541.robot.commands.auto.disableAutoPositionOverride;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
@@ -62,8 +65,10 @@ public class Robot extends TimedRobot {
 	public static CompressorSystem compressor;
 
 	public static Climber climber;
-	SendableChooser<FieldState.RobotPos> posChooser = new SendableChooser<>();
+	public static SendableChooser<FieldState.RobotPos> posChooser = new SendableChooser<>();
 	public static FieldState fieldState;
+	public static boolean isAutoPosOverridden = false;
+	public static RobotPos overriddenRobotPos = RobotPos.INVALID;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -104,6 +109,8 @@ public class Robot extends TimedRobot {
 //		cam1.setResolution(330, (int)(330*(9.0/16.0)));
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
+		SmartDashboard.putData(new OverrideAutoPosition());
+		SmartDashboard.putData(new disableAutoPositionOverride());
 	}
 
 	/**
@@ -121,6 +128,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putString("Robot Position Setting: ", FieldState.getNameFromRobotPos(getAutoPos()));
 	}
 
 	/**
@@ -137,7 +145,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), posChooser.getSelected());
+		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos());
 		fieldState.getDesiredAuto().start();
 	}
 
@@ -184,7 +192,8 @@ public class Robot extends TimedRobot {
 		// drivetrain.getLeftTalon().getClosedLoopError(0));
 		// SmartDashboard.putNumber("Right Error: ",
 		// drivetrain.getRightTalon().getClosedLoopError(0));
-		
+		SmartDashboard.putBoolean("Grabber Contracted: ", intake.getSolenoidState());
+		SmartDashboard.putBoolean("Grabber Spinning: ", Math.abs(intake.intakeMotor1.get()) > 0.05 && oi.currentTriggerSetting != TRIG_MODE.INTAKE);
 		Scheduler.getInstance().run();
 		
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
@@ -198,5 +207,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	
+	public RobotPos getAutoPos() {
+		if (!isAutoPosOverridden) {
+			return FieldState.getCurrentPositionFromJumpers();
+		} else {
+			return overriddenRobotPos;
+		}
 	}
 }
