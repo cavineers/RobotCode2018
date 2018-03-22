@@ -10,6 +10,7 @@ import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 import org.usfirst.frc.team4541.robot.commands.ToggleIntakeWheels;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LeftSwitchPointTurn extends CommandGroup {
 
     public  LeftSwitchPointTurn() {
+    	addSequential(new ShiftGear(true));
     	addSequential(new ZeroYaw());
     	addSequential(new setIntakeContracted(true));
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator

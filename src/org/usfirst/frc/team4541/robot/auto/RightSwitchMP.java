@@ -9,6 +9,7 @@ import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
+import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class RightSwitchMP extends CommandGroup {
 	public  RightSwitchMP() {
+		addSequential(new ShiftGear(true));
 		addSequential(new ZeroYaw());
 		addSequential(new setIntakeContracted(true));
 		addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));

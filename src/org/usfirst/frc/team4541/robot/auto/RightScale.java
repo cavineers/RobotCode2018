@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4541.robot.auto;
 
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
+import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class RightScale extends CommandGroup {
 	public RightScale() {
+		addSequential(new ShiftGear(true));
 		addParallel(new setIntakeContracted(true));
     	addParallel(new ElevatorToHeight(ElevatorConstants.twoInches)); // move up elevator
     	addParallel(new ZeroYaw());

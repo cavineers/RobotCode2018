@@ -10,6 +10,7 @@ import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 
@@ -21,6 +22,7 @@ public class RightSwitchPointTurn extends CommandGroup {
 //    	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight / 2));
 //    	addSequential(new DrivePath(PATHS.LEFT_SWITCH));
 //    	addSequential(new EjectCube());
+    	addSequential(new ShiftGear(true));
     	addSequential(new ZeroYaw());
     	addSequential(new setIntakeContracted(true)); 
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator

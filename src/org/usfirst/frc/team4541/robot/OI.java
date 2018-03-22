@@ -91,8 +91,8 @@ public class OI {
 //			}
 //
 //		});
-		r_bump.whenPressed(new ShiftGear(false));
-		l_bump.whenPressed(new ShiftGear(true));
+		r_bump.whenPressed(new ShiftGear(false)); //right is high
+		l_bump.whenPressed(new ShiftGear(true)); //left is low
 	}
 
 	public void processDPadInput() {
