@@ -86,7 +86,7 @@ public class DriveToPosAtAngle extends Command {
 		} else {
 			yController.setInputRange(yObj, 0);
 		}
-		yController.setOutputRange(-0.7, 0.7);
+		yController.setOutputRange(-0.9, 0.9);
 		yController.setPercentTolerance(5);
 //		SmartDashboard.putData(yController);
 		filter = LinearDigitalFilter.movingAverage(new PIDSource() {

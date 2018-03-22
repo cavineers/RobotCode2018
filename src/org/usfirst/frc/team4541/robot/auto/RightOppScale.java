@@ -20,9 +20,9 @@ public class RightOppScale extends CommandGroup{
 		addSequential(new ZeroYaw());
 		addSequential(new TimedCommand(1));
 		
-		addSequential(new DriveToPosAtAngle(16, 0)); //drive past the switch
+		addSequential(new DriveToPosAtAngle(18.5, 0)); //drive past the switch
     	addSequential(new TurnToAngle(-90));
-    	addSequential(new DriveToPosAtAngle(15, -90));	//drive over to the scale
+    	addSequential(new DriveToPosAtAngle(17, -90));	//drive over to the scale
     	addSequential(new TurnToAngle(0));		//turn to the scale
     	
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));

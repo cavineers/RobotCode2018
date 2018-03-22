@@ -21,7 +21,7 @@ public class RightScale extends CommandGroup {
     	addParallel(new ZeroYaw());
     	addSequential(new TimedCommand(1));
     	
-    	addSequential(new DriveToPosAtAngle(20.5, 0));
+    	addSequential(new DriveToPosAtAngle(22, 0));
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));
     	addSequential(new TimedCommand(1));
     	addSequential(new TurnToAngle(-45));
