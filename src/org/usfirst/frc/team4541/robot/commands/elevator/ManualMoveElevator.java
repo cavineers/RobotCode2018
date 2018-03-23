@@ -41,13 +41,13 @@ public class ManualMoveElevator extends Command {
 		if (upTrig > 0.05 && downTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
-			Robot.elevator.updatePIDVals();
+			//Robot.elevator.updatePIDVals();
 		}
 
 		else if (downTrig > 0.05 && upTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.minElevatorHeight);
-			Robot.elevator.updatePIDVals();
+			//Robot.elevator.updatePIDVals();
 
 		}
 
@@ -56,7 +56,7 @@ public class ManualMoveElevator extends Command {
 
 			if (!Robot.elevator.getPIDVel().onTarget()) {
 				Robot.elevator.getPIDVel().setSetpoint(Robot.elevator.getElevatorPos());
-				Robot.elevator.updatePIDVals();
+				//Robot.elevator.updatePIDVals();
 				System.out.println("not on target");
 			}
 			
