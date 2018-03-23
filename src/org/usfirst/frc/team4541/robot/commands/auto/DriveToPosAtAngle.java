@@ -133,18 +133,18 @@ public class DriveToPosAtAngle extends Command {
     	Robot.drivetrain.drive(fMovement, rMovement);
     	lastYPos = pulsesToFt(Robot.drivetrain.getDistanceMoved());
     }
-    
+    int counter = 0;
     protected boolean isFinished() {
-//        if (yController.onTarget() && aController.onTarget() ) {
-//        	counter++;
-//        } else {
-//        	counter = 0;
-//        }
-//        return counter > 30;
-        if (yController.onTarget() && aController.onTarget() && filter.pidGet() == 0 && (Timer.getFPGATimestamp() - this.startTime) > 1) {
-        	return true;
+        if (yController.onTarget() && aController.onTarget() ) {
+        	counter++;
+        } else {
+        	counter = 0;
         }
-        return false;
+        return counter > 50;
+//        if (yController.onTarget() && aController.onTarget() && filter.pidGet() == 0 && (Timer.getFPGATimestamp() - this.startTime) > 1) {
+//        	return true;
+//        }
+//        return false;
     }
 
     protected void end() {
