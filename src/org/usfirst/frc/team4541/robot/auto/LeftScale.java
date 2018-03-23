@@ -20,13 +20,12 @@ public class LeftScale extends CommandGroup {
 		addParallel(new setIntakeContracted(true));
     	addParallel(new ElevatorToHeight(ElevatorConstants.threeInches)); // move up elevator
     	addParallel(new ZeroYaw());
-    	addSequential(new TimedCommand(2));
+    	addSequential(new TimedCommand(1.5));
     	
     	addSequential(new DriveToPosAtAngle(22, 0));
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));
-    	addSequential(new TimedCommand(1));
     	addSequential(new TurnToAngle(45));
-    	
+    	addSequential(new DriveToPosAtAngle(0.5, 45, true));
     	addParallel(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at speed while opening grabber
 //    	addSequential(new setIntakeContracted(false));
     	addSequential(new TimedCommand(2));

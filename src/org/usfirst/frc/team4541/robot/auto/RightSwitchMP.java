@@ -29,7 +29,7 @@ public class RightSwitchMP extends CommandGroup {
     	addSequential(new DrivePath(PATHS.RIGHT_SWITCH)); //drive to switch
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
-    	addParallel(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at speed while opening grabber
+    	addParallel(new setIntakeSpeed(-0.5)); //spin wheels at speed while opening grabber
 //    	addSequential(new setIntakeContracted(false));
 
     	addSequential(new TimedCommand(2));
