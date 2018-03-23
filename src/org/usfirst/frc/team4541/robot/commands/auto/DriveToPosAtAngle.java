@@ -30,6 +30,9 @@ public class DriveToPosAtAngle extends Command {
 	double startTime;
 	LinearDigitalFilter filter;
 	public DriveToPosAtAngle(double yObj, double aObj) {
+		this(yObj, aObj, false);
+	}
+	public DriveToPosAtAngle(double yObj, double aObj, boolean isSlow) {
 		this.requires(Robot.drivetrain);
 		this.angleObj = aObj;
 		this.distObj = yObj;
@@ -86,7 +89,11 @@ public class DriveToPosAtAngle extends Command {
 		} else {
 			yController.setInputRange(yObj, 0);
 		}
-		yController.setOutputRange(-0.9, 0.9);
+		if (isSlow) {
+			yController.setOutputRange(-0.5, 0.5);
+		} else {
+			yController.setOutputRange(-1, 1);
+		}
 		yController.setPercentTolerance(5);
 //		SmartDashboard.putData(yController);
 		filter = LinearDigitalFilter.movingAverage(new PIDSource() {
