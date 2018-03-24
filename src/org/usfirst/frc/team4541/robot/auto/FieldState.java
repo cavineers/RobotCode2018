@@ -17,11 +17,12 @@ public class FieldState {
 	public static DigitalInput left = new DigitalInput(3);
 	public static DigitalInput middle = new DigitalInput(2);
 	public static DigitalInput right = new DigitalInput(1);
-	public static boolean favorScale = true;
+	public boolean favorScale = true;
 	
-	public FieldState(String fConfig, RobotPos robotPos) {
+	public FieldState(String fConfig, RobotPos robotPos, boolean favorScale) {
 		this.configFieldStates(fConfig);
 		this.robotPos = robotPos;
+		this.favorScale = favorScale;
 	}
 	public Command getDesiredAuto() {
 		if (robotPos == RobotPos.INVALID) {
