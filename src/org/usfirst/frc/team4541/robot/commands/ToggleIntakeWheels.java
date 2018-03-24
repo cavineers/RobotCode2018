@@ -21,7 +21,7 @@ public class ToggleIntakeWheels extends Command {
 	    		Robot.intake.setIntakeSpeed(0);
 	    		Robot.intake.isCurrentLimited = false;
 	    	} else {
-	    		Robot.intake.setIntakeSpeed(0.7);
+	    		Robot.intake.setIntakeSpeed(1);
 	    		Robot.intake.isCurrentLimited = true;
 	    	}
     	} else {

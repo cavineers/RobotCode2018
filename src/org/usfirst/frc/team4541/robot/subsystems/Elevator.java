@@ -52,12 +52,7 @@ public class Elevator extends Subsystem {
 	private double P_Vel_Up = 1.0;
 	private double D_Vel_Up = 4.0;
 
-	private double P_Out_Down = 0.000005;
-	private double D_Out_Down = 0.00005;
-	private double F_Out_Down = .65/3000.0;
-
-	private double P_Vel_Down = 1.0;
-	private double D_Vel_Down = 4.0;
+	
 
 
 	private double period = .025;

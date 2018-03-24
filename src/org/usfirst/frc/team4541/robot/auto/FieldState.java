@@ -14,9 +14,9 @@ public class FieldState {
 	FieldPos scalePos;
 	FieldPos oppSwitchPos;
 	RobotPos robotPos;
-	public static DigitalInput left = new DigitalInput(1);
+	public static DigitalInput left = new DigitalInput(3);
 	public static DigitalInput middle = new DigitalInput(2);
-	public static DigitalInput right = new DigitalInput(3);
+	public static DigitalInput right = new DigitalInput(1);
 	public static boolean favorScale = true;
 	
 	public FieldState(String fConfig, RobotPos robotPos) {
