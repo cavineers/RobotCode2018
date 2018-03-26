@@ -26,9 +26,9 @@ public class LeftOppScale extends CommandGroup{
     	addSequential(new TurnToAngle(0));		//turn to the scale
     	
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));
-    	addSequential(new DriveToPosAtAngle(2.5, 0, true));
+    	addSequential(new DriveToPosAtAngle(3, 0, true));
     	
-    	addParallel(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at speed while opening grabber
+    	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at speed while opening grabber
 //    	addSequential(new setIntakeContracted(false));
     	
     	addSequential(new DriveToPosAtAngle(-2, 0, true)); //back away from the switch

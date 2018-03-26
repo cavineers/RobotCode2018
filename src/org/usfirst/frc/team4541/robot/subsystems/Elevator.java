@@ -151,8 +151,8 @@ public class Elevator extends Subsystem {
 		elevatorMotor.setSelectedSensorPosition(-500, 0, 0);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
 		
-		SmartDashboard.putData(pidVel);
-		SmartDashboard.putData(pidMotorOutput);
+//		SmartDashboard.putData(pidVel);
+//		SmartDashboard.putData(pidMotorOutput);
 	}
 
 	public void initDefaultCommand() {

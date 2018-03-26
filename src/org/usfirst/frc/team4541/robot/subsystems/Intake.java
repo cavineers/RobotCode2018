@@ -25,7 +25,7 @@ public class Intake extends Subsystem {
 	public boolean isCurrentLimited = false;
 	private double highCurrentStartTime = -1;
 	
-	private static final double maxCurrent      = 30; //30A 
+	private static final double maxCurrent      = 20; //30A 
 	private static final double highCurrentTimeAllowed = 0.5; //half a second
 	
     public void initDefaultCommand() {
