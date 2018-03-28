@@ -51,6 +51,10 @@ public class Intake extends Subsystem {
     	intakeMotor2.setInverted(false);
     }
     
+    public double getIntakeSpeed() {
+    	return intakeMotor2.get();
+    }
+    
     public void setSolenoidOpen(boolean state){
 //    	System.out.println(state);
     	if (state) {
@@ -90,5 +94,6 @@ public class Intake extends Subsystem {
     		this.highCurrentStartTime = -1;
     	}
     }
+    
 }
 

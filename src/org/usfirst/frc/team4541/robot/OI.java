@@ -137,13 +137,9 @@ public class OI {
   		
 		left_middle.whenPressed(new Command() { //Toggle between elevator and climber
 			 protected void initialize() { 
-				Robot.oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
-				Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 0.5);
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.CLIMBER;
 				} else {
-					Robot.oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0);
-					Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 0);
 					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
 			 }
@@ -155,7 +151,7 @@ public class OI {
 		});
 		x_button.whenPressed(new Command() { //Toggle between intake and climber
 			 protected void initialize() { 
-				new BriefRumble(0.25, ControllerSide.BOTH).start();
+//				new BriefRumble(0.25, ControllerSide.BOTH).start();
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.INTAKE;
 					

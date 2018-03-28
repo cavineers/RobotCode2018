@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -202,6 +203,7 @@ public class Robot extends TimedRobot {
 		
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 		intake.updateCurrentLimit();
+		updateRumble();
 		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
 		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
 	}
@@ -218,6 +220,19 @@ public class Robot extends TimedRobot {
 			return FieldState.getCurrentPositionFromJumpers();
 		} else {
 			return overriddenRobotPos;
+		}
+	}
+	public static void updateRumble() {
+		if (oi.currentTriggerSetting == TRIG_MODE.CLIMBER) {
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+		}
+		else if (intake.getIntakeSpeed() > 0.2) { //grabber wheels are moving inwards
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.2);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.2);
+		} else {
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
 		}
 	}
 }

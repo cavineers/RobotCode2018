@@ -20,7 +20,7 @@ public class DrivePath extends Command {
 	MotionProfileStatus leftStatus;
     public DrivePath(PATHS path) {
     	requires(Robot.drivetrain);
-    	this.setTimeout(5); //times out after 7 seconds
+    	this.setTimeout(10); //times out after 10 seconds
     	rightHandler = new MotionProfileHandler(Robot.drivetrain.getRightTalon(), PathHandler.getRightPointsForPath(path));
     	leftHandler = new MotionProfileHandler(Robot.drivetrain.getLeftTalon(), PathHandler.getLeftPointsForPath(path));
     	Robot.drivetrain.getRightTalon().selectProfileSlot(0, 0);

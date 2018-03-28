@@ -12,8 +12,8 @@ import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorToHeight;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class LeftOppScale extends CommandGroup{
-	public  LeftOppScale() {
+public class RightOppScalePointTurn extends CommandGroup{
+	public  RightOppScalePointTurn() {
 		addSequential(new ShiftGear(true));
 		addSequential(new setIntakeContracted(true));
 		addSequential(new ElevatorToHeight(ElevatorConstants.threeInches)); // move up elevator
@@ -21,8 +21,8 @@ public class LeftOppScale extends CommandGroup{
 		addSequential(new TimedCommand(2));
 		
 		addSequential(new DriveToPosAtAngle(18, 0)); //drive past the switch
-    	addSequential(new TurnToAngle(90));
-    	addSequential(new DriveToPosAtAngle(16, 90));	//drive over to the scale
+    	addSequential(new TurnToAngle(-90));
+    	addSequential(new DriveToPosAtAngle(16, -90));	//drive over to the scale
     	addSequential(new TurnToAngle(0));		//turn to the scale
     	
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));

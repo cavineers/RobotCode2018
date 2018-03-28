@@ -33,12 +33,12 @@ public class FieldState {
 				return new RightScale();
 			} else if (this.switchPos == FieldPos.RIGHT) { //switch is on side but scale is not
 				if (favorScale) {
-					return new RightOppScale();
+					return new RightOppScalePointTurn();
 				} else {
 					return new RightSwitchSide();
 				}
 			} else {  //nothing is on our side
-				return new RightOppScale();
+				return new RightOppScalePointTurn();
 			}
 		} else if (robotPos == RobotPos.MIDDLE) {
 			if (this.switchPos == FieldPos.RIGHT) {
@@ -51,12 +51,12 @@ public class FieldState {
 				return new LeftScale();
 			} else if (this.switchPos == FieldPos.LEFT) { //switch is on side but scale is not
 				if (favorScale) {
-					return new LeftOppScale();
+					return new LeftOppScalePointTurn();
 				} else {
 					return new LeftSwitchSide();
 				}
 			} else { //nothing is on our side
-				return new LeftOppScale();
+				return new LeftOppScalePointTurn();
 			}
 		}
 		return null;
