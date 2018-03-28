@@ -102,11 +102,13 @@ public class Robot extends TimedRobot {
 		cam0.setFPS(20);
 		cam0.setResolution(330, (int)(330*(9.0/16.0)));
 		
-//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-//		cam1.setWhiteBalanceAuto();
-//		cam1.setExposureAuto();
-//		cam1.setFPS(20);
-//		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+		
+		cam1.setWhiteBalanceAuto();
+		cam1.setExposureAuto();
+		cam1.setFPS(20);
+		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
 		SmartDashboard.putData(new OverrideAutoPosition());
