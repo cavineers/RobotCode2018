@@ -33,6 +33,9 @@ public class DriveToPosAtAngle extends Command {
 		this(yObj, aObj, false);
 	}
 	public DriveToPosAtAngle(double yObj, double aObj, boolean isSlow) {
+		if (isSlow) {
+			this.setTimeout(1);
+		}
 		this.requires(Robot.drivetrain);
 		this.angleObj = aObj;
 		this.distObj = yObj;
@@ -140,7 +143,7 @@ public class DriveToPosAtAngle extends Command {
         } else {
         	counter = 0;
         }
-        return counter > 50;
+        return counter > 50 || this.isTimedOut();
 //        if (yController.onTarget() && aController.onTarget() && filter.pidGet() == 0 && (Timer.getFPGATimestamp() - this.startTime) > 1) {
 //        	return true;
 //        }

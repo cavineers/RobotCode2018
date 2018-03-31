@@ -12,9 +12,10 @@ import org.usfirst.frc.team4541.robot.Robot;
 import org.usfirst.frc.team4541.robot.RobotMap;
 import org.usfirst.frc.team4541.robot.commands.TankDriveWithJoystick;
 
-
+import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -70,6 +71,9 @@ public class DriveTrain extends Subsystem {
     	} else {
     		sol.set(DoubleSolenoid.Value.kForward);
     	}
+    }
+    public boolean isSolenoidOpen() {
+    	return sol.get() == DoubleSolenoid.Value.kReverse;
     }
 	/**
 	 * Tank style driving for the DriveTrain.
@@ -152,5 +156,27 @@ public class DriveTrain extends Subsystem {
 
 	public double getDistanceMoved() { //Note: right is negative as forward is the negative direction on the right side.
 		return (this.leftMotor1.getSelectedSensorPosition(0) + -this.rightMotor1.getSelectedSensorPosition(0)) / 2.0;
+	}
+	
+	public void log() {
+//		StickyFaults sfaults = new StickyFaults();
+//		leftMotor1.getStickyFaults(sfaults);
+//		if (sfaults.hasAnyFault()) {
+//			System.out.println("LM BUS VOLTAGE:" + leftMotor1.getBusVoltage());
+//			System.out.println("LM UNDERVOLTAGE: " + sfaults.UnderVoltage);
+//			System.out.println("LM RESET:" + sfaults.ResetDuringEn);
+//			System.out.println("LM SIGNAL LOSS:" + sfaults.RemoteLossOfSignal);
+//			leftMotor1.clearStickyFaults(0);
+//		}
+//		
+//		leftMotor2.getStickyFaults(sfaults);
+//		if (sfaults.hasAnyFault()) {
+//			System.out.println("LS BUS VOLTAGE:" + leftMotor2.getBusVoltage());
+//			System.out.println("LS UNDERVOLTAGE: " + sfaults.UnderVoltage);
+//			System.out.println("LS RESET:" + sfaults.ResetDuringEn);
+//			System.out.println("LS SIGNAL LOSS:" + sfaults.RemoteLossOfSignal);
+//			leftMotor2.clearStickyFaults(0);
+//		}
+		
 	}
 }

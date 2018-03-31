@@ -31,7 +31,10 @@ import org.usfirst.frc.team4541.robot.auto.FieldState;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.TestEncoders;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.RightOppScaleMP;
+import org.usfirst.frc.team4541.robot.auto.RightOppScalePointTurn;
 import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
+import org.usfirst.frc.team4541.robot.auto.LeftOppScaleMP;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
 import org.usfirst.frc.team4541.robot.commands.auto.OverrideAutoPosition;
@@ -99,14 +102,14 @@ public class Robot extends TimedRobot {
 		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
 		cam0.setWhiteBalanceAuto();
-		cam0.setExposureAuto();
+		cam0.setExposureManual(50);
 		cam0.setFPS(20);
 		cam0.setResolution(330, (int)(330*(9.0/16.0)));
 		
 		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
 		
 		cam1.setWhiteBalanceAuto();
-		cam1.setExposureAuto();
+		cam1.setExposureManual(50);
 		cam1.setFPS(20);
 		cam1.setResolution(330, (int)(330*(9.0/16.0)));
 		
@@ -204,8 +207,10 @@ public class Robot extends TimedRobot {
 		oi.processDPadInput(); //runs elevator commands when D-Pad is pressed
 		intake.updateCurrentLimit();
 		updateRumble();
-		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
-		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
+//		SmartDashboard.putNumber("Grabber Current 1", intake.intakeMotor1.getOutputCurrent());
+//		SmartDashboard.putNumber("Grabber Current 2", intake.intakeMotor2.getOutputCurrent());
+		SmartDashboard.putBoolean("isLowGear: ", drivetrain.isSolenoidOpen());
+		log();
 	}
 
 	/**
@@ -224,15 +229,18 @@ public class Robot extends TimedRobot {
 	}
 	public static void updateRumble() {
 		if (oi.currentTriggerSetting == TRIG_MODE.CLIMBER) {
-			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
-			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
 		}
 		else if (intake.getIntakeSpeed() > 0.2) { //grabber wheels are moving inwards
-			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.2);
-			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.2);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
 		} else {
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
 		}
+	}
+	private void log() {
+		Robot.drivetrain.log();
 	}
 }

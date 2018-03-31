@@ -22,15 +22,15 @@ public class RightOppScalePointTurn extends CommandGroup{
 		
 		addSequential(new DriveToPosAtAngle(18, 0)); //drive past the switch
     	addSequential(new TurnToAngle(-90));
-    	addSequential(new DriveToPosAtAngle(16, -90));	//drive over to the scale
+    	addSequential(new DriveToPosAtAngle(17, -90));	//drive over to the scale
     	addSequential(new TurnToAngle(0));		//turn to the scale
     	
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));
     	addSequential(new DriveToPosAtAngle(3, 0, true));
     	
-    	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at speed while opening grabber
+    	addSequential(new setIntakeSpeed(-0.4)); //spin wheels at speed while opening grabber
 //    	addSequential(new setIntakeContracted(false));
-    	
+//    	
     	addSequential(new DriveToPosAtAngle(-2, 0, true)); //back away from the switch
     	addSequential(new setIntakeSpeed(0));
     	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));

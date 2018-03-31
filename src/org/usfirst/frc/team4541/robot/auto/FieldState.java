@@ -38,7 +38,11 @@ public class FieldState {
 					return new RightSwitchSide();
 				}
 			} else {  //nothing is on our side
-				return new RightOppScalePointTurn();
+				if (favorScale) {
+					return new RightOppScalePointTurn();
+				} else {
+					return new DriveToAutoLine();
+				}
 			}
 		} else if (robotPos == RobotPos.MIDDLE) {
 			if (this.switchPos == FieldPos.RIGHT) {
@@ -56,7 +60,11 @@ public class FieldState {
 					return new LeftSwitchSide();
 				}
 			} else { //nothing is on our side
-				return new LeftOppScalePointTurn();
+				if (favorScale) {
+					return new LeftOppScalePointTurn();
+				} else {
+					return new DriveToAutoLine();
+				}
 			}
 		}
 		return null;

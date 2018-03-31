@@ -7,6 +7,7 @@ public class PathHandler {
 		LEFT_SWITCH,
 		RIGHT_SWITCH,
 		LEFT_OPP_SCALE,
+		RIGHT_OPP_SCALE,
 		TEN_FT_TEST
 	}
 	public static double[][] tenFtTest = new double[][] {
@@ -416,6 +417,8 @@ public class PathHandler {
 			return tenFtTest;
 		case LEFT_OPP_SCALE:
 			return LeftOppSide.LeftOppSide_right;
+		case RIGHT_OPP_SCALE:
+			return LeftOppSide.LeftOppSide_left;
 		
 		}
 		return null;
@@ -434,6 +437,8 @@ public class PathHandler {
 			return tenFtTest;
 		case LEFT_OPP_SCALE:
 			return LeftOppSide.LeftOppSide_left;
+		case RIGHT_OPP_SCALE:
+			return LeftOppSide.LeftOppSide_right;
 		}
 		return null;
 	}
