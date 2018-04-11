@@ -47,6 +47,9 @@ import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
+import org.usfirst.frc.team4541.superProfiling.CombinedSetpoint;
+import org.usfirst.frc.team4541.superProfiling.Setpoint;
+import org.usfirst.frc.team4541.superProfiling.SuperRobotState;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -119,6 +122,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new disableAutoPositionOverride());
 		
 		SmartDashboard.putBoolean("Favors Scale", true);
+		
+		this.setPeriod(0.0005);
 	}
 
 	/**
@@ -182,6 +187,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		compressor.setCompressorState(true);
+		this.setPeriod(0.002); //lower loop rate to default because profiling is no longer needed.
 	}
 
 	/**
@@ -242,5 +248,9 @@ public class Robot extends TimedRobot {
 	}
 	private void log() {
 		Robot.drivetrain.log();
+	}
+	
+	public static SuperRobotState getCurrentRobotState() {
+		return new SuperRobotState(drivetrain.getLeftVel(), drivetrain.getLeftPos(), drivetrain.getRightVel(), drivetrain.getRightPos(), gyro.getYaw());
 	}
 }

@@ -86,6 +86,10 @@ public class DriveTrain extends Subsystem {
 	public void drive(double forward, double rotate) {
 		drive.curvatureDrive(forward, rotate, true);
 	}
+	public void profileDrive(double left, double right) {
+		leftMotor1.set(left);
+		rightMotor1.set(right);
+	}
 	/**
 	 * @param joy
 	 *            The xbox style joystick to use to drive tank style.
@@ -156,6 +160,20 @@ public class DriveTrain extends Subsystem {
 
 	public double getDistanceMoved() { //Note: right is negative as forward is the negative direction on the right side.
 		return (this.leftMotor1.getSelectedSensorPosition(0) + -this.rightMotor1.getSelectedSensorPosition(0)) / 2.0;
+	}
+	
+	public double getLeftPos() {
+		return this.leftMotor1.getSelectedSensorPosition(0) * Constants.kSensorUnitsPerRotation;
+	}
+	public double getLeftVel() {
+		return this.leftMotor1.getSelectedSensorVelocity(0) * Constants.kSensorUnitsPerRotation;
+	}
+	
+	public double getRightPos() {
+		return -1 * this.rightMotor1.getSelectedSensorPosition(0) * Constants.kSensorUnitsPerRotation;
+	}
+	public double getRightVel() {
+		return -1 * this.rightMotor1.getSelectedSensorVelocity(0) * Constants.kSensorUnitsPerRotation;
 	}
 	
 	public void log() {
