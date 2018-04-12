@@ -28,8 +28,9 @@ public class CombinedSetpoint {
 		
 		this.heading = heading;
 	}
-	public CombinedSetpoint(Setpoint leftPoint, Setpoint rightPoint, double heading) {
+	public CombinedSetpoint(Setpoint leftPoint, Setpoint rightPoint) {
 		this.isLast = leftPoint.isLast || rightPoint.isLast;
+		this.dt = leftPoint.dt; //Left and right *should* be same dt
 		
 		this.lVel   = leftPoint.velocity;
 		this.lPos   = leftPoint.position;
@@ -39,12 +40,12 @@ public class CombinedSetpoint {
 		this.rPos   = rightPoint.position;
 		this.rAccel = rightPoint.accel;
 		
-		this.heading = heading;
+		this.heading = leftPoint.heading; //Left and right *should* be same heading
 	}
 	public Setpoint getRightSetpoint() {
-		return new Setpoint(isLast, rVel, rPos, rAccel);
+		return new Setpoint(isLast, dt, rVel, rPos, rAccel, heading);
 	}
 	public Setpoint getLeftSetpoint() {
-		return new Setpoint(isLast, lVel, lPos, lAccel);
+		return new Setpoint(isLast, dt, lVel, lPos, lAccel, heading);
 	}
 }

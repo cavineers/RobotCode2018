@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class SuperFollowPath extends Command {
 	CombinedSuperFollower csFollower;
+	SuperProfile profile;
 	double startTime; //start time in ms
-	public SuperFollowPath() {
+	public SuperFollowPath(String pathName) {
 		csFollower = new CombinedSuperFollower();
+		profile = new SuperProfile(pathName);
 	}
 	@Override
 	protected void initialize() {
@@ -19,7 +21,8 @@ public class SuperFollowPath extends Command {
 	}
 	@Override
 	protected void execute() {
-		csFollower.update(); //TODO: figure out SuperPath handling
+		long currentTime = Math.round((Timer.getFPGATimestamp() * 1000) - startTime);
+		csFollower.update(profile.getCombinedSetpointForTime(currentTime));
 	}
 	@Override
 	protected boolean isFinished() {

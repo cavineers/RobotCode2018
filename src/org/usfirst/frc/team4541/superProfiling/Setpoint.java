@@ -5,9 +5,12 @@ public class Setpoint {
 	public double velocity;
 	public double position;
 	public double accel;
-	
-	public Setpoint(boolean isLast, double position,  double velocity, double accel) {
+	public int dt;
+	public double heading;
+	public Setpoint(boolean isLast, int dt, double heading, double position,  double velocity, double accel) {
 		this.isLast = isLast;
+		this.dt = dt;
+		this.heading = heading;
 		this.velocity = velocity;
 		this.position = position;
 		this.accel = accel;
