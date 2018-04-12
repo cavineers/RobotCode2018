@@ -12,7 +12,7 @@ public class SuperProfile {
 	HashMap<Long, CombinedSetpoint> timedPath = new HashMap<Long, CombinedSetpoint>();
 
 	public SuperProfile(String pathName) {
-		ArrayList<CombinedSetpoint> setpoints = loadCombinedSetpointFromFiles(pathName + "_left", pathName + "_right");
+		ArrayList<CombinedSetpoint> setpoints = loadCombinedSetpointFromFiles(pathName + "_left_detailed", pathName + "_right_detailed");
 		Long time = (long) 0;
 		for (CombinedSetpoint point : setpoints) {
 			timedPath.put(time, point);
@@ -21,7 +21,7 @@ public class SuperProfile {
 	}
 
 	public CombinedSetpoint getCombinedSetpointForTime(long time) { // time in ms
-		return timedPath.get(this.getClosestElementInArray((Long[]) timedPath.keySet().toArray(), time));
+		return timedPath.get(this.getClosestElementInArray(timedPath.keySet().toArray(new Long[timedPath.size()]), time));
 	}
 
 	public long getClosestElementInArray(Long[] array, long target) {

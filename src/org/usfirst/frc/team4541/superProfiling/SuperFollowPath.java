@@ -12,6 +12,7 @@ public class SuperFollowPath extends Command {
 	SuperProfile profile;
 	double startTime; //start time in ms
 	public SuperFollowPath(String pathName) {
+		requires(Robot.drivetrain);
 		csFollower = new CombinedSuperFollower();
 		profile = new SuperProfile(pathName);
 	}

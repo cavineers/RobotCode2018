@@ -17,18 +17,24 @@ public class SuperFollower {
     protected double mKffv;
     protected double mKffa;
 
-    protected double mMinOutput = Double.NEGATIVE_INFINITY;
-    protected double mMaxOutput = Double.POSITIVE_INFINITY;
-    protected Setpoint mLatestActualState;
-    protected ProfileState mInitialState;
+    protected double mMinOutput = -1;
+    protected double mMaxOutput = 1;
     protected double mLatestPosError;
     protected double mLatestVelError;
     protected double mTotalError;
 
     protected Setpoint mLatestSetpoint = null;
+    protected Setpoint mPrevSetpoint   = null;
+    protected SuperRobotSide mPrevRobotState   = null;
+    protected SuperRobotSide mLatestRobotState = null;
+    protected Double mLatestStartTime = null;
+    protected Double mPrevStartTime = null;
+    protected ProfileState currentProfileState;
    
     public enum ProfileState {
-    	kInvalidState
+    	kInvalidState,
+    	kRunning,
+    	kFinished
     }
     
     /**
@@ -64,19 +70,11 @@ public class SuperFollower {
      */
     public void resetProfile() {
         mTotalError = 0.0;
-        mInitialState = ProfileState.kInvalidState;
-        mLatestActualState = ProfileState.kInvalidState;
-        mLatestPosError = Double.NaN;
-        mLatestVelError = Double.NaN;
+        currentProfileState = ProfileState.kInvalidState;
+        mLatestSetpoint = null;
+        mLatestPosError = 0;
+        mLatestVelError = 0;
         resetSetpoint();
-    }
-
-    public void setConstraints(MotionProfileConstraints constraints) {
-        setGoalAndConstraints(mGoal, constraints);
-    }
-
-    public MotionState getSetpoint() {
-        return (mLatestSetpoint == null ? MotionState.kInvalidState : mLatestSetpoint.motion_state);
     }
 
     /**
@@ -103,35 +101,45 @@ public class SuperFollower {
      * @return An output that reflects the control output to apply to achieve the new setpoint.
      */
     public synchronized double update(Setpoint latestSetpoint, SuperRobotSide currentRobotState) {
-        mLatestActualState = lastestSetpoint;
-        MotionState prev_state = latest_state;
-        if (mLatestSetpoint != null) {
-            prev_state = mLatestSetpoint.motion_state;
-        } else {
-            mInitialState = prev_state;
+    	mPrevSetpoint = mLatestSetpoint.copy();
+    	mLatestSetpoint = latestSetpoint;
+    	
+    	mPrevRobotState = mLatestRobotState;
+    	mLatestRobotState = currentRobotState;
+    	
+        if (mPrevRobotState == null) {
+            mPrevRobotState = currentRobotState;
         }
-        final double dt = Math.max(0.0, t - prev_state.t());
-        mLatestSetpoint = mSetpointGenerator.getSetpoint(mConstraints, mGoal, prev_state, t);
-
-        // Update error.
-        mLatestPosError = mLatestSetpoint.position - Robot.drivetrain.;
-        mLatestVelError = mLatestSetpoint.velocity - latest_state.vel();
-
-        // Calculate the feedforward and proportional terms.
-        double output = mKp * mLatestPosError + mKv * mLatestVelError + mKffv * mLatestSetpoint.motion_state.vel()
-                + (Double.isNaN(mLatestSetpoint.motion_state.acc()) ? 0.0 : mKffa * mLatestSetpoint.motion_state.acc());
-        if (output >= mMinOutput && output <= mMaxOutput) {
-            // Update integral.
-            mTotalError += mLatestPosError * dt;
-            output += mKi * mTotalError;
-        } else {
-            // Reset integral windup.
-            mTotalError = 0.0;
+        if (mPrevSetpoint == null) {
+        	mPrevSetpoint = latestSetpoint;
         }
-        // Clamp to limits.
-        output = Math.max(mMinOutput, Math.min(mMaxOutput, output));
+        if (mPrevStartTime == null) {
+        	
+        }
+        System.out.println(latestSetpoint.position);
+//        final double dt = Math.max(0.0, t - prev_state.t());
+//        mLatestSetpoint = mSetpointGenerator.getSetpoint(mConstraints, mGoal, prev_state, t);
+//
+//        // Update error.
+//        mLatestPosError = mLatestSetpoint.position - currentRobotState.pos;
+//        mLatestVelError = mLatestSetpoint.velocity - currentRobotState.vel;
+//
+//        // Calculate the feedforward and proportional terms.
+//        double output = mKp * mLatestPosError + mKv * mLatestVelError + mKffv * mLatestSetpoint.motion_state.vel()
+//                + (Double.isNaN(mLatestSetpoint.motion_state.acc()) ? 0.0 : mKffa * mLatestSetpoint.motion_state.acc());
+//        if (output >= mMinOutput && output <= mMaxOutput) {
+//            // Update integral.
+//            mTotalError += mLatestPosError * dt;
+//            output += mKi * mTotalError;
+//        } else {
+//            // Reset integral windup.
+//            mTotalError = 0.0;
+//        }
+//        // Clamp to limits.
+//        output = Math.max(mMinOutput, Math.min(mMaxOutput, output));
 
-        return output;
+//        return output;
+        return 0;
     }
 
     public void setMinOutput(double min_output) {
@@ -157,7 +165,7 @@ public class SuperFollower {
      * @return True if the final setpoint has been generated for the current goal.
      */
     public boolean isFinishedProfile() {
-        return mGoal != null && mLatestSetpoint != null && mLatestSetpoint.final_setpoint;
+        return mLatestSetpoint.isLast && this.onTarget();
     }
 
     /**
@@ -167,15 +175,17 @@ public class SuperFollower {
      * @return True if we have actually achieved the current goal.
      */
     public boolean onTarget() {
-        if (mGoal == null || mLatestSetpoint == null) {
-            return false;
-        }
-        // For the options that don't achieve the goal velocity exactly, also count any instance where we have passed
-        // the finish line.
-        final double goal_to_start = mGoal.pos() - mInitialState.pos();
-        final double goal_to_actual = mGoal.pos() - mLatestActualState.pos();
-        final boolean passed_goal_state = Math.signum(goal_to_start) * Math.signum(goal_to_actual) < 0.0;
-        return mGoal.atGoalState(mLatestActualState)
-                || (mGoal.completion_behavior() != CompletionBehavior.OVERSHOOT && passed_goal_state);
+//        if (mLatestSetpoint == null) {
+//            return false;
+//        }
+//        // For the options that don't achieve the goal velocity exactly, also count any instance where we have passed
+//        // the finish line.
+//        final double goal_to_start = mGoal.pos() - mInitialState.pos();
+//        final double goal_to_actual = mGoal.pos() - mLatestActualState.pos();
+//        final boolean passed_goal_state = Math.signum(goal_to_start) * Math.signum(goal_to_actual) < 0.0;
+//        return mGoal.atGoalState(mLatestActualState)
+//                || (mGoal.completion_behavior() != CompletionBehavior.OVERSHOOT && passed_goal_state);
+        return false;
+        
     }
 }

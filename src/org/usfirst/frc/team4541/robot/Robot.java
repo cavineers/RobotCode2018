@@ -49,6 +49,7 @@ import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
 import org.usfirst.frc.team4541.superProfiling.CombinedSetpoint;
 import org.usfirst.frc.team4541.superProfiling.Setpoint;
+import org.usfirst.frc.team4541.superProfiling.SuperFollowPath;
 import org.usfirst.frc.team4541.superProfiling.SuperRobotState;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -158,8 +159,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
-		fieldState.getDesiredAuto().start();
+//		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
+//		fieldState.getDesiredAuto().start();
+		new SuperFollowPath("10ftTest_10ms").start();;
 	}
 
 	/**
