@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 //		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
 //		fieldState.getDesiredAuto().start();
-		new SuperFollowPath("10ftTest_10ms").start();;
+		new SuperFollowPath("10ftTest_10ms").start(); //TODO: change back to a working auto before competition
 	}
 
 	/**

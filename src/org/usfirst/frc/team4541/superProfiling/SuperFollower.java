@@ -100,12 +100,15 @@ public class SuperFollower {
      *            The timestamp for which the setpoint is desired.
      * @return An output that reflects the control output to apply to achieve the new setpoint.
      */
-    public synchronized double update(Setpoint latestSetpoint, SuperRobotSide currentRobotState) {
-    	mPrevSetpoint = mLatestSetpoint.copy();
+    public synchronized double update(Setpoint latestSetpoint, SuperRobotSide currentRobotState, Double startTime) {
+    	mPrevSetpoint = mLatestSetpoint;
     	mLatestSetpoint = latestSetpoint;
     	
     	mPrevRobotState = mLatestRobotState;
     	mLatestRobotState = currentRobotState;
+    	
+    	mPrevStartTime = mLatestStartTime;
+    	mLatestStartTime = startTime;
     	
         if (mPrevRobotState == null) {
             mPrevRobotState = currentRobotState;
@@ -114,32 +117,31 @@ public class SuperFollower {
         	mPrevSetpoint = latestSetpoint;
         }
         if (mPrevStartTime == null) {
-        	
+        	mPrevStartTime = startTime;
         }
-        System.out.println(latestSetpoint.position);
-//        final double dt = Math.max(0.0, t - prev_state.t());
-//        mLatestSetpoint = mSetpointGenerator.getSetpoint(mConstraints, mGoal, prev_state, t);
-//
-//        // Update error.
-//        mLatestPosError = mLatestSetpoint.position - currentRobotState.pos;
-//        mLatestVelError = mLatestSetpoint.velocity - currentRobotState.vel;
-//
-//        // Calculate the feedforward and proportional terms.
-//        double output = mKp * mLatestPosError + mKv * mLatestVelError + mKffv * mLatestSetpoint.motion_state.vel()
-//                + (Double.isNaN(mLatestSetpoint.motion_state.acc()) ? 0.0 : mKffa * mLatestSetpoint.motion_state.acc());
-//        if (output >= mMinOutput && output <= mMaxOutput) {
-//            // Update integral.
-//            mTotalError += mLatestPosError * dt;
-//            output += mKi * mTotalError;
-//        } else {
-//            // Reset integral windup.
-//            mTotalError = 0.0;
-//        }
-//        // Clamp to limits.
-//        output = Math.max(mMinOutput, Math.min(mMaxOutput, output));
+        
+        System.out.println(latestSetpoint.position);  //TODO: REMOVE IF SUPER PROFILING WORKS
+        final double dt = Math.max(0.0, mLatestStartTime - mPrevStartTime);
 
-//        return output;
-        return 0;
+        // Update error.
+        mLatestPosError = mLatestSetpoint.position - currentRobotState.pos;
+        mLatestVelError = mLatestSetpoint.velocity - currentRobotState.vel;
+
+        // Calculate the feedforward and proportional terms.
+        double output = mKp * mLatestPosError + mKv * mLatestVelError + mKffv * mLatestSetpoint.velocity
+                + mKffa * mLatestSetpoint.accel;
+        if (output >= mMinOutput && output <= mMaxOutput) {
+            // Update integral.
+            mTotalError += mLatestPosError * dt;
+            output += mKi * mTotalError;
+        } else {
+            // Reset integral windup.
+            mTotalError = 0.0;
+        }
+        // Clamp to limits.
+        output = Math.max(mMinOutput, Math.min(mMaxOutput, output));
+
+        return output;
     }
 
     public void setMinOutput(double min_output) {
@@ -185,7 +187,6 @@ public class SuperFollower {
 //        final boolean passed_goal_state = Math.signum(goal_to_start) * Math.signum(goal_to_actual) < 0.0;
 //        return mGoal.atGoalState(mLatestActualState)
 //                || (mGoal.completion_behavior() != CompletionBehavior.OVERSHOOT && passed_goal_state);
-        return false;
-        
+        return true;
     }
 }

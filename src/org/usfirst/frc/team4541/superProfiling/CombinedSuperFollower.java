@@ -9,10 +9,10 @@ public class CombinedSuperFollower {
 		rightFollower = new SuperFollower(SuperConstants.kP, SuperConstants.kI, SuperConstants.kV, SuperConstants.mKffv, SuperConstants.mKffa);
 		leftFollower = new SuperFollower(SuperConstants.kP, SuperConstants.kI, SuperConstants.kV, SuperConstants.mKffv, SuperConstants.mKffa);
 	}
-	public void update(CombinedSetpoint cSetpoint) {
+	public void update(CombinedSetpoint cSetpoint, Double startTime) {
 		//get updated speeds from followers
-		double rMotorOut = rightFollower.update(cSetpoint.getRightSetpoint(), Robot.getCurrentRobotState().getRightSide());
-		double lMotorOut = leftFollower.update(cSetpoint.getLeftSetpoint(), Robot.getCurrentRobotState().getLeftSide());
+		double rMotorOut = rightFollower.update(cSetpoint.getRightSetpoint(), Robot.getCurrentRobotState().getRightSide(), startTime);
+		double lMotorOut = leftFollower.update(cSetpoint.getLeftSetpoint(), Robot.getCurrentRobotState().getLeftSide(), startTime);
 		
 		//account for gyro heading
 		double angle_difference = cSetpoint.heading - Robot.gyro.getYaw();

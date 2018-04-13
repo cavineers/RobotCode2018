@@ -15,7 +15,4 @@ public class Setpoint {
 		this.position = position;
 		this.accel = accel;
 	}
-	public Setpoint copy() {
-		return new Setpoint(this.isLast, this.dt, this.heading, this.position, this.velocity, this.accel);
-	}
 }

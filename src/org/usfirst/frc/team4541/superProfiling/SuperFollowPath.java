@@ -22,8 +22,12 @@ public class SuperFollowPath extends Command {
 	}
 	@Override
 	protected void execute() {
+		if (!profile.hasValidPath()) {
+			System.out.print("ERROR: UNABLE TO LOAD SUPERPATH; TRIED LOADING " + profile.getErrorPath());
+			return;
+		}
 		long currentTime = Math.round((Timer.getFPGATimestamp() * 1000) - startTime);
-		csFollower.update(profile.getCombinedSetpointForTime(currentTime));
+		csFollower.update(profile.getCombinedSetpointForTime(currentTime), Double.valueOf(currentTime));
 	}
 	@Override
 	protected boolean isFinished() {
