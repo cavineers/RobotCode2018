@@ -17,9 +17,10 @@ public class CombinedSuperFollower {
 		//account for gyro heading
 		double angle_difference = cSetpoint.heading - Robot.gyro.getYaw();
 		double turn = SuperConstants.kRotationP * (angle_difference / 180.0);
-		
+		System.out.println("LEFT: " + cSetpoint.getLeftSetpoint().accel + "\nRIGHT: " + cSetpoint.getRightSetpoint().accel);
 		//set speeds to drivetrain
-		Robot.drivetrain.profileDrive(lMotorOut + turn, rMotorOut - turn);
+//		Robot.drivetrain.profileDrive(lMotorOut + turn, rMotorOut - turn);
+		//TODO: UNCOMMENT AFTER DEBUG
 	}
 	
 }

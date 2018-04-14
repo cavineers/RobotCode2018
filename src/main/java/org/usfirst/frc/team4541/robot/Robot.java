@@ -103,19 +103,20 @@ public class Robot extends TimedRobot {
 		posChooser.addObject("Straight Override", RobotPos.INVALID);
 		SmartDashboard.putData(posChooser);
 		
-		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-
-		cam0.setWhiteBalanceAuto();
-		cam0.setExposureManual(50);
-		cam0.setFPS(20);
-		cam0.setResolution(330, (int)(330*(9.0/16.0)));
-		
-		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-		
-		cam1.setWhiteBalanceAuto();
-		cam1.setExposureManual(50);
-		cam1.setFPS(20);
-		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+//		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+//
+//		cam0.setWhiteBalanceAuto();
+//		cam0.setExposureManual(50);
+//		cam0.setFPS(20);
+//		cam0.setResolution(330, (int)(330*(9.0/16.0)));
+//		
+//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+//		
+//		cam1.setWhiteBalanceAuto();
+//		cam1.setExposureManual(50);
+//		cam1.setFPS(20);
+//		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		//TODO: UNCOMMENT BEFORE COMPETITION
 		
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
@@ -123,8 +124,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new disableAutoPositionOverride());
 		
 		SmartDashboard.putBoolean("Favors Scale", true);
-		
-		this.setPeriod(0.0005);
+		System.out.println("INIT");
+		this.setPeriod(0.00005);
 	}
 
 	/**
@@ -137,6 +138,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().removeAll();
 		elevator.getPIDMotorOutput().reset();
 		elevator.getPIDVel().reset();
+//		new SuperFollowPath("10ftTest_10ms").start(); 
 	}
 
 	@Override

@@ -2,11 +2,11 @@ plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.02.17"
 }
 
 def TEAM = 4541
-def ROBOT_CLASS = "org.usfirst.frc.team4541.robot"
+def ROBOT_CLASS = "org.usfirst.frc.team4541.robot.Robot"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -28,12 +28,31 @@ deploy {
     }
 }
 
-// Defining my dependencies. In this case, WPILib (+ friends), CTRE Phoenix (Talon SRX)
+// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
 // and NavX.
 dependencies {
-    compile wpilib()
-    compile ctre()
-    compile navx()
+	compile wpilib()
+	compile ctre()
+	compile navx()
+	  
+	compile 'org.jfree:jfreechart-fx:1.0.0'
+	compile 'org.controlsfx:controlsfx:9.0.0'
+	
+	// Required for NetworkTables
+	compile group: "edu.wpi.first.ntcore", name: "ntcore-java", version: "4.+"
+	runtime group: "edu.wpi.first.ntcore", name: "ntcore-jni", version: "4.+", classifier: "all"
+	
+	// Poofs library and its dependencies
+	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+}
+
+repositories {
+	mavenCentral() // HFR, tilesFX & Medusa (gauges)
+	jcenter() // fontawesomeFX
+	mavenLocal()   
+	flatDir {
+		dirs './lib'
+	}
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

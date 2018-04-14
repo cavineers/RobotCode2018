@@ -4,18 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.Set;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class SuperProfile {
 	// Tells where robot should be at a given time in a path
-	HashMap<Long, CombinedSetpoint> timedPath = new HashMap<Long, CombinedSetpoint>();
+	LinkedHashMap<Long, CombinedSetpoint> timedPath = new LinkedHashMap<Long, CombinedSetpoint>();
 	String errorPath = null;
 	
 	public SuperProfile(String pathName) {
-		ArrayList<CombinedSetpoint> setpoints = loadCombinedSetpointFromFiles(pathName + "_left_detailed", pathName + "_right_detailed");
+		ArrayList<CombinedSetpoint> setpoints = loadCombinedSetpointFromFiles(pathName + "_left_detailed.csv", pathName + "_right_detailed.csv");
 		Long time = (long) 0;
 		for (CombinedSetpoint point : setpoints) {
+//			System.out.println(time + " , " + point);
 			timedPath.put(time, point);
 			time += point.dt;
 		}
@@ -66,12 +70,20 @@ public class SuperProfile {
 		ArrayList<Setpoint> rightList = new ArrayList<Setpoint>();
 
 		// load the setpoints for the left wheel into the setpoint array
-		File file = new File("file://" + leftPath);
+		File file = new File("/home/lvuser/paths/" + leftPath);
 		try {
 			Scanner inputStream = new Scanner(file);
 			while (inputStream.hasNext()) {
 				String data = inputStream.next();
 				String[] values = data.split(",");
+				try //skip any lines (like the first line of a path which is a header) where the first value is not a number
+		        {
+		            Double.parseDouble(values[0]);
+		        } 
+		        catch (NumberFormatException e) 
+		        {
+		        	continue;
+		        }
 				// values[0] - dt
 				// values[1] - x pos
 				// values[2] - y pos
@@ -81,8 +93,8 @@ public class SuperProfile {
 				// values[6] - jerk
 				// values[7] - heading
 				leftList.add(new Setpoint(!inputStream.hasNext(), (int) (Double.parseDouble(values[0]) * 1000),
-						Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]),
-						Double.parseDouble(values[7])));
+						Double.parseDouble(values[7]), Double.parseDouble(values[3]), Double.parseDouble(values[4]),
+						Double.parseDouble(values[5])));
 			}
 			inputStream.close();
 		} catch (FileNotFoundException e) {
@@ -91,15 +103,24 @@ public class SuperProfile {
 		}
 
 		// load the setpoints for the right wheel into the setpoint array
-		file = new File("file://" + rightPath);
+		file = new File("/home/lvuser/paths/" + rightPath);
+		SmartDashboard.putBoolean("Does file exists: ", file.exists());
 		try {
 			Scanner inputStream = new Scanner(file);
 			while (inputStream.hasNext()) {
 				String data = inputStream.next();
 				String[] values = data.split(",");
+				try //skip any lines (like the first line of a path which is a header) where the first value is not a number
+		        {
+		            Double.parseDouble(values[0]);
+		        } 
+		        catch (NumberFormatException e) 
+		        {
+		        	continue;
+		        }
 				rightList.add(new Setpoint(!inputStream.hasNext(), (int) (Double.parseDouble(values[0]) * 1000),
-						Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]),
-						Double.parseDouble(values[7])));
+						Double.parseDouble(values[7]), Double.parseDouble(values[3]), Double.parseDouble(values[4]),
+						Double.parseDouble(values[5])));
 			}
 			inputStream.close();
 		} catch (FileNotFoundException e) {
