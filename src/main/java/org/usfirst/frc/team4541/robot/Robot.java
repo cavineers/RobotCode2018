@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -47,8 +48,6 @@ import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4541.robot.subsystems.Elevator;
 import org.usfirst.frc.team4541.robot.subsystems.Intake;
-import org.usfirst.frc.team4541.superProfiling.CombinedSetpoint;
-import org.usfirst.frc.team4541.superProfiling.Setpoint;
 import org.usfirst.frc.team4541.superProfiling.SuperFollowPath;
 import org.usfirst.frc.team4541.superProfiling.SuperRobotState;
 
@@ -103,20 +102,19 @@ public class Robot extends TimedRobot {
 		posChooser.addObject("Straight Override", RobotPos.INVALID);
 		SmartDashboard.putData(posChooser);
 		
-//		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-//
-//		cam0.setWhiteBalanceAuto();
-//		cam0.setExposureManual(50);
-//		cam0.setFPS(20);
-//		cam0.setResolution(330, (int)(330*(9.0/16.0)));
-//		
-//		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-//		
-//		cam1.setWhiteBalanceAuto();
-//		cam1.setExposureManual(50);
-//		cam1.setFPS(20);
-//		cam1.setResolution(330, (int)(330*(9.0/16.0)));
-		//TODO: UNCOMMENT BEFORE COMPETITION
+		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+
+		cam0.setWhiteBalanceAuto();
+		cam0.setExposureManual(50);
+		cam0.setFPS(20);
+		cam0.setResolution(330, (int)(330*(9.0/16.0)));
+		
+		UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+		
+		cam1.setWhiteBalanceAuto();
+		cam1.setExposureManual(50);
+		cam1.setFPS(20);
+		cam1.setResolution(330, (int)(330*(9.0/16.0)));
 		
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
@@ -124,8 +122,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new disableAutoPositionOverride());
 		
 		SmartDashboard.putBoolean("Favors Scale", true);
-		System.out.println("INIT");
-		this.setPeriod(0.00005);
 	}
 
 	/**
@@ -138,7 +134,6 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().removeAll();
 		elevator.getPIDMotorOutput().reset();
 		elevator.getPIDVel().reset();
-//		new SuperFollowPath("10ftTest_10ms").start(); 
 	}
 
 	@Override
@@ -159,11 +154,29 @@ public class Robot extends TimedRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
+	Command currentAutoCommand;
+//	double currentTime = 0;
+//	int counter = 0;
 	@Override
 	public void autonomousInit() {
 //		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
 //		fieldState.getDesiredAuto().start();
-		new SuperFollowPath("10ftTest_10ms").start(); //TODO: change back to a working auto before competition
+		this.setPeriod(0.00005);
+		currentAutoCommand = new SuperFollowPath("10ftTest_10ms"); //TODO: change back to a working auto before competition
+		currentAutoCommand.start();
+		
+		//NOTE: currently with scheduler superProfiling updates ~25ms, with a for loop just updating the command
+		//that drops to ~15ms.  TODO: Possibly use a custom scheduler to run commands in auto so profiling is faster.
+		
+//		while (this.isAutonomous()) {
+//			((SuperFollowPath)currentAutoCommand).update();
+////			Scheduler.getInstance().run();
+//			if (counter % 40 == 0) {
+//			SmartDashboard.putNumber("update interval", Timer.getFPGATimestamp() * 1000 - currentTime);
+//			}	
+//			currentTime = Timer.getFPGATimestamp() * 1000;
+//			counter++;
+//		}
 	}
 
 	/**

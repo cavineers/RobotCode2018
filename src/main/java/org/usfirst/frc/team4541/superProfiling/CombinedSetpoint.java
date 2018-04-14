@@ -43,9 +43,9 @@ public class CombinedSetpoint {
 		this.heading = leftPoint.heading; //Left and right *should* be same heading
 	}
 	public Setpoint getRightSetpoint() {
-		return new Setpoint(isLast, dt, rVel, rPos, rAccel, heading);
+		return new Setpoint(isLast, dt, heading, rPos, rVel, rAccel);
 	}
 	public Setpoint getLeftSetpoint() {
-		return new Setpoint(isLast, dt, lVel, lPos, lAccel, heading);
+		return new Setpoint(isLast, dt, heading, lPos, lVel, lAccel);
 	}
 }

@@ -15,4 +15,8 @@ public class Setpoint {
 		this.position = position;
 		this.accel = accel;
 	}
+	@Override
+	public String toString() {
+		return this.isLast + " dt: " + this.dt + " head: " + this.heading + " pos: " + this.position + " vel: " + this.velocity + " accel: " + this.accel; 
+	}
 }

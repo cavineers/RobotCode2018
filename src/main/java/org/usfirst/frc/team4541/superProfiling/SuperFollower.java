@@ -123,11 +123,9 @@ public class SuperFollower {
         final double dt = Math.max(0.0, mLatestStartTime - mPrevStartTime);
 
         // Update error.
-//        mLatestPosError = mLatestSetpoint.position - currentRobotState.pos;
-//        mLatestVelError = mLatestSetpoint.velocity - currentRobotState.vel;
+        mLatestPosError = mLatestSetpoint.position - currentRobotState.pos;
+        mLatestVelError = mLatestSetpoint.velocity - currentRobotState.vel;
 
-        mLatestPosError = 0;
-        mLatestVelError = 0;
         // Calculate the feedforward and proportional terms.
         double output = mKp * mLatestPosError + mKv * mLatestVelError + mKffv * mLatestSetpoint.velocity
                 + mKffa * mLatestSetpoint.accel;
