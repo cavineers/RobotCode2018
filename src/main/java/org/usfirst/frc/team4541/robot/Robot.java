@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
 	 */
 	Command currentAutoCommand;
 //	double currentTime = 0;
-//	int counter = 0;
+//	int counter = 0; 
 	@Override
 	public void autonomousInit() {
 //		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
