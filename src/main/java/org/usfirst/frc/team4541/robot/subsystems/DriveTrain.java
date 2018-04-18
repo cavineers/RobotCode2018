@@ -27,11 +27,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * and a gyro.
  */
 public class DriveTrain extends Subsystem {
-	private WPI_TalonSRX leftMotor1  = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
-	private WPI_TalonSRX leftMotor2  = new WPI_TalonSRX(RobotMap.leftDriveMotor2);
+	public WPI_TalonSRX leftMotor1  = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
+	public WPI_TalonSRX leftMotor2  = new WPI_TalonSRX(RobotMap.leftDriveMotor2);
 	
-	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
-	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor2);
+	public WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
+	public WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightDriveMotor2);
 	private DoubleSolenoid sol;
 	
 //	private SpeedControllerGroup leftMotors  = new SpeedControllerGroup(leftMotor1,  leftMotor2);
@@ -88,7 +88,9 @@ public class DriveTrain extends Subsystem {
 	}
 	public void profileDrive(double left, double right) {
 		leftMotor1.set(left);
+		leftMotor2.set(left);
 		rightMotor1.set(right);
+		rightMotor2.set(right);
 	}
 	/**
 	 * @param joy
@@ -163,17 +165,17 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double getLeftPos() {
-		return this.leftMotor1.getSelectedSensorPosition(0) * Constants.kSensorUnitsPerRotation;
+		return this.leftMotor1.getSelectedSensorPosition(0) / Constants.kSensorUnitsPerRotation;
 	}
 	public double getLeftVel() {
-		return this.leftMotor1.getSelectedSensorVelocity(0) * Constants.kSensorUnitsPerRotation;
+		return this.leftMotor1.getSelectedSensorVelocity(0) / Constants.kSensorUnitsPerRotation;
 	}
 	
 	public double getRightPos() {
-		return -1 * this.rightMotor1.getSelectedSensorPosition(0) * Constants.kSensorUnitsPerRotation;
+		return this.rightMotor1.getSelectedSensorPosition(0) / Constants.kSensorUnitsPerRotation;
 	}
 	public double getRightVel() {
-		return -1 * this.rightMotor1.getSelectedSensorVelocity(0) * Constants.kSensorUnitsPerRotation;
+		return this.rightMotor1.getSelectedSensorVelocity(0) / Constants.kSensorUnitsPerRotation;
 	}
 	
 	public void log() {
