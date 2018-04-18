@@ -2,22 +2,30 @@ package org.usfirst.frc.team4541.superProfiling;
 
 public class SuperHeadingAdjuster {
 	double totalPositionOffset = 0;
+	long lastTimeMs = 0;
 	public SuperHeadingAdjuster() {
 		
 	}
-	public CombinedSetpoint getAdjustedCombinedSetpointForHeading(CombinedSetpoint cspoint, double headingError) {
+	public CombinedSetpoint getAdjustedCombinedSetpointForHeading(CombinedSetpoint cspoint, double headingError, long timeMs) {
+		if (lastTimeMs == 0) {
+			lastTimeMs = timeMs;
+		}
+		long dtMs = timeMs - lastTimeMs;
 		double turnVel = SuperConstants.kRotationP * (headingError/180.0) ; //SuperConstants.kRotationP * (angle_difference / 180.0);
 
 		cspoint.lVel += turnVel * SuperConstants.kV;
 		cspoint.rVel -= turnVel * SuperConstants.kV;
 		
 		//integrate the difference in velocity over time to modify the position points of the profile
-		totalPositionOffset += (turnVel * ((double)cspoint.dt)/1000.0);  
+		double dtMin = ((double)dtMs)/(1000.0*60.0); //Convert milliseconds to minutes
+		totalPositionOffset += (turnVel * dtMin);  //Convert Rotations/Min to Rotations and then integrate
 		
 		cspoint.lPos += totalPositionOffset;
 		cspoint.rPos -= totalPositionOffset;
 		
-		System.out.println("vel change: " + turnVel + "\ttotal position change: " + totalPositionOffset);
+		lastTimeMs = timeMs;
+		
+		System.out.println("vel change: " + turnVel + "\ttotal position change: " + totalPositionOffset + "\tdt: " + dtMs);
 		
 		return cspoint;
 	}

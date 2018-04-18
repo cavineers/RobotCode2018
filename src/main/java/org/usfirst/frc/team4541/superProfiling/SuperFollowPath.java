@@ -36,7 +36,7 @@ public class SuperFollowPath extends Command {
 		
 		//account for gyro heading
 		double angleError = SuperHeadingAdjuster.standardize(Math.toDegrees(idealSetpoint.heading)) - Robot.gyro.getYaw();
-		CombinedSetpoint realSetpoint = headingAdjuster.getAdjustedCombinedSetpointForHeading(idealSetpoint, angleError);
+		CombinedSetpoint realSetpoint = headingAdjuster.getAdjustedCombinedSetpointForHeading(idealSetpoint, angleError, currentTime);
 		
 		csFollower.update(realSetpoint, Double.valueOf(currentTime));
 	}
