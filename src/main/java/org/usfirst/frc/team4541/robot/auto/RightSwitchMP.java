@@ -4,6 +4,7 @@ import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
 import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath_2;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
@@ -26,7 +27,7 @@ public class RightSwitchMP extends CommandGroup {
 		
 		addSequential(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator
     	
-    	addSequential(new DrivePath(PATHS.RIGHT_SWITCH)); //drive to switch
+    	addSequential(new DrivePath_2(PATHS.RIGHT_SWITCH, 15)); //drive to switch
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
     	addParallel(new setIntakeSpeed(-0.5)); //spin wheels at speed while opening grabber

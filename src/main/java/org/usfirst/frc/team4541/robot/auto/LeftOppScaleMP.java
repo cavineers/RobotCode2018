@@ -5,7 +5,7 @@ import org.usfirst.frc.team4541.robot.ElevatorConstants;
 import org.usfirst.frc.team4541.robot.commands.ShiftGear;
 import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
-import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath_2;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.ZeroYaw;
@@ -22,7 +22,7 @@ public class LeftOppScaleMP extends CommandGroup{
     	addParallel(new ZeroYaw());
     	addSequential(new TimedCommand(1));
     	
-    	addSequential(new DrivePath(PATHS.LEFT_OPP_SCALE));
+    	addSequential(new DrivePath_2(PATHS.LEFT_OPP_SCALE, 15));
     	addSequential(new ZeroYaw());
     	
     	addSequential(new ElevatorToHeight(ElevatorConstants.maxElevatorHeight));

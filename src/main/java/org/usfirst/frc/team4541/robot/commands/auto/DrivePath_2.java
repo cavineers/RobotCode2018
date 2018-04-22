@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DrivePath_2 extends Command{
 	MP_Handler_3 rightHandler;
 	MP_Handler_3 leftHandler;
-	
 	MotionProfileStatus rightStatus;
 	MotionProfileStatus leftStatus;
 	

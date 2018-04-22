@@ -15,7 +15,7 @@ import org.usfirst.frc.team4541.robot.commands.setIntakeContracted;
 import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+ 
 public class RightSwitchPointTurn extends CommandGroup {
 
     public  RightSwitchPointTurn() {
