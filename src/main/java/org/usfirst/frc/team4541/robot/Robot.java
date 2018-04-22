@@ -38,6 +38,7 @@ import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.auto.LeftOppScaleMP;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.OverrideAutoPosition;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.disableAutoPositionOverride;
@@ -159,6 +160,7 @@ public class Robot extends TimedRobot {
 //	int counter = 0; 
 	@Override
 	public void autonomousInit() {
+		drivetrain.configTalons();
 //		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
 //		fieldState.getDesiredAuto().start();
 		this.setPeriod(0.00005);
@@ -185,10 +187,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		// SmartDashboard.putNumber("Left Speed: ",
-		// drivetrain.getLeftTalon().getSelectedSensorVelocity(0));
-		// SmartDashboard.putNumber("Right Speed: ",
-		// drivetrain.getRightTalon().getSelectedSensorVelocity(0));
+		 SmartDashboard.putNumber("Left Pos: ",
+		 drivetrain.getLeftTalon().getSelectedSensorPosition(0));
+		 SmartDashboard.putNumber("Right Pos: ",
+		 drivetrain.getRightTalon().getSelectedSensorPosition(0));
 //		if (this.isEnabled()) {
 //			System.out.print(drivetrain.getRightTalon().get());
 //			System.out.print(",");
@@ -203,6 +205,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+//		currentAutoCommand.cancel();
 		compressor.setCompressorState(true);
 		this.setPeriod(0.002); //lower loop rate to default because profiling is no longer needed.
 	}
