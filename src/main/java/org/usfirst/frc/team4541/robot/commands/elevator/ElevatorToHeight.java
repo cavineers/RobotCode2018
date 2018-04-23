@@ -39,7 +39,8 @@ public class ElevatorToHeight extends Command {
 	protected boolean isFinished() {
 		double upTrig = Robot.oi.getJoystick().getRawAxis(3);
 		double downTrig = Robot.oi.getJoystick().getRawAxis(2);
-		return Robot.elevator.getPIDVel().onTarget() || ((upTrig > 0.05 || downTrig > 0.05) && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR);
+//		return Robot.elevator.getPIDVel().onTarget() || ((upTrig > 0.05 || downTrig > 0.05) && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR);
+		return true;
 	}
 
 	protected void end() {

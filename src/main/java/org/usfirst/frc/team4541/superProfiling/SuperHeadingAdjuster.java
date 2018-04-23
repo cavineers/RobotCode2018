@@ -13,8 +13,8 @@ public class SuperHeadingAdjuster {
 		long dtMs = timeMs - lastTimeMs;
 		double turnVel = SuperConstants.kRotationP * (headingError/180.0) ; //SuperConstants.kRotationP * (angle_difference / 180.0);
 
-		cspoint.lVel += turnVel * SuperConstants.kV;
-		cspoint.rVel -= turnVel * SuperConstants.kV;
+//		cspoint.lVel += turnVel;
+//		cspoint.rVel -= turnVel;
 		
 		//integrate the difference in velocity over time to modify the position points of the profile
 		double dtMin = ((double)dtMs)/(1000.0*60.0); //Convert milliseconds to minutes

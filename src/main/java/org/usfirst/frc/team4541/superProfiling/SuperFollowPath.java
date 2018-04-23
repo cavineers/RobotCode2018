@@ -27,7 +27,7 @@ public class SuperFollowPath extends Command {
 		Robot.drivetrain.leftMotor2.setInverted(true);
 		Robot.drivetrain.rightMotor1.setInverted(false);
 		Robot.drivetrain.rightMotor2.setInverted(false);
-		headingAdjuster = new SuperHeadingAdjuster();
+//		headingAdjuster = new SuperHeadingAdjuster();
 	}
 	@Override
 	protected void execute() {
@@ -36,9 +36,9 @@ public class SuperFollowPath extends Command {
 		
 		//account for gyro heading
 		double angleError = SuperHeadingAdjuster.standardize(Math.toDegrees(idealSetpoint.heading)) - Robot.gyro.getYaw();
-		CombinedSetpoint realSetpoint = headingAdjuster.getAdjustedCombinedSetpointForHeading(idealSetpoint, angleError, currentTime);
+//		CombinedSetpoint realSetpoint = headingAdjuster.getAdjustedCombinedSetpointForHeading(idealSetpoint, angleError, currentTime);
 		
-		csFollower.update(realSetpoint, Double.valueOf(currentTime));
+		csFollower.update(idealSetpoint, Double.valueOf(currentTime));
 	}
 	public void update() {
 		this.execute();

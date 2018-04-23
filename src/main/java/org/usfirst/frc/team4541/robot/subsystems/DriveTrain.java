@@ -123,6 +123,9 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX getLeftTalon() {
 		return this.leftMotor1;
 	}
+	public WPI_TalonSRX getLeftSlaveTalon() {
+		return this.leftMotor2;
+	}
 	public void configTalons() {
 		rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		rightMotor1.setSensorPhase(false); /* keep sensor and motor in phase */

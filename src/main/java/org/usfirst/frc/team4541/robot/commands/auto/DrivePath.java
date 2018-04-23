@@ -33,6 +33,7 @@ public class DrivePath extends Command {
 	    rightHandler.startMotionProfile();
     	Robot.drivetrain.getRightTalon().setInverted(false);
     	Robot.drivetrain.getRightSlaveTalon().setInverted(false);
+    	
     	execute();
     }
 
