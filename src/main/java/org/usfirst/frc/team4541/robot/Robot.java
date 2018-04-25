@@ -161,11 +161,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		drivetrain.configTalons();
-//		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
-//		fieldState.getDesiredAuto().start();
+		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
+		fieldState.getDesiredAuto().start();
 		this.setPeriod(0.00005);
-		currentAutoCommand = new SuperFollowPath("10ftTest_10ms"); //TODO: change back to a working auto before competition
-		currentAutoCommand.start();
+//		currentAutoCommand = new SuperFollowPath("10ftTest_10ms"); //TODO: change back to a working auto before competition
+//		currentAutoCommand.start();
 		
 		//NOTE: currently with scheduler superProfiling updates ~25ms, with a for loop just updating the command
 		//that drops to ~15ms.  TODO: Possibly use a custom scheduler to run commands in auto so profiling is faster.
