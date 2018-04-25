@@ -167,11 +167,11 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		drivetrain.configTalons();
 		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
-//		fieldState.getDesiredAuto().start();
+		fieldState.getDesiredAuto().start();
 //		new RightOppScaleMP().start();
 //		new SuperFollowPath("fastRightSwitchForward").start();
 //		new DrivePath_2(PATHS.RIGHT_OPP_SCALE, 4).start();
-		new RightTwoCubeSwitch().start();
+//		new RightTwoCubeSwitch().start();
 //		currentAutoCommand = new SuperFollowPath("10ftTest_10ms"); //TODO: change back to a working auto before competition
 //		currentAutoCommand.start();
 		
@@ -182,10 +182,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		 SmartDashboard.putNumber("Left Pos: ",
-		 drivetrain.getLeftTalon().getSelectedSensorPosition(0));
-		 SmartDashboard.putNumber("Right Pos: ",
-		 drivetrain.getRightTalon().getSelectedSensorPosition(0));
 //		if (this.isEnabled()) {
 //			System.out.print(drivetrain.getRightTalon().get());
 //			System.out.print(",");
@@ -252,13 +248,16 @@ public class Robot extends TimedRobot {
 		if (oi.currentTriggerSetting == TRIG_MODE.CLIMBER) {
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
+			climber.extendClimber();
 		}
 		else if (intake.getIntakeSpeed() > 0.2) { //grabber wheels are moving inwards
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
+			climber.retractClimber();
 		} else {
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
+			climber.retractClimber();
 		}
 	}
 	private void log() {

@@ -10,8 +10,9 @@ public class PathHandler {
 		RIGHT_OPP_SCALE,
 		TEN_FT_TEST,
 		FAST_RIGHT_SWITCH,
-		FAST_RIGHT_SWITCH_REV,
-		RIGHT_TO_CUBE
+		RIGHT_TO_CUBE,
+		FAST_LEFT_SWITCH,
+		LEFT_TO_CUBE
 	}
 	public static double[][] tenFtTest = new double[][] {
 		  { 0.000005, 0, 10 },
@@ -426,10 +427,12 @@ public class PathHandler {
 			return RightOppScale.rightOppScale_right;
 		case FAST_RIGHT_SWITCH:
 			return FastRightSwitch.FastRightSwitch_right;
-		case FAST_RIGHT_SWITCH_REV:
-			return FastRightSwitchReverse.FastRightSwitchReverse_right;
 		case RIGHT_TO_CUBE:
 			return RightToCube.RightToCube_right;
+		case FAST_LEFT_SWITCH:
+			return FastLeftSwitch.FastLeftSwitch_right;
+		case LEFT_TO_CUBE:
+			return LeftToCube.LeftToCube_right;
 		}
 		return null;
 	}
@@ -453,10 +456,12 @@ public class PathHandler {
 			return RightOppScale.rightOppScale_left;
 		case FAST_RIGHT_SWITCH:
 			return FastRightSwitch.FastRightSwitch_left;
-		case FAST_RIGHT_SWITCH_REV:
-			return FastRightSwitchReverse.FastRightSwitchReverse_left;
 		case RIGHT_TO_CUBE:
 			return RightToCube.RightToCube_left;
+		case FAST_LEFT_SWITCH:
+			return FastLeftSwitch.FastLeftSwitch_left;
+		case LEFT_TO_CUBE:
+			return LeftToCube.LeftToCube_left;
 		}
 		return null;
 	}

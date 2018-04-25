@@ -18,6 +18,7 @@ public class FieldState {
 	public static DigitalInput middle = new DigitalInput(2);
 	public static DigitalInput right = new DigitalInput(1);
 	public boolean favorScale = true;
+	public boolean favorTwoCube = true;
 	
 	public FieldState(String fConfig, RobotPos robotPos, boolean favorScale) {
 		this.configFieldStates(fConfig);
@@ -46,9 +47,18 @@ public class FieldState {
 			}
 		} else if (robotPos == RobotPos.MIDDLE) {
 			if (this.switchPos == FieldPos.RIGHT) {
-				return new RightSwitchMP();
+				if (favorTwoCube) {
+					return new RightTwoCubeSwitch();
+				} else {
+					return new RightSwitchMP();
+				}
+				
 			} else if (this.switchPos == FieldPos.LEFT) {
-				return new LeftSwitchMP();
+				if (favorTwoCube) {
+					return new LeftTwoCubeSwitch();
+				} else {
+					return new LeftSwitchMP();
+				}
 			}
 		} else if (robotPos == RobotPos.LEFT) {
 			if (this.scalePos == FieldPos.LEFT) {
