@@ -28,6 +28,7 @@ public class Elevator extends Subsystem {
 	private PIDController pidMotorOutput;
 	private double manualVelocity = 9999;
 	private double prevOutput = 0;
+	private int loop = 0;
 
 	
 	//same values- based on 800 maxA with old grabber
@@ -128,10 +129,22 @@ public class Elevator extends Subsystem {
 				if (manualVelocity == 9999)
 					getPIDMotorOutput().setSetpoint(d);
 
-				else if (manualVelocity > 0)
+				else if (manualVelocity > 0) {
 					getPIDMotorOutput().setSetpoint(Math.min(d, manualVelocity));
-				else
+					loop = 0;
+				}
+				else if (manualVelocity < 0) {
 					getPIDMotorOutput().setSetpoint(Math.max(d, manualVelocity));
+					loop = 0;
+				}
+				else if (manualVelocity == 0) {
+					getPIDMotorOutput().setSetpoint(0);
+					loop++;
+				}
+				if(loop == 10) {
+					manualVelocity = 9999;
+					loop = 0;
+				}
 
 			}
 		}, period);

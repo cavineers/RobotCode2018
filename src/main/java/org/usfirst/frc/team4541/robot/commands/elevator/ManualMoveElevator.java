@@ -41,26 +41,24 @@ public class ManualMoveElevator extends Command {
 		if (upTrig > 0.05 && downTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
-			//Robot.elevator.updatePIDVals();
+			// Robot.elevator.updatePIDVals();
 		}
 
 		else if (downTrig > 0.05 && upTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.minElevatorHeight);
-			//Robot.elevator.updatePIDVals();
+			// Robot.elevator.updatePIDVals();
 
 		}
 
 		else {
-			Robot.elevator.setTriggerValue(9999);
+			Robot.elevator.setTriggerValue(0);
 
 			if (!Robot.elevator.getPIDVel().onTarget()) {
 				Robot.elevator.getPIDVel().setSetpoint(Robot.elevator.getElevatorPos());
 				//Robot.elevator.updatePIDVals();
 				System.out.println("not on target");
 			}
-			
-
 		}
 
 	}
@@ -78,6 +76,6 @@ public class ManualMoveElevator extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevator.setTriggerValue(9999); 
+		Robot.elevator.setTriggerValue(9999);
 	}
 }
