@@ -28,11 +28,17 @@ public class DrivePath_2 extends Command{
 	protected void initialize() {
 		Robot.drivetrain.getRightTalon().setInverted(false);
 		Robot.drivetrain.getRightSlaveTalon().setInverted(false);
+		rightHandler.reset();
+		leftHandler.reset();
 		Robot.drivetrain.getRightTalon().set(ControlMode.MotionProfile, 0);
 		Robot.drivetrain.getLeftTalon().set(ControlMode.MotionProfile, 0);
 	}
 	
 	protected void execute() {
+		if (rightHandler.isReady() && leftHandler.isReady()) {
+			rightHandler.start();
+			leftHandler.start();
+		}
 		rightStatus = rightHandler.control();
 		leftStatus = leftHandler.control();
 	}

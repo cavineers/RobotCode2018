@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.nio.file.Path;
+
 import org.usfirst.frc.team4541.motionProfiling.Constants;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler;
 import org.usfirst.frc.team4541.motionProfiling.PathHandler.PATHS;
@@ -30,14 +32,17 @@ import org.usfirst.frc.team4541.robot.OI.TRIG_MODE;
 import org.usfirst.frc.team4541.robot.auto.DriveToAutoLine;
 import org.usfirst.frc.team4541.robot.auto.FieldState;
 import org.usfirst.frc.team4541.robot.auto.RightSwitchPointTurn;
+import org.usfirst.frc.team4541.robot.auto.RightTwoCubeSwitch;
 import org.usfirst.frc.team4541.robot.auto.TestEncoders;
 import org.usfirst.frc.team4541.robot.auto.LeftSwitchPointTurn;
 import org.usfirst.frc.team4541.robot.auto.RightOppScaleMP;
 import org.usfirst.frc.team4541.robot.auto.RightOppScalePointTurn;
+import org.usfirst.frc.team4541.robot.auto.RightSwitchMP;
 import org.usfirst.frc.team4541.robot.auto.FieldState.RobotPos;
 import org.usfirst.frc.team4541.robot.auto.LeftOppScaleMP;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveForward;
 import org.usfirst.frc.team4541.robot.commands.auto.DrivePath;
+import org.usfirst.frc.team4541.robot.commands.auto.DrivePath_2;
 import org.usfirst.frc.team4541.robot.commands.auto.DriveToPosAtAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.OverrideAutoPosition;
 import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
@@ -103,7 +108,7 @@ public class Robot extends TimedRobot {
 		posChooser.addObject("Straight Override", RobotPos.INVALID);
 		SmartDashboard.putData(posChooser);
 		
-		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		/*UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
 		cam0.setWhiteBalanceAuto();
 		cam0.setExposureManual(50);
@@ -115,7 +120,7 @@ public class Robot extends TimedRobot {
 		cam1.setWhiteBalanceAuto();
 		cam1.setExposureManual(50);
 		cam1.setFPS(20);
-		cam1.setResolution(330, (int)(330*(9.0/16.0)));
+		cam1.setResolution(330, (int)(330*(9.0/16.0)));*/
 		
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
@@ -162,25 +167,15 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		drivetrain.configTalons();
 		fieldState = new FieldState(DriverStation.getInstance().getGameSpecificMessage(), getAutoPos(), SmartDashboard.getBoolean("Favors Scale",  true));
-		fieldState.getDesiredAuto().start();
-		this.setPeriod(0.00005);
+//		fieldState.getDesiredAuto().start();
+//		new RightOppScaleMP().start();
+//		new SuperFollowPath("fastRightSwitchForward").start();
+//		new DrivePath_2(PATHS.RIGHT_OPP_SCALE, 4).start();
+		new RightTwoCubeSwitch().start();
 //		currentAutoCommand = new SuperFollowPath("10ftTest_10ms"); //TODO: change back to a working auto before competition
 //		currentAutoCommand.start();
 		
-		//NOTE: currently with scheduler superProfiling updates ~25ms, with a for loop just updating the command
-		//that drops to ~15ms.  TODO: Possibly use a custom scheduler to run commands in auto so profiling is faster.
-		
-//		while (this.isAutonomous()) {
-//			((SuperFollowPath)currentAutoCommand).update();
-////			Scheduler.getInstance().run();
-//			if (counter % 40 == 0) {
-//			SmartDashboard.putNumber("update interval", Timer.getFPGATimestamp() * 1000 - currentTime);
-//			}	
-//			currentTime = Timer.getFPGATimestamp() * 1000;
-//			counter++;
-//		}
 	}
-
 	/**
 	 * This function is called periodically during autonomous.
 	 */

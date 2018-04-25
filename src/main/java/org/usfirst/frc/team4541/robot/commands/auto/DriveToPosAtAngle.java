@@ -86,7 +86,7 @@ public class DriveToPosAtAngle extends Command {
 				fMovement = output;
 			}
 		};
-		yController = new PIDController(0.8, 0.0, 1.3, 0, ySource, yOutput);
+		yController = new PIDController(0.7, 0.0, 1.5, 0, ySource, yOutput);
 		if (yObj > 0) {
 			yController.setInputRange(0, yObj);
 		} else {
@@ -97,6 +97,87 @@ public class DriveToPosAtAngle extends Command {
 		} else {
 			yController.setOutputRange(-1, 1);
 		}
+		yController.setPercentTolerance(5);
+//		SmartDashboard.putData(yController);
+		filter = LinearDigitalFilter.movingAverage(new PIDSource() {
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+
+			@Override
+			public double pidGet() {
+//				System.out.println(pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos);
+				return pulsesToFt(Robot.drivetrain.getDistanceMoved()) - lastYPos;
+			}
+			
+		}, 10);
+	}
+	
+	public DriveToPosAtAngle(double yObj, double aObj, double vel) {
+		this.requires(Robot.drivetrain);
+		this.angleObj = aObj;
+		this.distObj = yObj;
+		aSource = new PIDSource() {
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+			
+			@Override
+			public double pidGet() {
+				return Robot.gyro.getYaw();
+			}
+		};
+		aOutput = new PIDOutput() {
+			@Override
+			public void pidWrite(double output) {
+				rMovement = output;
+			}
+		};
+		aController = new PIDController(0.04, 0, 0, 0, aSource, aOutput); //same p,i,d as turn to angle
+		aController.setInputRange(-180, 180);
+		aController.setOutputRange(-1, 1);
+		aController.setContinuous(true);
+		aController.setPercentTolerance(1);
+		ySource = new PIDSource() {
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return PIDSourceType.kDisplacement;
+			}
+			
+			@Override
+			public double pidGet() {
+				return pulsesToFt(Robot.drivetrain.getDistanceMoved());
+			}
+		};
+		yOutput = new PIDOutput() {
+			@Override
+			public void pidWrite(double output) {
+				fMovement = output;
+			}
+		};
+		yController = new PIDController(0.8, 0.0, 1.3, 0, ySource, yOutput);
+		if (yObj > 0) {
+			yController.setInputRange(0, yObj);
+		} else {
+			yController.setInputRange(yObj, 0);
+		}
+		yController.setOutputRange(-vel, vel);
 		yController.setPercentTolerance(5);
 //		SmartDashboard.putData(yController);
 		filter = LinearDigitalFilter.movingAverage(new PIDSource() {
@@ -143,7 +224,7 @@ public class DriveToPosAtAngle extends Command {
         } else {
         	counter = 0;
         }
-        return counter > 50 || this.isTimedOut();
+        return counter > 10 || this.isTimedOut();
 //        if (yController.onTarget() && aController.onTarget() && filter.pidGet() == 0 && (Timer.getFPGATimestamp() - this.startTime) > 1) {
 //        	return true;
 //        }

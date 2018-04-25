@@ -24,7 +24,7 @@ public class MP_Handler_3 {
 	
 	private SetValueMotionProfile _setValue = SetValueMotionProfile.Disable;
 	
-	private static final int kMinPointsInTalon = 5;
+	private static final int kMinPointsInTalon = 50;
 	
 	private static final int kNumLoopsTimeout = 10;
 	
@@ -44,6 +44,7 @@ public class MP_Handler_3 {
 	Notifier bufferNotifier = new Notifier(new BufferLoader());
 	
 	public MP_Handler_3(WPI_TalonSRX talon, double[][] path) {
+		
 		_talon = talon;
 		_path = path;
 		lastPointSent = 0;
@@ -51,7 +52,7 @@ public class MP_Handler_3 {
 		_talon.clearMotionProfileTrajectories();
 		_talon.configMotionProfileTrajectoryPeriod(Constants.kBaseTrajPeriodMs, Constants.kTimeoutMs);
 		_talon.changeMotionControlFramePeriod(5);
-		bufferNotifier.startPeriodic(.005);
+		bufferNotifier.startPeriodic(0.005);
 	}
 	
 	public void reset() {
@@ -60,7 +61,7 @@ public class MP_Handler_3 {
 		_talon.set(ControlMode.MotionProfile, _setValue.value);
 		hasPathStarted = false;
 		lastPointSent = 0;
-		bufferNotifier.stop();
+//		bufferNotifier.stop();
 	}
 	
 	public MotionProfileStatus control() {
@@ -87,11 +88,11 @@ public class MP_Handler_3 {
 			_talon.clearMotionProfileHasUnderrun(0);
 		}
 		
-		if(!hasPathStarted && _status.btmBufferCnt > kMinPointsInTalon) {
-			_setValue = SetValueMotionProfile.Hold;
-			hasPathStarted = true;
-			_loopTimeout = kNumLoopsTimeout;
-		}
+//		if(!hasPathStarted && _status.btmBufferCnt > kMinPointsInTalon) { //originally greater than
+//			_setValue = SetValueMotionProfile.Enable;
+//			hasPathStarted = true;
+//			_loopTimeout = kNumLoopsTimeout;
+//		}
 		
 		if(hasPathStarted && _status.activePointValid && _status.isLast) {
 			_setValue = SetValueMotionProfile.Hold;
@@ -108,8 +109,17 @@ public class MP_Handler_3 {
 		return _status;
 	}
 	
+	public boolean isReady() {
+		return !hasPathStarted && _status.btmBufferCnt > kMinPointsInTalon;
+	}
+	public void start() {
+		_setValue = SetValueMotionProfile.Enable;
+		hasPathStarted = true;
+		_loopTimeout = kNumLoopsTimeout;
+	}
+	
 	private int manageTopBuffer(TalonSRX talon, double[][] profile, int totalCnt, int lastPointSent) {
-		int imax = 5;
+		int imax = 50;
 		if(lastPointSent >= totalCnt) {
 			return lastPointSent;
 		}
@@ -117,7 +127,8 @@ public class MP_Handler_3 {
 			imax = 50;
 		}
 		
-		for(int i=0; i>imax; i++) {
+		for(int i=0; i<imax; i++) {
+			
 			if(!talon.isMotionProfileTopLevelBufferFull() && lastPointSent < totalCnt) {
 				double positionFt = profile[lastPointSent][0];
 				double velocityFPS = profile[lastPointSent][1];
@@ -132,13 +143,14 @@ public class MP_Handler_3 {
 				if(lastPointSent == 0) {
 					point.zeroPos = true;
 					point.isLastPoint = false;
-					if((lastPointSent + 1) == totalCnt) {
-						point.isLastPoint = true;
-					}
-					_talon.pushMotionProfileTrajectory(point);
-					lastPointSent++;
 				}
-			}
+				if((lastPointSent + 1) == totalCnt) {
+					point.isLastPoint = true;
+				}
+				_talon.pushMotionProfileTrajectory(point);
+				lastPointSent++;
+				}
+			
 		}
 		return lastPointSent;
 	}

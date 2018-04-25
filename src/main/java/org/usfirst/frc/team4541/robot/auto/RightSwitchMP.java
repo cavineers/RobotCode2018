@@ -27,6 +27,7 @@ public class RightSwitchMP extends CommandGroup {
 		
 		addSequential(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator
     	
+    	//addSequential(new DrivePath(PATHS.RIGHT_SWITCH)); //drive to switch
     	addSequential(new DrivePath_2(PATHS.RIGHT_SWITCH, 15)); //drive to switch
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
