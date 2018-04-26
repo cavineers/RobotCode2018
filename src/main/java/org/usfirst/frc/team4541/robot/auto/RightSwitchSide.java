@@ -29,7 +29,7 @@ public class RightSwitchSide extends CommandGroup {
     	
     	addSequential(new DriveToPosAtAngle(13, 0)); //drive to side of left switch
     	addSequential(new TurnToAngle(-90));
-    	addSequential(new DriveToPosAtAngle(1.5, -90));
+    	addSequential(new DriveToPosAtAngle(1.5, -90, true));
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving at half speed for half a second
     	addSequential(new setIntakeSpeed(AutoConstants.ejectVelocity)); //spin wheels at half speed while opening grabber

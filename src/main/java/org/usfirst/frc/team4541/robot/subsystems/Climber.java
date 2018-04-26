@@ -31,6 +31,13 @@ public class Climber extends Subsystem {
 	public void retractClimber() {
 		climberSol.set(Value.kReverse);
 	}
+	public void toggleClimber() {
+		if (climberSol.get() == Value.kForward) {
+			climberSol.set(Value.kReverse);
+		} else {
+			climberSol.set(Value.kForward);
+		}
+	}
     
 }
 

@@ -29,8 +29,9 @@ public class LeftOppScalePointTurn extends CommandGroup{
     	addSequential(new DriveToPosAtAngle(3, 0, true));
     	
     	addSequential(new setIntakeSpeed(-0.4)); //spin wheels at speed while opening grabber
+    	addSequential(new TimedCommand(0.5));
 //      addSequential(new setIntakeContracted(false));
-//    	
+    	
     	addSequential(new DriveToPosAtAngle(-2, 0, true)); //back away from the switch
     	addSequential(new setIntakeSpeed(0));
     	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));

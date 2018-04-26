@@ -20,11 +20,10 @@ public class LeftTwoCubeSwitch extends CommandGroup{
 		addSequential(new ShiftGear(true));
 		addSequential(new ZeroYaw());
 		addSequential(new setIntakeContracted(true));
-//		addParallel(new ElevatorToHeight(ElevatorConstants.twoInches));
-//		addSequential(new TimedCommand(1));
+		addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight));
+		addSequential(new TimedCommand(0.4));
 		
     	addSequential(new DrivePath(PATHS.FAST_LEFT_SWITCH)); //drive to switch
-    	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight)); // move up elevator
     	
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
     	addParallel(new setIntakeSpeed(-0.5)); //spin wheels at speed while opening grabber
@@ -32,8 +31,8 @@ public class LeftTwoCubeSwitch extends CommandGroup{
 //    	addSequential(new TimedCommand(2));
 //    	addSequential(new setIntakeSpeed(0));
     	
+    	addParallel(new ElevatorToHeight(ElevatorConstants.minElevatorHeight));
     	addSequential(new DriveToPosAtAngle(-8.5, 0, 0.8)); //back away from the switch
-    	addParallel(new ElevatorToHeight(ElevatorConstants.twoInches));
     	
     	addSequential(new setIntakeContracted(false));
     	addSequential(new setIntakeSpeed(1));
@@ -43,8 +42,8 @@ public class LeftTwoCubeSwitch extends CommandGroup{
     	
     	addSequential(new DriveToPosAtAngle(-5, 0, 0.8)); //back away from the switch
     	
-    	addSequential(new DrivePath(PATHS.FAST_LEFT_SWITCH)); //drive to switch
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight));
+    	addSequential(new DrivePath(PATHS.FAST_LEFT_SWITCH)); //drive to switch
     	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
     	addParallel(new setIntakeSpeed(-0.5)); //spin wheels at speed while opening grabber
     	

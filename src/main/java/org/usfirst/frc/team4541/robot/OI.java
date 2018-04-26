@@ -139,6 +139,7 @@ public class OI {
 			 protected void initialize() { 
 				if (Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.CLIMBER;
+					Robot.climber.extendClimber();
 				} else {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
@@ -159,6 +160,18 @@ public class OI {
 					Robot.oi.currentTriggerSetting = TRIG_MODE.ELEVATOR;
 				}
 			 }
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			
+		});
+		left_stick.whenPressed(new Command() {
+			protected void initialize() { 
+				if (Robot.oi.currentTriggerSetting == TRIG_MODE.CLIMBER) {
+					Robot.climber.toggleClimber();
+				}
+			}
 			@Override
 			protected boolean isFinished() {
 				return true;

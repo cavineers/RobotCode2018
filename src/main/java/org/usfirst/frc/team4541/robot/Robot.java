@@ -49,6 +49,7 @@ import org.usfirst.frc.team4541.robot.commands.auto.TurnToAngle;
 import org.usfirst.frc.team4541.robot.commands.auto.disableAutoPositionOverride;
 import org.usfirst.frc.team4541.robot.commands.elevator.ElevatorHome;
 import org.usfirst.frc.team4541.robot.commands.EjectCube;
+import org.usfirst.frc.team4541.robot.commands.setIntakeSpeed;
 import org.usfirst.frc.team4541.robot.subsystems.Climber;
 import org.usfirst.frc.team4541.robot.subsystems.CompressorSystem;
 import org.usfirst.frc.team4541.robot.subsystems.DriveTrain;
@@ -108,7 +109,7 @@ public class Robot extends TimedRobot {
 		posChooser.addObject("Straight Override", RobotPos.INVALID);
 		SmartDashboard.putData(posChooser);
 		
-		/*UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 
 		cam0.setWhiteBalanceAuto();
 		cam0.setExposureManual(50);
@@ -120,7 +121,7 @@ public class Robot extends TimedRobot {
 		cam1.setWhiteBalanceAuto();
 		cam1.setExposureManual(50);
 		cam1.setFPS(20);
-		cam1.setResolution(330, (int)(330*(9.0/16.0)));*/
+		cam1.setResolution(330, (int)(330*(9.0/16.0)));
 		
 		SmartDashboard.putData(new TestEncoders());
 		SmartDashboard.putString("ENCODER STATUS", "DID NOT TEST");
@@ -128,6 +129,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(new disableAutoPositionOverride());
 		
 		SmartDashboard.putBoolean("Favors Scale", true);
+		
+		SmartDashboard.putBoolean("Grabber Contracted: ", !intake.getSolenoidState());
+		SmartDashboard.putBoolean("Grabber Spinning: ", Math.abs(intake.intakeMotor1.get()) > 0.05 && oi.currentTriggerSetting != TRIG_MODE.INTAKE);
+
 	}
 
 	/**
@@ -199,6 +204,7 @@ public class Robot extends TimedRobot {
 //		currentAutoCommand.cancel();
 		compressor.setCompressorState(true);
 		this.setPeriod(0.002); //lower loop rate to default because profiling is no longer needed.
+		new setIntakeSpeed(0).start();
 	}
 
 	/**
@@ -248,16 +254,16 @@ public class Robot extends TimedRobot {
 		if (oi.currentTriggerSetting == TRIG_MODE.CLIMBER) {
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.7);
-			climber.extendClimber();
 		}
 		else if (intake.getIntakeSpeed() > 0.2) { //grabber wheels are moving inwards
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.5);
-			climber.retractClimber();
 		} else {
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
 			oi.getJoystick().setRumble(RumbleType.kLeftRumble, 0.0);
-			climber.retractClimber();
+		}
+		if (oi.currentTriggerSetting != TRIG_MODE.CLIMBER) {
+			Robot.climber.retractClimber();
 		}
 	}
 	private void log() {

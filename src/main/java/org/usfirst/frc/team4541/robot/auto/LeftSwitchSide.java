@@ -36,7 +36,7 @@ public class LeftSwitchSide extends CommandGroup {
     	addSequential(new setIntakeContracted(false));
     	
     	addSequential(new TimedCommand(2));
-    	addSequential(new DriveToPosAtAngle(-2.5, 90)); //back away from the switch
+    	addSequential(new DriveToPosAtAngle(-2.5, 90, true)); //back away from the switch
     	addSequential(new setIntakeSpeed(0));
     	addSequential(new ElevatorToHeight(ElevatorConstants.twoInches));
     }
