@@ -50,7 +50,7 @@ public class NewManual extends Command {
 				time = Math.abs(Robot.elevator.getElevatorVel()/ElevatorConstants.maxA);
 				
 				
-				Robot.elevator.setTriggerValue(9999);
+				Robot.elevator.setManualVelocity(9999);
 				if(isLastUp) {
 					
 					Robot.elevator.getPIDVel().setSetpoint(elevPos + 300);
@@ -66,13 +66,13 @@ public class NewManual extends Command {
 
 		if (upTrig > 0.05 && downTrig < 0.05) {
 			isLastUp = true;
-			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
+			Robot.elevator.setManualVelocity(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
 			changePos = true;
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
 		}
 		if (downTrig > 0.05 && upTrig < 0.05) {
 			isLastUp = false;
-			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
+			Robot.elevator.setManualVelocity(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
 			changePos = true;
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.minElevatorHeight);
 		}

@@ -39,20 +39,20 @@ public class ManualMoveElevator extends Command {
 		upTrig = Robot.oi.getJoystick().getRawAxis(3);
 		downTrig = Robot.oi.getJoystick().getRawAxis(2);
 		if (upTrig > 0.05 && downTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-			Robot.elevator.setTriggerValue(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
+			Robot.elevator.setManualVelocity(ElevatorConstants.maxSpeed * Math.pow(upTrig, 2));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.maxElevatorHeight);
 			// Robot.elevator.updatePIDVals();
 		}
 
 		else if (downTrig > 0.05 && upTrig < 0.05 && Robot.oi.currentTriggerSetting == TRIG_MODE.ELEVATOR) {
-			Robot.elevator.setTriggerValue(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
+			Robot.elevator.setManualVelocity(-1 * (ElevatorConstants.maxSpeed * Math.pow(downTrig, 2)));
 			Robot.elevator.getPIDVel().setSetpoint(ElevatorConstants.minElevatorHeight);
 			// Robot.elevator.updatePIDVals();
 
 		}
 
 		else {
-			Robot.elevator.setTriggerValue(0);
+			Robot.elevator.setManualVelocity(0);
 
 			if (!Robot.elevator.getPIDVel().onTarget()) {
 				Robot.elevator.getPIDVel().setSetpoint(Robot.elevator.getElevatorPos());
@@ -76,6 +76,6 @@ public class ManualMoveElevator extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevator.setTriggerValue(9999);
+		Robot.elevator.setManualVelocity(9999);
 	}
 }

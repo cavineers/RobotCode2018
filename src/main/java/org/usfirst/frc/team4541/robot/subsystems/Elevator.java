@@ -199,7 +199,7 @@ public class Elevator extends Subsystem {
 		return limitSwitch;
 	}
 
-	public void setTriggerValue(double trigger) {
+	public void setManualVelocity(double trigger) {
 		manualVelocity = trigger;
 	}
 	

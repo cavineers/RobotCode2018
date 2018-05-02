@@ -37,6 +37,7 @@ public class RightTwoCubeSwitch extends CommandGroup{
     	addSequential(new setIntakeContracted(false));
     	addSequential(new setIntakeSpeed(1));
     	addSequential(new DrivePath(PATHS.RIGHT_TO_CUBE)); //drive to switch
+    	addSequential(new DriveForward(AutoConstants.driveForwardVel, 0.5)); //make sure that we're touching the cube by driving forward a bit
     	addSequential(new setIntakeContracted(true));
     	addSequential(new setIntakeSpeed(0));
     	
@@ -44,7 +45,7 @@ public class RightTwoCubeSwitch extends CommandGroup{
     	
     	addParallel(new ElevatorToHeight(ElevatorConstants.switchHeight));
     	addSequential(new DrivePath(PATHS.FAST_RIGHT_SWITCH)); //drive to switch
-    	addSequential(new DriveForward(AutoConstants.driveForwardVel, AutoConstants.driveForwardTime)); //make sure that we're touching the wall by driving forward a bit
+    	addSequential(new DriveForward(AutoConstants.driveForwardVel, 0.5)); //make sure that we're touching the wall by driving forward a bit
     	addParallel(new setIntakeSpeed(-0.5)); //spin wheels at speed while opening grabber
     	
 	}

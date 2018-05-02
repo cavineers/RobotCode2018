@@ -37,6 +37,7 @@ public class LeftTwoCubeSwitch extends CommandGroup{
     	addSequential(new setIntakeContracted(false));
     	addSequential(new setIntakeSpeed(1));
     	addSequential(new DrivePath(PATHS.LEFT_TO_CUBE)); //drive to switch
+    	addSequential(new DriveForward(AutoConstants.driveForwardVel, 0.2)); //make sure that we're touching the cube by driving forward a bit
     	addSequential(new setIntakeContracted(true));
     	addSequential(new setIntakeSpeed(0));
     	
